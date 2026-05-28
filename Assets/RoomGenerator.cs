@@ -5,16 +5,17 @@ using Microsoft.Win32.SafeHandles;
 
 public enum TileTypes { Air = 0, Floor = 1, Wall = 2, Border = 3 , StartPos=4}
 public enum GenerationAlgo { SimpleWalker, RandomNoise,PerlinNoise}
+//encorprate TileTypes into the HashSet somehow
 
 public class RoomGenerator : MonoBehaviour
 {
-    [FoldoutGroup("Generation Attributes", true, nameof(algoUsed), nameof(iterations), nameof(walklength), nameof(mapWidth), nameof(mapHeight), nameof(smoothing), nameof(smoothingIterations),nameof(smoothingCutoff), nameof(walkerCount), nameof(minRoomSize), nameof(useRandomSeed),nameof(seed))]
+    [FoldoutGroup("Generation Attributes", true, nameof(algoUsed), nameof(iterations), nameof(walklength), nameof(mapWidth), nameof(mapHeight), nameof(smoothing), nameof(smoothingIterations), nameof(smoothingCutoff), nameof(walkerCount), nameof(minRoomSize), nameof(useRandomSeed), nameof(seed))]
     [SerializeField] private EditorAttributes.Void _;
 
     public HashSet<Vector2Int> WalkerStartPositions => walkerStartPositions;
-    public int[,] Map => map;
     public int MapWidth => mapWidth;
     public int MapHeight => mapHeight;
+    public HashSet<Vector2Int> RoomFloorTiles => roomFloorTiles;
 
     [SerializeField, HideProperty] int iterations = 10;
     [SerializeField, HideProperty] int walklength = 10;
@@ -38,6 +39,7 @@ public class RoomGenerator : MonoBehaviour
 
     int[,] map;
     HashSet<Vector2Int> walkerStartPositions = new HashSet<Vector2Int>();
+    HashSet<Vector2Int> roomFloorTiles = new HashSet<Vector2Int>();
 
     private void Start()
     {
@@ -55,8 +57,7 @@ public class RoomGenerator : MonoBehaviour
 
         Smooth(((int)TileTypes.Floor), ((int)TileTypes.Air));
 
-        roomData = GenerateRoomData(walkerStartPositions.AtIndex(0),map);
-        roomDebugger.RoomData = roomData;
+        UpdateRoomData();
     }
 
 
@@ -64,14 +65,13 @@ public class RoomGenerator : MonoBehaviour
 
     RoomData GenerateRoomData(Vector2Int origin, int[,] map)
     {
-        HashSet<Vector2Int> tiles,shiftedTiles = new HashSet<Vector2Int>();
-        Debug.Log(origin);
-        tiles = Helper.GetFloodFill(map, origin, ((int)TileTypes.Floor));
-        //shift by origin
+        HashSet<Vector2Int> shiftedTiles = new HashSet<Vector2Int>();
+        roomFloorTiles = Helper.GetFloodFill(map, origin, ((int)TileTypes.Floor)); 
 
-        foreach (Vector2Int tile in tiles)
+        //shift by origin
+        foreach (Vector2Int tile in roomFloorTiles)
         {
-            Vector2Int pos = new Vector2Int(tile.x-origin.x, tile.y-origin.y);
+            Vector2Int pos = new Vector2Int(tile.x - origin.x, tile.y - origin.y);
             shiftedTiles.Add(pos);
         }
         return new RoomData(origin, shiftedTiles);
@@ -89,7 +89,7 @@ public class RoomGenerator : MonoBehaviour
                 {
                     for (int j = 0; j < map.GetLength(1); j++)
                     {
-                        int tileCount = Helper.GetSurroundingTileCount(map,i, j, fillValue, mapWidth, mapHeight);
+                        int tileCount = Helper.GetSurroundingTileCount(map, i, j, fillValue, mapWidth, mapHeight);
 
                         if (tileCount > smoothingCutoff) map[i, j] = fillValue;
                         else if (tileCount < smoothingCutoff) map[i, j] = emptyVal;
@@ -97,7 +97,7 @@ public class RoomGenerator : MonoBehaviour
                 }
             }
         }
-        
+
     }
 
     private void GenerateFloorTiles()
@@ -134,28 +134,63 @@ public class RoomGenerator : MonoBehaviour
         GenerateRoom();
     }
 
+    [Button("Update Room Data")]
+    void UpdateRoomData()
+    {
+        roomData = GenerateRoomData(walkerStartPositions.AtIndex(0), map);
+        roomDebugger.RoomData = roomData;
+    }
+
+    public void SetTile(int x, int y, bool filled, TileTypes layer)
+    {
+        if (x >= mapWidth || x < 0 || y >= mapWidth || y < 0) return;
+
+        if (layer == TileTypes.Floor)
+        {
+            if (filled) 
+            { 
+                roomFloorTiles.Add(new Vector2Int(x, y));
+                map[x, y] = ((int)layer);
+            }
+            else 
+            {
+                if (roomFloorTiles.Contains(new Vector2Int(x, y))) { roomFloorTiles.Remove(new Vector2Int(x, y)); map[x, y] = ((int)TileTypes.Air); }
+            }
+        }
+    }
+
     private void OnDrawGizmos()
     {
         if (ShowDebug && map != null)
         {
             if (mapHeight != 0 && mapWidth != 0)
             {
-                for (int i = 0; i < map.GetLength(0); i++)
-                {
-                    for (int j = 0; j < map.GetLength(1); j++)
-                    {
-                        Gizmos.color = Color.white;
-                        if (map[i, j] == ((int)debugTileLayer)) Gizmos.DrawCube(new Vector3(i + 0.5f, j + 0.5f, 0), Vector3.one);
-                    }
-                }
-            }
+                //for (int i = 0; i < map.GetLength(0); i++)
+                //{
+                //    for (int j = 0; j < map.GetLength(1); j++)
+                //    {
+                //        Gizmos.color = Color.white;
+                //        if (map[i, j] == ((int)debugTileLayer)) Gizmos.DrawCube(new Vector3(i + 0.5f, j + 0.5f, 0), Vector3.one);
+                //    }
+                //}
+                //DRAW BORDER
+                Gizmos.color = Color.black;
+                for (int i = 0; i < MapWidth; i++) { Gizmos.DrawCube(new Vector3(i+0.5f, 0.5f), Vector3.one); Gizmos.DrawCube(new Vector3(i + 0.5f, mapHeight + 0.5f), Vector3.one); }
+                for (int i = 0; i < MapHeight; i++) { Gizmos.DrawCube(new Vector3(0.5f, i + 0.5f), Vector3.one); Gizmos.DrawCube(new Vector3(mapWidth + 0.5f, i+0.5f), Vector3.one); }
 
-            Gizmos.color = Color.red;
-            foreach(Vector2Int pos in walkerStartPositions)
+
+            }
+            Gizmos.color = Color.white;
+            foreach(Vector2Int pos in roomFloorTiles)
             {
                 Gizmos.DrawCube(new Vector3(pos.x + 0.5f, pos.y + 0.5f, 0), Vector3.one);
             }
 
+            Gizmos.color = Color.red;
+            foreach (Vector2Int pos in walkerStartPositions)
+            {
+               Gizmos.DrawCube(new Vector3(pos.x + 0.5f, pos.y + 0.5f, 0), Vector3.one);
+            }
         }
     }
 }

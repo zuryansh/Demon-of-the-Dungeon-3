@@ -373,6 +373,98 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &662214890
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 662214892}
+  - component: {fileID: 662214891}
+  m_Layer: 0
+  m_Name: RoomEditor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &662214891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 662214890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96d2034393187f641950535e24de2629, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roomGenerator: {fileID: 1926177068}
+--- !u!4 &662214892
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 662214890}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 13.858559, y: 24.40445, z: -0.37259915}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &694369562
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 694369564}
+  - component: {fileID: 694369563}
+  m_Layer: 0
+  m_Name: RoomDataVisualier
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &694369563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 694369562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56ad58d529d104c4a8765c8469faefa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RoomData:
+    id: 1127538167
+    origin: {x: 27, y: 11}
+--- !u!4 &694369564
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 694369562}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 30.830873, y: 30.42082, z: -0.3766489}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1518056400
 GameObject:
   m_ObjectHideFlags: 0
@@ -509,22 +601,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b323feef52646344ab2ac1944ddf8ab0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugTileLayer: 1
   iterations: 10
-  walklength: 16
-  ShowDebug: 1
+  walklength: 30
   mapWidth: 50
   mapHeight: 50
-  smoothing: 0
+  smoothing: 1
   smoothingIterations: 1
-  walkerCount: 8
+  walkerCount: 1
   minRoomSize: 0
-  seed: 9849
+  seed: 4652
   algoUsed: 0
   useRandomSeed: 1
   smoothingCutoff: 3
+  debugTileLayer: 0
+  ShowDebug: 1
   fillPercent: 0
   cutoff: 0
+  roomData:
+    id: 1127538167
+    origin: {x: 27, y: 11}
+  roomDebugger: {fileID: 694369563}
 --- !u!4 &1926177069
 Transform:
   m_ObjectHideFlags: 0
@@ -548,3 +644,5 @@ SceneRoots:
   - {fileID: 619394802}
   - {fileID: 1518056403}
   - {fileID: 1926177069}
+  - {fileID: 694369564}
+  - {fileID: 662214892}
