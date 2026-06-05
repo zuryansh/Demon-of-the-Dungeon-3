@@ -448,8 +448,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RoomData:
-    id: 1127538167
-    origin: {x: 27, y: 11}
+    id: 1144416480
+    boundingBox:
+      m_Center: {x: 1, y: 0.5, z: 0}
+      m_Extent: {x: 6.5, y: 6, z: 0}
 --- !u!4 &694369564
 Transform:
   m_ObjectHideFlags: 0
@@ -459,7 +461,7 @@ Transform:
   m_GameObject: {fileID: 694369562}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 30.830873, y: 30.42082, z: -0.3766489}
+  m_LocalPosition: {x: -40.4, y: 17.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -609,7 +611,7 @@ MonoBehaviour:
   smoothingIterations: 1
   walkerCount: 1
   minRoomSize: 0
-  seed: 4652
+  seed: 9674
   algoUsed: 0
   useRandomSeed: 1
   smoothingCutoff: 3
@@ -618,8 +620,10 @@ MonoBehaviour:
   fillPercent: 0
   cutoff: 0
   roomData:
-    id: 1127538167
-    origin: {x: 27, y: 11}
+    id: 1144416480
+    boundingBox:
+      m_Center: {x: 1, y: 0.5, z: 0}
+      m_Extent: {x: 6.5, y: 6, z: 0}
   roomDebugger: {fileID: 694369563}
 --- !u!4 &1926177069
 Transform:
@@ -630,7 +634,7 @@ Transform:
   m_GameObject: {fileID: 1926177067}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.9080672, y: -0.83155674, z: -0.27135035}
+  m_LocalPosition: {x: -3, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

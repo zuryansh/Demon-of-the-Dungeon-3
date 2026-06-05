@@ -1,9 +1,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 using EditorAttributes;
-using Microsoft.Win32.SafeHandles;
+using static UnityEngine.UI.Image;
+using static UnityEditor.PlayerSettings;
 
-public enum TileTypes { Air = 0, Floor = 1, Wall = 2, Border = 3 , StartPos=4}
+//Room Generator and editor ONLY HAS INT MAP
+//all other systems use room Data after it has been generated from int map
+// STEPS
+//generate room
+// generate a room data
+// make necessary editions
+//only pass data when edittions are done 
+
+
+
+
 public enum GenerationAlgo { SimpleWalker, RandomNoise,PerlinNoise}
 //encorprate TileTypes into the HashSet somehow
 
@@ -15,7 +26,7 @@ public class RoomGenerator : MonoBehaviour
     public HashSet<Vector2Int> WalkerStartPositions => walkerStartPositions;
     public int MapWidth => mapWidth;
     public int MapHeight => mapHeight;
-    public HashSet<Vector2Int> RoomFloorTiles => roomFloorTiles;
+    public int[,] Map => map;   
 
     [SerializeField, HideProperty] int iterations = 10;
     [SerializeField, HideProperty] int walklength = 10;
@@ -39,11 +50,18 @@ public class RoomGenerator : MonoBehaviour
 
     int[,] map;
     HashSet<Vector2Int> walkerStartPositions = new HashSet<Vector2Int>();
-    HashSet<Vector2Int> roomFloorTiles = new HashSet<Vector2Int>();
 
     private void Start()
     {
+        StartProcess();
+    }
+
+    void StartProcess()
+    {
+        //generate
         GenerateRoom();
+        // make edits
+
     }
 
     void GenerateRoom()
@@ -57,6 +75,9 @@ public class RoomGenerator : MonoBehaviour
 
         Smooth(((int)TileTypes.Floor), ((int)TileTypes.Air));
 
+        GenerateWalls();
+
+
         UpdateRoomData();
     }
 
@@ -65,16 +86,20 @@ public class RoomGenerator : MonoBehaviour
 
     RoomData GenerateRoomData(Vector2Int origin, int[,] map)
     {
-        HashSet<Vector2Int> shiftedTiles = new HashSet<Vector2Int>();
-        roomFloorTiles = Helper.GetFloodFill(map, origin, ((int)TileTypes.Floor)); 
+        List<RoomTile> shiftedTiles = new List<RoomTile>();
 
         //shift by origin
-        foreach (Vector2Int tile in roomFloorTiles)
+        for (int i = 0; i < map.GetLength(0); i++)
         {
-            Vector2Int pos = new Vector2Int(tile.x - origin.x, tile.y - origin.y);
-            shiftedTiles.Add(pos);
+            for (int j = 0; j < map.GetLength(1); j++)
+            {
+                if (map[i, j] == ((int)TileTypes.Air)) continue;
+                Vector2Int pos = new Vector2Int(i - origin.x, j - origin.y);
+                shiftedTiles.Add(new RoomTile(pos, (TileTypes)map[i, j]));
+            }
         }
-        return new RoomData(origin, shiftedTiles);
+
+        return new RoomData(shiftedTiles);
     }
 
 
@@ -149,12 +174,38 @@ public class RoomGenerator : MonoBehaviour
         {
             if (filled) 
             { 
-                roomFloorTiles.Add(new Vector2Int(x, y));
+                //roomFilledTiles.Add(new Vector2Int(x, y));
                 map[x, y] = ((int)layer);
             }
             else 
             {
-                if (roomFloorTiles.Contains(new Vector2Int(x, y))) { roomFloorTiles.Remove(new Vector2Int(x, y)); map[x, y] = ((int)TileTypes.Air); }
+                if (map[x,y] != (int)TileTypes.Air) { map[x, y] = ((int)TileTypes.Air); }
+            }
+        }
+    }
+
+    [Button("Regenerate Walls")]
+    void GenerateWalls()
+    {
+        //loop through each floor pos 
+        // check each cardinal direction and if there is no floor add wall instead
+        for (int i = 1; i < map.GetLength(0) - 1; i++)
+        {
+            for (int j = 1; j < map.GetLength(1) - 1; j++)
+            {
+                if (map[i, j] == 1)
+                {
+                    //loop through each direction
+                    if (map[i + 1, j] == 0) map[i + 1, j] = ((int)TileTypes.Wall); //right
+                    if (map[i - 1, j] == 0) map[i - 1, j] = ((int)TileTypes.Wall); //left
+                    if (map[i, j + 1] == 0) map[i, j + 1] = ((int)TileTypes.Wall); //up
+                    if (map[i, j - 1] == 0) map[i, j - 1] = ((int)TileTypes.Wall); //down
+
+                    if (map[i + 1, j + 1] == 0) map[i + 1, j + 1] = ((int)TileTypes.Wall); //top right
+                    if (map[i + 1, j - 1] == 0) map[i + 1, j - 1] = ((int)TileTypes.Wall); //bottom right
+                    if (map[i - 1, j - 1] == 0) map[i - 1, j - 1] = ((int)TileTypes.Wall); //bottom left
+                    if (map[i - 1, j + 1] == 0) map[i - 1, j + 1] = ((int)TileTypes.Wall); //top left
+                }
             }
         }
     }
@@ -165,14 +216,6 @@ public class RoomGenerator : MonoBehaviour
         {
             if (mapHeight != 0 && mapWidth != 0)
             {
-                //for (int i = 0; i < map.GetLength(0); i++)
-                //{
-                //    for (int j = 0; j < map.GetLength(1); j++)
-                //    {
-                //        Gizmos.color = Color.white;
-                //        if (map[i, j] == ((int)debugTileLayer)) Gizmos.DrawCube(new Vector3(i + 0.5f, j + 0.5f, 0), Vector3.one);
-                //    }
-                //}
                 //DRAW BORDER
                 Gizmos.color = Color.black;
                 for (int i = 0; i < MapWidth; i++) { Gizmos.DrawCube(new Vector3(i+0.5f, 0.5f), Vector3.one); Gizmos.DrawCube(new Vector3(i + 0.5f, mapHeight + 0.5f), Vector3.one); }
@@ -180,17 +223,32 @@ public class RoomGenerator : MonoBehaviour
 
 
             }
-            Gizmos.color = Color.white;
-            foreach(Vector2Int pos in roomFloorTiles)
+
+            for (int i = 0; i < map.GetLength(0); i++)
             {
-                Gizmos.DrawCube(new Vector3(pos.x + 0.5f, pos.y + 0.5f, 0), Vector3.one);
+                for (int j = 0; j < map.GetLength(1); j++)
+                {
+                    int val = map[i, j];
+                    if (val == ((int)TileTypes.Air)) continue;
+                    else if (val == ((int)TileTypes.Floor)) Gizmos.color = Color.white;
+                    else if (val == ((int)TileTypes.Wall)) Gizmos.color = Color.black;
+                    Gizmos.DrawCube(new Vector3(i + 0.5f, j + 0.5f, 0), Vector3.one);
+                }
             }
 
-            Gizmos.color = Color.red;
-            foreach (Vector2Int pos in walkerStartPositions)
-            {
-               Gizmos.DrawCube(new Vector3(pos.x + 0.5f, pos.y + 0.5f, 0), Vector3.one);
-            }
+            //Gizmos.color = Color.white;
+            //foreach(Vector2Int pos in roomFilledTiles)
+            //{
+            //    Gizmos.DrawCube(new Vector3(pos.x + 0.5f, pos.y + 0.5f, 0), Vector3.one);
+            //}
+
+            //Gizmos.color = Color.red;
+            //foreach (Vector2Int pos in walkerStartPositions)
+            //{
+            //   Gizmos.DrawCube(new Vector3(pos.x + 0.5f, pos.y + 0.5f, 0), Vector3.one);
+            //}
         }
     }
 }
+
+//MAKE TWO DEBUG MODES ONE FOR MAP AND ONE FOR POSITIONS

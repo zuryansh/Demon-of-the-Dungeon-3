@@ -1,3 +1,4 @@
+using UnityEditor.Tilemaps;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
 
@@ -12,14 +13,20 @@ public class RoomDataDebugger : MonoBehaviour
 
         if (RoomData.Tiles != null)
         {
-            Gizmos.color = new Color(1f, 0f, 0f, 0.3f);
 
 
-            foreach (Vector2Int tile in RoomData.Tiles)
+            foreach (RoomTile tile in RoomData.Tiles)
             {
-
-                Gizmos.DrawCube(tile.ToV3(0.5f), Vector2.one);
+                if (tile.TileType == TileTypes.Wall) Gizmos.color = Color.black;
+                else if(tile.TileType == TileTypes.Floor) Gizmos.color = Color.white;
+                Gizmos.DrawCube(tile.LocalPosition.ToV3() + transform.position, Vector2.one);
             }
+
+            Gizmos.color = Color.green;
+            Gizmos.DrawSphere(transform.position, 0.1f);
+            Gizmos.DrawWireCube( RoomData.BoundingBox.center + transform.position, RoomData.BoundingBox.size);
+
+
         }
     }
 }

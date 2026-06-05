@@ -73,11 +73,14 @@ public static class Helper
 
     //}
 
-    //written by gpt iterative version of flood fill
-    public static HashSet<Vector2Int> GetFloodFill(
-    int[,] map,
-    Vector2Int startPos,
-    int fillVal)
+    /// <summary>
+    /// Gets flood Fill of all cells that are fill val
+    /// </summary>
+    /// <param name="map"></param>
+    /// <param name="startPos"></param>
+    /// <param name="fillVal"></param>
+    /// <returns></returns>
+    public static HashSet<Vector2Int> GetFloodFill( int[,] map, Vector2Int startPos, int fillVal)
     {
         HashSet<Vector2Int> positions = new HashSet<Vector2Int>();
 
@@ -123,6 +126,59 @@ public static class Helper
         return positions;
     }
 
+    /// <summary>
+    /// Gets Flood Fill of all cells that are not empty val
+    /// </summary>
+    /// <param name="map"></param>
+    /// <param name="startPos"></param>
+    /// <param name="emptyVal"></param>
+    /// <returns></returns>
+    public static HashSet<Vector2Int> GetFloodFillInverted( int[,] map, Vector2Int startPos, int emptyVal)
+    {
+        HashSet<Vector2Int> positions = new HashSet<Vector2Int>();
+
+        int width = map.GetLength(0);
+        int height = map.GetLength(1);
+
+        // bounds check
+        if (startPos.x < 0 || startPos.x >= width ||
+            startPos.y < 0 || startPos.y >= height)
+        {
+            return positions;
+        }
+
+        // starting cell invalid
+        if (map[startPos.x, startPos.y] == emptyVal)
+        {
+            return positions;
+        }
+
+        Stack<Vector2Int> stack = new Stack<Vector2Int>();
+        stack.Push(startPos);
+
+        while (stack.Count > 0)
+        {
+            Vector2Int current = stack.Pop();
+
+            // bounds check
+            if (current.x < 0 || current.x >= width || current.y < 0 || current.y >= height) continue;
+            // wrong tile type
+            if (map[current.x, current.y] == emptyVal) continue;
+
+            // already visited
+            if (positions.Contains(current)) continue;
+
+            positions.Add(current);
+
+            stack.Push(current + Vector2Int.up);
+            stack.Push(current + Vector2Int.right);
+            stack.Push(current + Vector2Int.down);
+            stack.Push(current + Vector2Int.left);
+        }
+
+        return positions;
+    }
+
     public static Vector3 ToV3(this Vector2Int vector, float buffer = 0f)
     {
         return new Vector3(vector.x + buffer, vector.y + buffer, 0);
@@ -137,6 +193,7 @@ public static class Helper
     {
         return new Vector2Int(((int)(vector.x + buffer)), ((int)(vector.y + buffer)));
     }
+
     public static T AtIndex<T>(this HashSet<T> hashSet, int index)
     {
         int i = 0;
@@ -147,6 +204,7 @@ public static class Helper
         }
         return default(T);
     }
+
 
     public static int GetSurroundingTileCount(int[,] Map ,int gridX, int gridY, int tileVal, int MapWidth, int MapHeight)
     {
