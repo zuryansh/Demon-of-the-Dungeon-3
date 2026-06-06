@@ -9,12 +9,12 @@ public class RoomData
     public int ID => id;
     public List<RoomTile> Tiles => tiles;
     public Bounds BoundingBox => boundingBox;
-
+    
 
     [SerializeField] int id;
     [SerializeField] List<RoomTile> tiles;
     [SerializeField] Bounds boundingBox;
-
+    
 
 
 
@@ -30,6 +30,11 @@ public class RoomData
             boundingBox.Encapsulate(tile.LocalPosition.ToV3());
         }
         boundingBox.extents += new Vector3(0.5f, 0.5f, 0);
+    }
+
+    public void CalculateGlobalBounds(Vector3 centerPosition)
+    {
+
     }
 
 }

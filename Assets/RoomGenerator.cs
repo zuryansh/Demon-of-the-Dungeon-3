@@ -102,8 +102,6 @@ public class RoomGenerator : MonoBehaviour
         return new RoomData(shiftedTiles);
     }
 
-
-
     void Smooth(int fillValue, int emptyVal)
     {
         if (smoothing)
@@ -166,22 +164,17 @@ public class RoomGenerator : MonoBehaviour
         roomDebugger.RoomData = roomData;
     }
 
-    public void SetTile(int x, int y, bool filled, TileTypes layer)
+    public void SetTile(int x, int y, TileTypes fill)
     {
         if (x >= mapWidth || x < 0 || y >= mapWidth || y < 0) return;
 
-        if (layer == TileTypes.Floor)
-        {
-            if (filled) 
-            { 
-                //roomFilledTiles.Add(new Vector2Int(x, y));
-                map[x, y] = ((int)layer);
-            }
-            else 
-            {
-                if (map[x,y] != (int)TileTypes.Air) { map[x, y] = ((int)TileTypes.Air); }
-            }
-        }
+        map[x, y] = ((int)fill) ;   
+    }
+
+    public RoomData GetNewRoom() 
+    {
+        GenerateRoom();
+        return roomData;
     }
 
     [Button("Regenerate Walls")]

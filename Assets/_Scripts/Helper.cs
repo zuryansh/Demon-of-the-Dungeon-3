@@ -205,7 +205,12 @@ public static class Helper
         return default(T);
     }
 
-
+    public static Bounds LocalToGlobalBound(this Bounds local, Vector3 position)
+    {
+        Bounds global = local;
+        global.center += position;
+        return global;
+    }
     public static int GetSurroundingTileCount(int[,] Map ,int gridX, int gridY, int tileVal, int MapWidth, int MapHeight)
     {
         int count = 0;

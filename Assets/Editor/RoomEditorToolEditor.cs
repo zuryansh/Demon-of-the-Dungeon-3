@@ -1,3 +1,4 @@
+using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -5,6 +6,7 @@ using UnityEngine;
 public class RoomEditorToolEditor : Editor
 {
     RoomEditorTool tool;
+    TileTypes currentBrush;
 
     private void OnEnable()
     {
@@ -13,6 +15,10 @@ public class RoomEditorToolEditor : Editor
 
     public void OnSceneGUI()
     {
+
+        HandleUtility.AddDefaultControl(
+    GUIUtility.GetControlID(FocusType.Passive)
+);
         //current input event 
         Event e = Event.current;
 
@@ -21,7 +27,9 @@ public class RoomEditorToolEditor : Editor
 
         Plane plane = new Plane(Vector3.forward, Vector3.zero);
 
-        if (plane.Raycast(ray, out float dist))
+        DrawSelector();
+
+        if (plane.Raycast(ray, out float dist) && tool.roomGenerator.Map!=null)
         {
             Vector3 world = ray.GetPoint(dist);
 
@@ -40,14 +48,12 @@ public class RoomEditorToolEditor : Editor
 
 
 
-
-            // Paint on click
-            if (e.type == EventType.MouseDown && !e.alt) // avoid camera conflict
+                // Paint on click
+            if (e.type == EventType.MouseDrag && e.button == 0 && !e.alt) // avoid camera conflict
             {
                 Undo.RecordObject(tool, "Paint Tile");
 
-                if(e.button ==0) tool.PaintTile(x, y);
-                else if(e.button ==1) tool.RemoveTile(x, y);
+                if(e.button ==0) tool.PaintTile(x, y,currentBrush);
 
                 EditorUtility.SetDirty(tool);
 
@@ -60,6 +66,30 @@ public class RoomEditorToolEditor : Editor
             HandleUtility.Repaint();
         }
 
+    }
+
+    void DrawSelector()
+    {
+        Handles.BeginGUI();
+
+        GUILayout.BeginArea(
+            new Rect(10, 10, 150, 200),
+            GUI.skin.box
+        );
+
+        GUILayout.Label("Brush");
+
+        foreach (TileTypes type in Enum.GetValues(typeof(TileTypes)))
+        {
+            if (GUILayout.Button(type.ToString()))
+            {
+                currentBrush = type;
+            }
+        }
+
+        GUILayout.EndArea();
+
+        Handles.EndGUI();
     }
 
     void DrawOutlinedText(Vector3 pos, string text, Color outlineColor, Color fillColor )

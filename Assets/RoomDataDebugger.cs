@@ -7,7 +7,6 @@ public class RoomDataDebugger : MonoBehaviour
     public RoomData RoomData;
 
 
-
     private void OnDrawGizmos()
     {
 
@@ -23,7 +22,7 @@ public class RoomDataDebugger : MonoBehaviour
             }
 
             Gizmos.color = Color.green;
-            Gizmos.DrawSphere(transform.position, 0.1f);
+            Gizmos.DrawSphere(transform.position, 1f);
             Gizmos.DrawWireCube( RoomData.BoundingBox.center + transform.position, RoomData.BoundingBox.size);
 
 
