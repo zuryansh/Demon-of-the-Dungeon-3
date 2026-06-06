@@ -5,8 +5,9 @@ using EditorAttributes;
 public class RoomAssembler : MonoBehaviour
 {
     [SerializeField] RoomGenerator generator;
-    [SerializeField] List<RoomDataDebugger> rooms = new List<RoomDataDebugger>(); //TODO REPLACE DEBUGGER WITH ROOM SCRIPT
-    [SerializeField] RoomDataDebugger visualiserPrefab;
+    [SerializeField] List<Room> rooms = new List<Room>(); //TODO REPLACE DEBUGGER WITH ROOM SCRIPT
+    [SerializeField] Room roomPrefab;
+
     [SerializeField] Vector2Int firstRoomPos;
     [SerializeField] int spacing;
 
@@ -37,10 +38,13 @@ public class RoomAssembler : MonoBehaviour
         {
             spawnPos = GetNextRoomPos(data.BoundingBox, rooms[rooms.Count-1].transform.position.ToV2().ToV2Int());
         }
-        RoomDataDebugger visualiser = Instantiate(visualiserPrefab, spawnPos.ToV3(), Quaternion.identity);
-        visualiser.RoomData = data;
-        
-        rooms.Add(visualiser);
+        Room spawnedRoom = Instantiate(roomPrefab, spawnPos.ToV3(), Quaternion.identity);
+        //spawnedRoom.SetRoomData(data);
+        List<Room> connections = (rooms.Count == 0) ? new() : new() { rooms[^1] }; //rooms[^1] = last element
+
+        spawnedRoom.Init(data, connections);
+
+        rooms.Add(spawnedRoom);
 
     }
 
@@ -54,9 +58,9 @@ public class RoomAssembler : MonoBehaviour
 
             bool intersects = false;
 
-            foreach (RoomDataDebugger room in rooms)
+            foreach (Room room in rooms)
             {
-                if (room.RoomData.BoundingBox
+                if (room.Data.BoundingBox
                         .LocalToGlobalBound(room.transform.position)
                         .Intersects(bounds.LocalToGlobalBound(pos)))
                 {
@@ -76,9 +80,9 @@ public class RoomAssembler : MonoBehaviour
     [Button("CLear Generation")]
     void Clear()
     {
-        foreach(RoomDataDebugger visualiser in rooms)
+        foreach(Room room in rooms)
         {
-            Destroy(visualiser.gameObject);
+            Destroy(room.gameObject);
             
         }
         rooms.Clear();
