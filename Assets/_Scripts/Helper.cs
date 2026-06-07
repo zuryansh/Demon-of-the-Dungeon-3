@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public static class Helper
@@ -229,5 +230,60 @@ public static class Helper
             }
         }
         return count;
+    }
+
+    public static T Choice<T>(this IList<T> collection)
+    {
+        if (collection == null)
+            throw new System.ArgumentNullException(nameof(collection));
+
+        if (collection.Count == 0)
+            throw new System.InvalidOperationException(
+                "Cannot choose from an empty collection.");
+
+        return collection[UnityEngine.Random.Range(0, collection.Count)];
+    }
+
+    public static T Choice<T>(this IList<T> collection, System.Random prng, [CallerMemberName] string caller = "")
+    {
+        if (collection == null)
+            throw new System.ArgumentNullException(nameof(collection));
+
+        if (collection.Count == 0)
+            throw new System.InvalidOperationException(
+                $"Cannot choose from an empty collection. {caller}");
+
+        return collection[prng.Next(0, collection.Count)];
+    }
+
+    public static T WeightedChoice<T>(IList<T> values, IList<float> weights, System.Random rng)
+    {
+        if (values == null)throw new ArgumentNullException(nameof(values));
+        if (weights == null)throw new ArgumentNullException(nameof(weights));
+        if (values.Count != weights.Count)throw new ArgumentException("Values and weights must have the same length.");
+        if (values.Count == 0) throw new InvalidOperationException("Cannot choose from an empty collection.");
+
+        float totalWeight = 0;
+
+        foreach (float weight in weights)
+        {
+            if (weight < 0)
+                throw new ArgumentException(
+                    "Weights cannot be negative.");
+
+            totalWeight += weight;
+        }
+
+        float roll = (float)rng.NextDouble() * totalWeight;
+
+        for (int i = 0; i < values.Count; i++)
+        {
+            if (roll < weights[i])
+                return values[i];
+
+            roll -= weights[i];
+        }
+
+        return values[^1];
     }
 }

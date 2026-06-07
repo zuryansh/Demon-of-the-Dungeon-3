@@ -1,14 +1,18 @@
+using EditorAttributes;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Room : MonoBehaviour
 {
     public RoomData Data => data;
+    public Bounds GlobalBounds=>globalBounds;
+    public Vector3 GlobalPosition => transform.position;
+    public List<Room> ConnectedRooms =>connectedRooms;
 
     [SerializeField] RoomTile originTile = new RoomTile(Vector2Int.zero, TileTypes.StartPos);
     [SerializeField] RoomDataDebugger debugger;
     [SerializeField] List<Room> connectedRooms= new List<Room>();
-
+    [SerializeField] Bounds globalBounds;
 
 
     RoomData data;
@@ -22,6 +26,8 @@ public class Room : MonoBehaviour
         {
             if(!room.connectedRooms.Contains(this)) room.connectedRooms.Add(this);
         }
+
+        globalBounds = data.BoundingBox.LocalToGlobalBound(transform.position);
     }
 
     private void Start()

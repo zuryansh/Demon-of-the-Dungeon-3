@@ -21,7 +21,7 @@ public enum GenerationAlgo { SimpleWalker, RandomNoise,PerlinNoise}
 public class RoomGenerator : MonoBehaviour
 {
     [FoldoutGroup("Generation Attributes", true, nameof(algoUsed), nameof(iterations), nameof(walklength), nameof(mapWidth), nameof(mapHeight), nameof(smoothing), nameof(smoothingIterations), nameof(smoothingCutoff), nameof(walkerCount), nameof(minRoomSize), nameof(useRandomSeed), nameof(seed))]
-    [SerializeField] private EditorAttributes.Void _;
+    [SerializeField] private Void groupHolder;
 
     public HashSet<Vector2Int> WalkerStartPositions => walkerStartPositions;
     public int MapWidth => mapWidth;
@@ -49,6 +49,8 @@ public class RoomGenerator : MonoBehaviour
     [SerializeField] RoomDataDebugger roomDebugger;
 
     int[,] map;
+    System.Random prng;
+
     HashSet<Vector2Int> walkerStartPositions = new HashSet<Vector2Int>();
 
     private void Start()
@@ -67,6 +69,7 @@ public class RoomGenerator : MonoBehaviour
     void GenerateRoom()
     {
         if (useRandomSeed) seed = Random.Range(0, 10000);
+        prng = new System.Random(seed);
 
         map = Helper.CreateEmpty2dArray(mapHeight, mapWidth, ((int)TileTypes.Air));
         walkerStartPositions = new HashSet<Vector2Int>();
@@ -130,9 +133,9 @@ public class RoomGenerator : MonoBehaviour
 
             for (int i = 0; i < walkerCount; i++)
             {
-                if (useRandomSeed) seed = Random.Range(0, 10000);
-                int walkerStartX = (int)UnityEngine.Random.Range(5, map.GetLength(0) / 1.15f);
-                int walkerStartY = (int)UnityEngine.Random.Range(5, map.GetLength(1) / 1.15f);
+                //if (useRandomSeed) seed = Random.Range(0, 10000);
+                int walkerStartX = prng.Next(5, (int)(map.GetLength(0) / 1.15f));
+                int walkerStartY = prng.Next(5, (int)(map.GetLength(1) / 1.15f));
 
 
                 walkerStartPositions.Add(new Vector2Int(walkerStartX, walkerStartY));
@@ -173,6 +176,7 @@ public class RoomGenerator : MonoBehaviour
 
     public RoomData GetNewRoom() 
     {
+        
         GenerateRoom();
         return roomData;
     }

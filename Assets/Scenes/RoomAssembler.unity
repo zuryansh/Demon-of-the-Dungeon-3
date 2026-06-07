@@ -163,11 +163,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: deaa76fc110ff62459aec5b74fa9bb04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  possibleNoOfAnchorRooms: 010000000200000003000000
+  anchorRoomsWeight:
+  - 0.7
+  - 0.25
+  - 0.05
+  maxAnchorDist: 50
+  maxConnections: 4
+  maxAttemptsToFindPos: 100
+  seed: 0
+  useRandomSeed: 0
   generator: {fileID: 0}
-  rooms: []
+  placedRooms: []
   roomPrefab: {fileID: 8257017177754270078, guid: 5dd24b17158be1b4b8dcea1a3e036398, type: 3}
+  noOfRooms: 10
   firstRoomPos: {x: 20, y: 20}
   spacing: 70
+  datas: []
 --- !u!1 &1082776228
 GameObject:
   m_ObjectHideFlags: 0
