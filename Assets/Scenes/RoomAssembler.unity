@@ -168,18 +168,18 @@ MonoBehaviour:
   - 0.7
   - 0.25
   - 0.05
-  maxAnchorDist: 50
-  maxConnections: 4
+  maxAnchorDist: 70
+  maxConnections: 3
   maxAttemptsToFindPos: 100
   seed: 0
   useRandomSeed: 0
+  noOfRooms: 10
+  roomPosSearchRad: 100
   generator: {fileID: 0}
   placedRooms: []
   roomPrefab: {fileID: 8257017177754270078, guid: 5dd24b17158be1b4b8dcea1a3e036398, type: 3}
-  noOfRooms: 10
   firstRoomPos: {x: 20, y: 20}
-  spacing: 70
-  datas: []
+  availaleRoomDatas: []
 --- !u!1 &1082776228
 GameObject:
   m_ObjectHideFlags: 0

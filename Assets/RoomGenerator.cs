@@ -190,7 +190,7 @@ public class RoomGenerator : MonoBehaviour
         {
             for (int j = 1; j < map.GetLength(1) - 1; j++)
             {
-                if (map[i, j] == 1)
+                if (map[i, j] == ((int)TileTypes.Floor))
                 {
                     //loop through each direction
                     if (map[i + 1, j] == 0) map[i + 1, j] = ((int)TileTypes.Wall); //right
@@ -248,4 +248,3 @@ public class RoomGenerator : MonoBehaviour
     }
 }
 
-//MAKE TWO DEBUG MODES ONE FOR MAP AND ONE FOR POSITIONS

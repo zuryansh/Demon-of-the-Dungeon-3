@@ -2,22 +2,17 @@ using UnityEngine;
 using System.Collections.Generic;
 using EditorAttributes;
 using System;
-using System.Runtime.InteropServices;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using UnityEngine.Rendering.Universal;
 
-//1.Place first room.
-//2.Place second near first.
-//3. Pick 1-3 anchor rooms. (near a random primary room)
-//4. Compute anchor center. 
-//5. Generate candidate positions around center.
-//6. Reject overlaps.
-//7. Connect to anchors.
+//THINGS TO ADD
+// scoring function to score possible positions
 
 public class RoomAssembler : MonoBehaviour
 {
-    [FoldoutGroup("Generation Attributes", true, nameof(possibleNoOfAnchorRooms),nameof(maxConnections), nameof(anchorRoomsWeight),nameof(maxAnchorDist), nameof(maxAttemptsToFindPos),nameof(seed),nameof(useRandomSeed))]
+    [FoldoutGroup("Generation Attributes", true, nameof(noOfRooms),nameof(possibleNoOfAnchorRooms),nameof(maxConnections), nameof(anchorRoomsWeight),nameof(maxAnchorDist), nameof(roomPosSearchRad),nameof(maxAttemptsToFindPos),nameof(seed),nameof(useRandomSeed))]
     [SerializeField] private EditorAttributes.Void groupHolder;
-
-
 
     [SerializeField, HideProperty] List<int> possibleNoOfAnchorRooms = new List<int>();
     [SerializeField, HideProperty, Range(0f,1f)] List<float> anchorRoomsWeight = new List<float>();
@@ -26,17 +21,17 @@ public class RoomAssembler : MonoBehaviour
     [SerializeField, HideProperty] int maxAttemptsToFindPos;
     [SerializeField, HideProperty] int seed;
     [SerializeField, HideProperty] bool useRandomSeed;
+    [SerializeField,HideProperty] int noOfRooms;
+    [SerializeField,HideProperty] int roomPosSearchRad;
 
 
     [SerializeField] RoomGenerator generator;
     [SerializeField] List<Room> placedRooms = new List<Room>(); //TODO REPLACE DEBUGGER WITH ROOM SCRIPT
     [SerializeField] Room roomPrefab;
-    [SerializeField] int noOfRooms;
     [SerializeField] Vector2Int firstRoomPos;
-    [SerializeField] int spacing;
 
     System.Random prng;
-    [SerializeField]List<RoomData> datas;
+    [SerializeField]List<RoomData> availaleRoomDatas;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -60,7 +55,13 @@ public class RoomAssembler : MonoBehaviour
     [Button("Start Assembly")]
     void StartAssembly()
     {
-        datas = GetAllRoomsFromGenerator(noOfRooms);
+        if (!ValidateSettings())
+        {
+            Debug.LogError("Invalid assembler setup.");
+            return;
+        }
+
+        availaleRoomDatas = GetAllRoomsFromGenerator(noOfRooms);
         PlaceLinearRoom();
         PlaceLinearRoom();
 
@@ -69,12 +70,24 @@ public class RoomAssembler : MonoBehaviour
         {
             PlaceRoomWithRandomAnchors();
         }
+
+        ValidateDungeon();
+    }
+
+    bool ValidateSettings()
+    {
+        return generator != null
+            && roomPrefab != null
+            && noOfRooms > 0;
+    }
+    void ValidateDungeon()
+    {
+        if(placedRooms.Count != noOfRooms) { Debug.LogError("Not Enough Rooms Placed!"); HandleInvalidDungeon(); }
     }
 
     void PlaceRoomWithRandomAnchors()
     {
         if (placedRooms.Count > noOfRooms) return;
-        //MAKE EXCEPTIONS FOR FIRST FEW ROOMS
         RoomData data = GetRandomRoomData();
         List<Room> anchors = GetAnchorRooms(Helper.WeightedChoice(possibleNoOfAnchorRooms, anchorRoomsWeight, prng));
 
@@ -87,6 +100,10 @@ public class RoomAssembler : MonoBehaviour
     Vector2Int GetRoomPositionUsingAnchors(Bounds bounds, List<Room> anchors)
     {
         //firs calc mean pos of anchor then
+        if (anchors.Count == 0)
+        {
+            throw new InvalidOperationException("No Anchors provided to spawn room");
+        }
         Vector3 meanPos = Vector3.zero;
         foreach (Room anchor in anchors)
         {
@@ -94,32 +111,37 @@ public class RoomAssembler : MonoBehaviour
         }
         meanPos /= anchors.Count;
 
-        return GetRoomPosNear(bounds, meanPos.ToV2().ToV2Int());
+        return GetValidRoomPosNear(bounds, meanPos.ToV2().ToV2Int());
     }
 
     List<Room> GetAnchorRooms(int count)
     {
-        List<Room> GetNRoomsInRadius(Vector3 center, float maxAnchorDist)
-        {
-            List<Room> candidates = GetNearbyRoomsInRadius(center, maxAnchorDist);
-            while (count > candidates.Count) { count--; } //make sure count is not more than total possible candidates
-            return candidates;
-        }
+
 
         List<Room> anchors= new List<Room>();
-        //pick random anchor and then search for few around them in a rad;
-        Room primary = placedRooms.Choice(prng);
-        while (primary.ConnectedRooms.Count > maxConnections) primary = placedRooms.Choice(prng); //dont want primary with too many connections
+
+        //pick anchor room and make sure its not too crowded
+        List<Room> validRooms = placedRooms.Where(r => r.ConnectedRooms.Count < maxConnections).ToList();
+        if (validRooms.Count == 0)
+        {
+            Debug.LogWarning("No valid anchor rooms found.");
+            return anchors;
+        }
+        Room primary = validRooms.Choice(prng);
         anchors.Add(primary);
 
-        List<Room> candidates = GetNearbyRoomsInRadius(primary.GlobalPosition, maxAnchorDist);
-        
 
-        for (int i = 0; i < count-1; i++)
+        List<Room> candidates = GetNearbyRoomsInRadius(primary.GlobalPosition, maxAnchorDist);
+        candidates = candidates.Where(r => r.ConnectedRooms.Count < maxConnections && r!=primary).ToList() ;
+        if(candidates.Count == 0) { Debug.LogWarning("No candidates found around primary anchor"); return anchors; }
+
+        count = Math.Min(candidates.Count, count); 
+
+        for (int i = 0; anchors.Count<count; i++)
         {
-            // add checking for too many connetions in candidate like with primary but make sure it picks them if none are found
             Room choice = candidates.Choice(prng);
             anchors.Add(choice);
+            candidates.Remove(choice);
         }
 
         return anchors;
@@ -139,6 +161,7 @@ public class RoomAssembler : MonoBehaviour
                 result.Add(room);
             }
         }
+        if (result.Count == 0) Debug.LogWarning($"No Rooms found near {center}");
         return result;
     }
 
@@ -166,7 +189,7 @@ public class RoomAssembler : MonoBehaviour
         }
         else
         {
-            spawnPos = GetRoomPosNear(data.BoundingBox, placedRooms[placedRooms.Count - 1].transform.position.ToV2().ToV2Int());
+            spawnPos = GetValidRoomPosNear(data.BoundingBox, placedRooms[placedRooms.Count - 1].transform.position.ToV2().ToV2Int());
         }
         List<Room> connections = (placedRooms.Count == 0) ? new() : new() { placedRooms[^1] }; //rooms[^1] = last element
         PlaceRoomAtPosition(data,spawnPos, connections);
@@ -175,17 +198,17 @@ public class RoomAssembler : MonoBehaviour
 
     RoomData GetRandomRoomData()
     {
-        if(datas.Count == 0) throw new InvalidOperationException("All RoomDatas have been used");
-        RoomData data = datas.Choice(prng);
-        datas.Remove(data);
+        if(availaleRoomDatas.Count == 0) throw new InvalidOperationException("All RoomDatas have been used");
+        RoomData data = availaleRoomDatas.Choice(prng);
+        availaleRoomDatas.Remove(data);
         return data;
     } 
 
-    Vector2Int GetRoomPosNear(Bounds bounds, Vector2Int center)
+    Vector2Int GetValidRoomPosNear(Bounds bounds, Vector2Int center, [CallerMemberName] string caller = "")
     {
         for (int i = 0; i < maxAttemptsToFindPos; i++)
         {
-            Vector2 pos = UnityEngine.Random.insideUnitCircle * spacing + center;
+            Vector2 pos = UnityEngine.Random.insideUnitCircle * roomPosSearchRad + center;
 
             bool intersects = false;
 
@@ -204,8 +227,14 @@ public class RoomAssembler : MonoBehaviour
                 return pos.ToV2Int();
         }
 
-        Debug.LogWarning("NOTHING FOUND");
+        Debug.LogWarning($"Nothing Found when trying to find room Pos near {center} by {caller}");
+        HandleInvalidDungeon();
         return center;
+    }
+
+    public void HandleInvalidDungeon()
+    {
+        throw new Exception("DUNGEON GENERATION INVALID");
     }
 
     [Button("CLear Generation")]
