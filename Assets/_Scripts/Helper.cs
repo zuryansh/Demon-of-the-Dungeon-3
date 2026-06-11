@@ -195,6 +195,14 @@ public static class Helper
         return new Vector2Int(((int)(vector.x + buffer)), ((int)(vector.y + buffer)));
     }
 
+    public static Vector3Int ToV3Int(this Vector2Int vector, int buffer = 0)
+    {
+        return new Vector3Int(vector.x + buffer, vector.y + buffer, 0);
+    }
+    public static Vector3Int ToV3Int(this Vector3 vector, int buffer = 0)
+    {
+        return new Vector3Int(((int)(vector.x + buffer)), ((int)(vector.y + buffer)), ((int)(vector.z + buffer)));
+    }
     public static T AtIndex<T>(this HashSet<T> hashSet, int index)
     {
         int i = 0;

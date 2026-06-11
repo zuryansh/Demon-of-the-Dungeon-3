@@ -5,11 +5,11 @@ using static UnityEditor.PlayerSettings;
 public class RoomDataDebugger : MonoBehaviour
 {
     public RoomData RoomData;
-
+    [SerializeField] bool showDebug;
 
     private void OnDrawGizmos()
     {
-
+        if (!showDebug) return;
         if (RoomData.Tiles != null)
         {
 

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor.TextCore.Text;
 using UnityEngine;
 
 
@@ -9,20 +10,21 @@ public class RoomData
     public int ID => id;
     public List<RoomTile> Tiles => tiles;
     public Bounds BoundingBox => boundingBox;
-    
+    public RoomPalleteSO Tilepallete=> tilepallete;
+
 
     [SerializeField] int id;
     [SerializeField] List<RoomTile> tiles;
     [SerializeField] Bounds boundingBox;
-    
+    [SerializeField] RoomPalleteSO tilepallete;
 
 
 
-    public RoomData(List<RoomTile> tiles)
+    public RoomData(List<RoomTile> tiles, RoomPalleteSO pallete)
     {
         this.id = Time.time.GetHashCode();
         this.tiles = tiles;
-
+        this.tilepallete = pallete;
         boundingBox = new Bounds(Vector3.zero, Vector3.zero);
 
         foreach (var tile in tiles)

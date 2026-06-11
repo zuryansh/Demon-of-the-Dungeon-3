@@ -3,6 +3,7 @@ using UnityEngine;
 using EditorAttributes;
 using static UnityEngine.UI.Image;
 using static UnityEditor.PlayerSettings;
+using UnityEditor.Tilemaps;
 
 //Room Generator and editor ONLY HAS INT MAP
 //all other systems use room Data after it has been generated from int map
@@ -20,7 +21,7 @@ public enum GenerationAlgo { SimpleWalker, RandomNoise,PerlinNoise}
 
 public class RoomGenerator : MonoBehaviour
 {
-    [FoldoutGroup("Generation Attributes", true, nameof(algoUsed), nameof(iterations), nameof(walklength), nameof(mapWidth), nameof(mapHeight), nameof(smoothing), nameof(smoothingIterations), nameof(smoothingCutoff), nameof(walkerCount), nameof(minRoomSize), nameof(useRandomSeed), nameof(seed))]
+    [FoldoutGroup("Generation Attributes", true, nameof(algoUsed), nameof(iterations), nameof(walklength), nameof(mapWidth), nameof(mapHeight), nameof(smoothing), nameof(smoothingIterations), nameof(smoothingCutoff), nameof(walkerCount), nameof(minRoomSize), nameof(useRandomSeed), nameof(seed),nameof(tilePallete))]
     [SerializeField] private Void groupHolder;
 
     public HashSet<Vector2Int> WalkerStartPositions => walkerStartPositions;
@@ -40,6 +41,7 @@ public class RoomGenerator : MonoBehaviour
     [SerializeField, HideProperty] GenerationAlgo algoUsed;
     [SerializeField, HideProperty] bool useRandomSeed;
     [SerializeField, HideProperty] int smoothingCutoff;
+    [SerializeField, HideProperty] RoomPalleteSO tilePallete;
 
     [SerializeField] TileTypes debugTileLayer;
     [SerializeField] bool ShowDebug = true;
@@ -62,30 +64,46 @@ public class RoomGenerator : MonoBehaviour
     {
         //generate
         GenerateRoom();
-        // make edits
-
     }
 
     void GenerateRoom()
     {
-        if (useRandomSeed) seed = Random.Range(0, 10000);
-        prng = new System.Random(seed);
+        while (true)
+        {
+            if (useRandomSeed) seed = Random.Range(0, 10000);
+            prng = new System.Random(seed);
 
-        map = Helper.CreateEmpty2dArray(mapHeight, mapWidth, ((int)TileTypes.Air));
-        walkerStartPositions = new HashSet<Vector2Int>();
+            map = Helper.CreateEmpty2dArray(mapHeight, mapWidth, ((int)TileTypes.Air));
+            walkerStartPositions = new HashSet<Vector2Int>();
 
-        GenerateFloorTiles();
+            GenerateFloorTiles();
 
-        Smooth(((int)TileTypes.Floor), ((int)TileTypes.Air));
+            Smooth(((int)TileTypes.Floor), ((int)TileTypes.Air));
 
-        GenerateWalls();
+            GenerateWalls();
 
-
+            if (ValidateRoom()) break;
+        }
         UpdateRoomData();
     }
 
 
+    bool ValidateRoom()
+    {
+        int noOfFloorTilesInRoom=0;
+        for (int i = 0; i < map.GetLength(0); i++)
+        {
+            for (int j = 0; j < map.GetLength(1); j++)
+            {
+                if (map[i, j] == ((int)TileTypes.Floor)) 
+                noOfFloorTilesInRoom++;
+            }
+        }
 
+        int floodFillCount = Helper.GetFloodFill(map, walkerStartPositions.AtIndex(0),((int)TileTypes.Floor)).Count;
+        if(floodFillCount!=noOfFloorTilesInRoom) return false;
+        else return true;
+    }
 
     RoomData GenerateRoomData(Vector2Int origin, int[,] map)
     {
@@ -102,7 +120,7 @@ public class RoomGenerator : MonoBehaviour
             }
         }
 
-        return new RoomData(shiftedTiles);
+        return new RoomData(shiftedTiles,tilePallete);
     }
 
     void Smooth(int fillValue, int emptyVal)
@@ -139,7 +157,7 @@ public class RoomGenerator : MonoBehaviour
 
 
                 walkerStartPositions.Add(new Vector2Int(walkerStartX, walkerStartY));
-                map[walkerStartX, walkerStartY] = ((int)TileTypes.StartPos);
+                map[walkerStartX, walkerStartY] = ((int)TileTypes.Floor);
                 map = ProceduralGenerationAlgorithims.SimpleRandomWalk(map, walkerStartX, walkerStartY, walklength, iterations, ((int)TileTypes.Floor), seed);
             }
 

@@ -4,7 +4,6 @@ using EditorAttributes;
 using System;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using UnityEngine.Rendering.Universal;
 
 //THINGS TO ADD
 // scoring function to score possible positions
@@ -33,6 +32,9 @@ public class RoomAssembler : MonoBehaviour
     System.Random prng;
     [SerializeField]List<RoomData> availaleRoomDatas;
 
+    public static Action<IReadOnlyList<Room>> EOnAssemblyFinished;
+    public static Action EClearGeneration;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -40,6 +42,8 @@ public class RoomAssembler : MonoBehaviour
         generator = FindFirstObjectByType<RoomGenerator>();
         if (useRandomSeed) seed = UnityEngine.Random.Range(0, 10000);
         prng = new System.Random(seed);
+
+        StartAssembly();
     }
 
     List<RoomData> GetAllRoomsFromGenerator(int n)
@@ -71,7 +75,10 @@ public class RoomAssembler : MonoBehaviour
             PlaceRoomWithRandomAnchors();
         }
 
-        ValidateDungeon();
+        if (ValidateDungeon())
+        {
+            EOnAssemblyFinished?.Invoke(placedRooms);
+        }
     }
 
     bool ValidateSettings()
@@ -80,9 +87,10 @@ public class RoomAssembler : MonoBehaviour
             && roomPrefab != null
             && noOfRooms > 0;
     }
-    void ValidateDungeon()
+    bool  ValidateDungeon()
     {
-        if(placedRooms.Count != noOfRooms) { Debug.LogError("Not Enough Rooms Placed!"); HandleInvalidDungeon(); }
+        if(placedRooms.Count != noOfRooms) { Debug.LogError("Not Enough Rooms Placed!"); HandleInvalidDungeon(); return false; }
+        return true;
     }
 
     void PlaceRoomWithRandomAnchors()
@@ -246,6 +254,7 @@ public class RoomAssembler : MonoBehaviour
             
         }
         placedRooms.Clear();
+        EClearGeneration?.Invoke();
     }
 
 }
