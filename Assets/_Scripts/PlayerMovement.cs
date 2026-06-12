@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -36,6 +38,19 @@ public class PlayerMovement : MonoBehaviour
         Vector2 speedDif = targetSpeed - rb.linearVelocity;
         rb.AddForce(speedDif, ForceMode2D.Impulse); // impulse feels more snappy but FORCE feels more floaty
 
+    }
+
+    private void OnEnable()
+    {
+        RoomAssembler.EOnAssemblyFinished += OnGenFinish;
+    }
+    private void OnDisable()
+    {
+        RoomAssembler.EOnAssemblyFinished -= OnGenFinish;
+    }
+    void OnGenFinish(IReadOnlyList<Room> rooms)
+    {
+        transform.position = rooms[0].GlobalPosition;
     }
 
 }

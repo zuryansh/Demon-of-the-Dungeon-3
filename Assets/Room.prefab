@@ -50,6 +50,8 @@ MonoBehaviour:
     boundingBox:
       m_Center: {x: 0, y: 0, z: 0}
       m_Extent: {x: 0, y: 0, z: 0}
+    tilepallete: {fileID: 0}
+  showDebug: 0
 --- !u!114 &8257017177754270078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,5 +64,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d9e769c66ba06945aa84bc3b126ae63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  localOrigin: {x: 0, y: 0}
   debugger: {fileID: 744110699096498839}
+  connectedRooms: []
+  globalBounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
+  doorPrefab: {fileID: 5280056065013452662, guid: f024aa78363ea4748b8120a164064c04, type: 3}
+  doors: []

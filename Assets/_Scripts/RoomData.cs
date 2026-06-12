@@ -17,7 +17,8 @@ public class RoomData
     [SerializeField] List<RoomTile> tiles;
     [SerializeField] Bounds boundingBox;
     [SerializeField] RoomPalleteSO tilepallete;
-
+    
+    Dictionary<Vector2Int, RoomTile> tilesDict = new Dictionary<Vector2Int, RoomTile>();
 
 
     public RoomData(List<RoomTile> tiles, RoomPalleteSO pallete)
@@ -27,16 +28,21 @@ public class RoomData
         this.tilepallete = pallete;
         boundingBox = new Bounds(Vector3.zero, Vector3.zero);
 
+        //calc global bounds and generate Tile Dic
         foreach (var tile in tiles)
         {
             boundingBox.Encapsulate(tile.LocalPosition.ToV3());
+
+            tilesDict.Add(tile.LocalPosition, tile);
         }
         boundingBox.extents += new Vector3(0.5f, 0.5f, 0);
+
+
     }
 
-    public void CalculateGlobalBounds(Vector3 centerPosition)
+    public RoomTile GetTileAtPos(Vector2Int localPos)
     {
-
+        return tilesDict[localPos];
     }
 
 }

@@ -187,7 +187,7 @@ public class RoomGenerator : MonoBehaviour
 
     public void SetTile(int x, int y, TileTypes fill)
     {
-        if (x >= mapWidth || x < 0 || y >= mapWidth || y < 0) return;
+        if (x >= mapWidth || x < 0 || y >= mapHeight || y < 0) return;
 
         map[x, y] = ((int)fill) ;   
     }
