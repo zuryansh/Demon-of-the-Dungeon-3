@@ -15,20 +15,21 @@ MonoBehaviour:
   attackCombo:
   - {fileID: 11400000, guid: b0cf33855672d1a448a60310435cc780, type: 2}
   - {fileID: 11400000, guid: bbdedcfc200c3ad4fbb576cafa8b0e51, type: 2}
+  idleClip: {fileID: 7400000, guid: 17f99d6c686302244880af8fd8917925, type: 2}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
   effects:
-  - rid: 6524999287814750300
-  - rid: 6524999287814750301
+  - rid: 6524999351590191212
+  - rid: 6524999351590191211
   references:
     version: 2
     RefIds:
-    - rid: 6524999287814750300
+    - rid: 6524999351590191211
       type: {class: DamageEffect, ns: , asm: Assembly-CSharp}
       data:
         damage: 0
-    - rid: 6524999287814750301
+    - rid: 6524999351590191212
       type: {class: KnockBackEffect, ns: , asm: Assembly-CSharp}
       data:
-        knockBack: 0
+        knockback: 1000

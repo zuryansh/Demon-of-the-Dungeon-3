@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackName: ThrustLeft
   attackAnimation: {fileID: 7400000, guid: 5801d1443af9de84e98d7754f331ace0, type: 2}
-  mouseLockTime: 0.24000001
-  nextAttackInputStartTime: 0.24000001
+  mouseLockTime: 0.1
+  nextAttackInputStartTime: 0.5
   cancelAttackBeforeTime: 0.36
   mouseLockTimeS: 0.05
   nextAttackInputStartS: 0.1

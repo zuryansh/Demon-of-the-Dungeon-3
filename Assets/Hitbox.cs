@@ -6,7 +6,8 @@ using UnityEngine;
 public class Hitbox : MonoBehaviour
 {
 
-    public event Action<Collider2D> EOnHitDetect;
+    public event Action<Collider2D,Vector3> EOnHitDetect;
+    public event Action OnHitboxDisable;
 
     [SerializeField]Collider2D col;
     [SerializeField] HashSet<Collider2D> detectedColliders = new HashSet<Collider2D>();
@@ -14,6 +15,7 @@ public class Hitbox : MonoBehaviour
 
     ContactFilter2D contactFilter;
     List<Collider2D> temp = new List<Collider2D>();
+
 
     void Start()
     {
@@ -34,15 +36,26 @@ public class Hitbox : MonoBehaviour
         {
             if (detectedColliders.Add(collider))
             {
-                EOnHitDetect?.Invoke(collider);
+                Vector3 dir = (collider.transform.position - col.transform.position).normalized;
+
+                EOnHitDetect?.Invoke(collider, dir);
             }
         }
     }
 
+    Vector3 GetHitDirection()
+    {
+        throw new NotImplementedException();
+    }
 
     private void OnEnable()
     {
         ResetHitbox();
+    }
+
+    private void OnDisable()
+    {
+        OnHitboxDisable?.Invoke(); // for when we want to use the whole list of colliders at once
     }
 
     public void ResetHitbox()

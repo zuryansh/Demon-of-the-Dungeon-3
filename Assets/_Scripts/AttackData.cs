@@ -22,7 +22,6 @@ public class AttackData : ScriptableObject
     [SerializeField] float cancelAttackBeforeTimeS; // can cancel attack before this
 
 
-    [SerializeField] List<Effect> effects;
 
     public string AttackName { get => attackName;  }
     public int AttackAnimation { get => Animator.StringToHash(attackAnimation.name);  }
