@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8738c2175f86edb4a8463ed4359cf35d, type: 3}
+  m_Name: Thrust Left
+  m_EditorClassIdentifier: 
+  attackName: ThrustLeft
+  attackAnimation: {fileID: 7400000, guid: 5801d1443af9de84e98d7754f331ace0, type: 2}
+  mouseLockTime: 0.24000001
+  nextAttackInputStartTime: 0.24000001
+  cancelAttackBeforeTime: 0.36
+  mouseLockTimeS: 0.05
+  nextAttackInputStartS: 0.1
+  cancelAttackBeforeTimeS: 0.15

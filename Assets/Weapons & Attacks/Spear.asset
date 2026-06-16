@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac8781f33fe10b943b58a2718175b369, type: 3}
+  m_Name: Spear
+  m_EditorClassIdentifier: 
+  attackCombo:
+  - {fileID: 11400000, guid: b0cf33855672d1a448a60310435cc780, type: 2}
+  - {fileID: 11400000, guid: bbdedcfc200c3ad4fbb576cafa8b0e51, type: 2}
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  effects:
+  - rid: 6524999287814750300
+  - rid: 6524999287814750301
+  references:
+    version: 2
+    RefIds:
+    - rid: 6524999287814750300
+      type: {class: DamageEffect, ns: , asm: Assembly-CSharp}
+      data:
+        damage: 0
+    - rid: 6524999287814750301
+      type: {class: KnockBackEffect, ns: , asm: Assembly-CSharp}
+      data:
+        knockBack: 0
