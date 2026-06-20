@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8738c2175f86edb4a8463ed4359cf35d, type: 3}
-  m_Name: Thrust Right
+  m_Name: Swipe
   m_EditorClassIdentifier: 
-  attackName: ThrustRight
-  attackAnimation: {fileID: 7400000, guid: cc1a6e8720d93264188e37e5e5aea17d, type: 2}
-  mouseLockTime: 0.24000001
+  attackName: Swipe
+  attackAnimation: {fileID: 7400000, guid: 955c0ad6e7bbe71448bf099d9b4ee0d6, type: 2}
+  mouseLockTime: 0.1
   nextAttackInputStartTime: 0.3
-  cancelAttackBeforeTime: 0.36
-  mouseLockTimeS: 0.05
-  nextAttackInputStartS: 0.1
-  cancelAttackBeforeTimeS: 0.15
+  cancelAttackBeforeTime: 0.7
+  mouseLockTimeS: 0
+  nextAttackInputStartS: 0
+  cancelAttackBeforeTimeS: 0

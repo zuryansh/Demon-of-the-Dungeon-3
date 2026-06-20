@@ -1,5 +1,6 @@
 using EditorAttributes;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -7,6 +8,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName ="attack")]
 public class AttackData : ScriptableObject
 {
+    
+
     [SerializeField] string attackName;
     [SerializeField] AnimationClip attackAnimation;
 
@@ -25,6 +28,7 @@ public class AttackData : ScriptableObject
 
     public string AttackName { get => attackName;  }
     public int AttackAnimation { get => Animator.StringToHash(attackAnimation.name);  }
+
     public float MouseLockTime { get => mouseLockTime;  }
     public float NextAttackInputStartTime { get => nextAttackInputStartTime;  }
     public float CancelAttackBeforeTime { get => cancelAttackBeforeTime;  }

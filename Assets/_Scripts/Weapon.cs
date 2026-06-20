@@ -1,79 +1,102 @@
-using EditorAttributes;
-using System.Collections.Generic;
-using Unity.Collections.LowLevel.Unsafe;
+
 using UnityEngine;
 
 [RequireComponent(typeof(AnimationHelper))]
-public class Weapon:MonoBehaviour
+public class Weapon: MonoBehaviour, ICombatHandler
 {
 
     [SerializeField] WeaponData weaponData;
     [SerializeField] int comboIndex = 0;
-    [SerializeField] float progress;
     [SerializeField] Hitbox weaponHitbox;
-    [SerializeField] bool isAttacking;
     [SerializeField] bool hasBufferedAttack;
     [SerializeField] MouseLook mouseLook;
+    [SerializeField] float comboCyoteTime=1f;
+    [SerializeField] bool comboIsFinished = true;
 
-    [SerializeField]AttackData currentAttack;
+    [SerializeField] AttackRuntime currentAttack;
+
     AnimationHelper animHelper;
+    float timeSinceLastAttack=0f;
 
+    [SerializeField] bool isAttacking;
 
     float prevProgress;
     private void Start()
     {
         animHelper = GetComponent<AnimationHelper>();
-        currentAttack = weaponData.Combo[comboIndex];
+        currentAttack = null;
     }
 
     private void Update()
     {
-        prevProgress = progress;
-        progress = animHelper.Anim.GetCurrentAnimatorStateInfo(0).normalizedTime;
-        if (isAttacking)
+        if(isAttacking)
         {
-            if (progress > 0.95f && progress<1.1f) OnAttackFinish();
-            if (progress > currentAttack.MouseLockTime) mouseLook.Locked= true;
-            else mouseLook.Locked= false;
+            currentAttack.Tick();
         }
-        //if (progress > 1f) isAttacking = false;
+        else
+        {
+            if(Time.time - timeSinceLastAttack > comboCyoteTime && !comboIsFinished)
+            {
+                OnComboFinish();
+            }
+        }
+    }
 
+    void StartAttack(int index)
+    {
+        comboIndex = index;
+        AttackData data= weaponData.Combo[index];
+        comboIsFinished = false;
+        isAttacking = true;
+        currentAttack = CreateRuntimeAttack(data);
+
+        currentAttack.EAttackFinish += OnAttackFinish;
+        
+
+        animHelper.ChangeAnimation(currentAttack.Data.AttackAnimation);
     }
 
     public void TryAttack()
     {
-
-        if (isAttacking && hasBufferedAttack) return;
-        if(isAttacking&& !hasBufferedAttack) 
+        if (isAttacking)
         {
-            if(progress > currentAttack.NextAttackInputStartTime) hasBufferedAttack = true; 
-            return; 
+            if (currentAttack != null &&
+                currentAttack.CanBufferNextAttack())
+            {
+                hasBufferedAttack = true;
+            }
+
+            return;
         }
 
-        isAttacking=true;
-        comboIndex++;
-        comboIndex = comboIndex % weaponData.Combo.Count;
-        currentAttack = weaponData.Combo[comboIndex];
+        int index =
+            comboIsFinished
+            ? 0
+            : GetNextAttackInCombo();
 
-        animHelper.ChangeAnimation(currentAttack.AttackAnimation);
+        StartAttack(index);
     }
+
+
 
 
     void OnAttackFinish()
     {
+        currentAttack.EAttackFinish -= OnAttackFinish;
+        timeSinceLastAttack = Time.time;
+
+        currentAttack = null;
         isAttacking = false;
-        if (hasBufferedAttack) { hasBufferedAttack = false; TryAttack(); }
-        else 
-        {
-            OnComboFinish();
-        }
+        animHelper.ChangeAnimation(weaponData.IdleAnim);
+        if(hasBufferedAttack) { hasBufferedAttack = false; StartAttack(GetNextAttackInCombo()); }
     }
 
     void OnComboFinish()
     {
-        Debug.Log("Combo Finished");
         comboIndex = 0;
+
         animHelper.ChangeAnimation(weaponData.IdleAnim);
+        comboIsFinished = true;
     }
 
     public void NotifyHit(Collider2D collider, Vector3 dir)
@@ -88,6 +111,29 @@ public class Weapon:MonoBehaviour
             effect.Apply(context);
     }
 
+    //int GetComboIndexOf(AttackData data)
+    //{
+    //    for (int i = 0; i < weaponData.Combo.Count; i++)
+    //    {
+    //        if (weaponData.Combo[i] == data) {Debug.Log(data.name); return i; }
+    //    }
+
+    //    throw new System.Exception("attack does not exist in combo");
+    //}
+
+    int GetNextAttackInCombo()
+    {
+        //if (comboIndex + 1 >= weaponData.Combo.Count) return weaponData.Combo[0];
+        //else return weaponData.Combo[comboIndex + 1];
+        return (comboIndex + 1) % weaponData.Combo.Count;
+    }
+
+    AttackRuntime CreateRuntimeAttack(AttackData data)
+    {
+        return new AttackRuntime(data,Time.time, animHelper.Anim);
+    }
+
+
     private void OnEnable()
     {
         weaponHitbox.EOnHitDetect += NotifyHit;
@@ -97,9 +143,6 @@ public class Weapon:MonoBehaviour
         weaponHitbox.EOnHitDetect -= NotifyHit;
     }
 
-    bool Crossed(float prev, float next, float threshold)
-    {
-        return (prev < threshold && next >= threshold);
-    }
+
 
 }

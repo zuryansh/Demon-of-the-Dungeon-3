@@ -1189,7 +1189,7 @@ GameObject:
   - component: {fileID: 1145953468}
   - component: {fileID: 1145953469}
   m_Layer: 0
-  m_Name: Spear
+  m_Name: Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1225,12 +1225,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponData: {fileID: 11400000, guid: 40f93677860348b45a63d6c8cb8d3a02, type: 2}
   comboIndex: 0
-  progress: 0
   weaponHitbox: {fileID: 1814589118}
-  isAttacking: 0
   hasBufferedAttack: 0
   mouseLook: {fileID: 1870269753}
-  currentAttack: {fileID: 0}
+  comboCyoteTime: 0.3
+  comboIsFinished: 1
+  currentAttack:
+    data: {fileID: 0}
+    progress: 0
+  isAttacking: 0
 --- !u!95 &1145953468
 Animator:
   serializedVersion: 7
@@ -1612,8 +1615,8 @@ TrailRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.0031547546
-        value: 0.3488369
+        time: 0
+        value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -1621,13 +1624,13 @@ TrailRenderer:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.9842224
+        time: 0.95638627
         value: 0
-        inSlope: 0.41201687
-        outSlope: 0.41201687
+        inSlope: 0.6648032
+        outSlope: 0.6648032
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.26507938
+        inWeight: 0.30130282
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -1825,7 +1828,7 @@ PolygonCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -1842,9 +1845,9 @@ PolygonCollider2D:
   m_Points:
     m_Paths:
     - - {x: 0.42167315, y: 2.3736105}
-      - {x: 0.68065554, y: 1.445306}
-      - {x: 1.0817065, y: 1.583805}
-      - {x: 1.2601634, y: 2.695077}
+      - {x: 0.8124236, y: 1.0700386}
+      - {x: 0.959658, y: 1.145343}
+      - {x: 1.3712988, y: 2.7004404}
   m_UseDelaunayMesh: 0
 --- !u!114 &1814589118
 MonoBehaviour:

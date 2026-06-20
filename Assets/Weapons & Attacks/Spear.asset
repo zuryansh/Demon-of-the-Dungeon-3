@@ -15,6 +15,8 @@ MonoBehaviour:
   attackCombo:
   - {fileID: 11400000, guid: b0cf33855672d1a448a60310435cc780, type: 2}
   - {fileID: 11400000, guid: bbdedcfc200c3ad4fbb576cafa8b0e51, type: 2}
+  - {fileID: 11400000, guid: b0cf33855672d1a448a60310435cc780, type: 2}
+  - {fileID: 11400000, guid: 902f1aae606972b48a50710833d4e863, type: 2}
   idleClip: {fileID: 7400000, guid: 17f99d6c686302244880af8fd8917925, type: 2}
   enemyLayer:
     serializedVersion: 2
@@ -32,4 +34,4 @@ MonoBehaviour:
     - rid: 6524999351590191212
       type: {class: KnockBackEffect, ns: , asm: Assembly-CSharp}
       data:
-        knockback: 1000
+        knockback: 100
