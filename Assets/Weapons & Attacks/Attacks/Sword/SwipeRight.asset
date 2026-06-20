@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8738c2175f86edb4a8463ed4359cf35d, type: 3}
+  m_Name: SwipeRight
+  m_EditorClassIdentifier: 
+  attackName: SwordRight
+  attackAnimation: {fileID: 7400000, guid: e360118f93b400847a70c4f7082268b6, type: 2}
+  mouseLockTime: 0.3
+  nextAttackInputStartTime: 0.1
+  cancelAttackBeforeTime: 0.7
+  mouseLockTimeS: 0
+  nextAttackInputStartS: 0
+  cancelAttackBeforeTimeS: 0

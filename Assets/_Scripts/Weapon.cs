@@ -15,7 +15,7 @@ public class Weapon: MonoBehaviour, ICombatHandler
 
     [SerializeField] AttackRuntime currentAttack;
 
-    AnimationHelper animHelper;
+    [SerializeField ]AnimationHelper animHelper;
     float timeSinceLastAttack=0f;
 
     [SerializeField] bool isAttacking;
@@ -24,6 +24,8 @@ public class Weapon: MonoBehaviour, ICombatHandler
     private void Start()
     {
         animHelper = GetComponent<AnimationHelper>();
+        if (animHelper == null) { Debug.Log("SD"); }
+
         currentAttack = null;
     }
 
@@ -46,12 +48,14 @@ public class Weapon: MonoBehaviour, ICombatHandler
     {
         comboIndex = index;
         AttackData data= weaponData.Combo[index];
+        if (data == null) Debug.LogError("DATA NOT FOUND");
         comboIsFinished = false;
         isAttacking = true;
         currentAttack = CreateRuntimeAttack(data);
 
         currentAttack.EAttackFinish += OnAttackFinish;
-        
+        currentAttack.EToggleMouseLock += OnToggleMouseLook;
+
 
         animHelper.ChangeAnimation(currentAttack.Data.AttackAnimation);
     }
@@ -77,12 +81,11 @@ public class Weapon: MonoBehaviour, ICombatHandler
         StartAttack(index);
     }
 
-
-
-
     void OnAttackFinish()
     {
         currentAttack.EAttackFinish -= OnAttackFinish;
+        currentAttack.EToggleMouseLock -= OnToggleMouseLook;
+
         timeSinceLastAttack = Time.time;
 
         currentAttack = null;
@@ -111,20 +114,8 @@ public class Weapon: MonoBehaviour, ICombatHandler
             effect.Apply(context);
     }
 
-    //int GetComboIndexOf(AttackData data)
-    //{
-    //    for (int i = 0; i < weaponData.Combo.Count; i++)
-    //    {
-    //        if (weaponData.Combo[i] == data) {Debug.Log(data.name); return i; }
-    //    }
-
-    //    throw new System.Exception("attack does not exist in combo");
-    //}
-
     int GetNextAttackInCombo()
     {
-        //if (comboIndex + 1 >= weaponData.Combo.Count) return weaponData.Combo[0];
-        //else return weaponData.Combo[comboIndex + 1];
         return (comboIndex + 1) % weaponData.Combo.Count;
     }
 
@@ -133,6 +124,7 @@ public class Weapon: MonoBehaviour, ICombatHandler
         return new AttackRuntime(data,Time.time, animHelper.Anim);
     }
 
+    void OnToggleMouseLook(bool val)=> mouseLook.Locked = val;
 
     private void OnEnable()
     {

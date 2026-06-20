@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8738c2175f86edb4a8463ed4359cf35d, type: 3}
-  m_Name: Swipe
+  m_Name: SwipeLeft
   m_EditorClassIdentifier: 
-  attackName: Swipe
-  attackAnimation: {fileID: 7400000, guid: 955c0ad6e7bbe71448bf099d9b4ee0d6, type: 2}
-  mouseLockTime: 0.1
-  nextAttackInputStartTime: 0.3
+  attackName: Sword Left
+  attackAnimation: {fileID: 7400000, guid: 2a53b088e9832e748ad6bc9dc9d79975, type: 2}
+  mouseLockTime: 0.3
+  nextAttackInputStartTime: 0.1
   cancelAttackBeforeTime: 0.7
   mouseLockTimeS: 0
   nextAttackInputStartS: 0

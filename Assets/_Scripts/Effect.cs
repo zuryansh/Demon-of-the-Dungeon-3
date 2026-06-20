@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics.Contracts;
+using UnityEditor;
 using UnityEngine;
 
 [Serializable]
@@ -35,11 +36,26 @@ public class KnockBackEffect: Effect
         Rigidbody2D rb;
         if(context.Target.TryGetComponent<Rigidbody2D>(out rb))
         {
-            Debug.Log("KNOCKBACK");
-            rb.AddForce(context.EffectDir * knockback);
+            rb.AddForce(context.EffectDir * knockback* 100);
         }
     }
 
+}
 
+[Serializable]
+public class SpawnParticlesEffect : Effect
+{
+    [SerializeField] ParticleSystem particlesPreab;
+    [SerializeField] bool useAttackDir = true;
+
+    public override void Apply(EffectContext context)
+    {
+        Quaternion spawnRot=Quaternion.identity;
+        if(useAttackDir) spawnRot = Quaternion.FromToRotation(particlesPreab.transform.right, context.EffectDir);
+
+        ParticleSystem particles = MonoBehaviour.Instantiate(particlesPreab, context.EffectPoint,spawnRot);
+        particles.Play();
+    }
 
 }
+

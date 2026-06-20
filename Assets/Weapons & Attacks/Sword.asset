@@ -10,33 +10,32 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac8781f33fe10b943b58a2718175b369, type: 3}
-  m_Name: Spear
+  m_Name: Sword
   m_EditorClassIdentifier: 
   attackCombo:
-  - {fileID: 11400000, guid: b0cf33855672d1a448a60310435cc780, type: 2}
-  - {fileID: 11400000, guid: bbdedcfc200c3ad4fbb576cafa8b0e51, type: 2}
-  - {fileID: 11400000, guid: b0cf33855672d1a448a60310435cc780, type: 2}
-  - {fileID: 11400000, guid: 902f1aae606972b48a50710833d4e863, type: 2}
-  idleClip: {fileID: 7400000, guid: 17f99d6c686302244880af8fd8917925, type: 2}
+  - {fileID: 11400000, guid: 57c0040851b5218449ffb31f072d7ca1, type: 2}
+  - {fileID: 11400000, guid: 20d104e74baced0419affb05211184c9, type: 2}
+  - {fileID: 11400000, guid: 57c0040851b5218449ffb31f072d7ca1, type: 2}
+  idleClip: {fileID: 7400000, guid: 34bc6edb3d436c640b2e0f04cd998554, type: 2}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
   effects:
-  - rid: 6524999351590191212
-  - rid: 6524999351590191211
-  - rid: 6524999442004705429
+  - rid: 6524999442004705446
+  - rid: 6524999442004705447
+  - rid: 6524999442004705448
   references:
     version: 2
     RefIds:
-    - rid: 6524999351590191211
+    - rid: 6524999442004705446
       type: {class: DamageEffect, ns: , asm: Assembly-CSharp}
       data:
-        damage: 2
-    - rid: 6524999351590191212
+        damage: 1
+    - rid: 6524999442004705447
       type: {class: KnockBackEffect, ns: , asm: Assembly-CSharp}
       data:
-        knockback: 2
-    - rid: 6524999442004705429
+        knockback: 1
+    - rid: 6524999442004705448
       type: {class: SpawnParticlesEffect, ns: , asm: Assembly-CSharp}
       data:
         particlesPreab: {fileID: 2725978470722761693, guid: ee5ea9f624204f444ad1ed154d53fe90, type: 3}

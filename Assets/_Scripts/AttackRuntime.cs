@@ -23,7 +23,6 @@ public class AttackRuntime
         this.data = data;
         this.startTime = startTime;
         this.animator = animator;
-        Debug.Log("Started Attack");
 
     }
 
@@ -42,9 +41,8 @@ public class AttackRuntime
 
         if(Crossed(prevProgress,progress, 1f))
         {
-            EAttackFinish?.Invoke();
-            Debug.Log("attack Finish");
             AttackFinish();
+            EAttackFinish?.Invoke();
         }
     }
 
