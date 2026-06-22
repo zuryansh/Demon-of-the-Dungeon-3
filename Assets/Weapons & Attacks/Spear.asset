@@ -35,7 +35,7 @@ MonoBehaviour:
     - rid: 6524999351590191212
       type: {class: KnockBackEffect, ns: , asm: Assembly-CSharp}
       data:
-        knockback: 2
+        knockback: 10
     - rid: 6524999442004705429
       type: {class: SpawnParticlesEffect, ns: , asm: Assembly-CSharp}
       data:

@@ -10,7 +10,6 @@ public class AttackRuntime
 
     [SerializeField] AttackData data;
     float startTime;
-    float timeElapsed;
     Animator animator;
     [SerializeField] float progress=0f;
     float prevProgress = 0f;
