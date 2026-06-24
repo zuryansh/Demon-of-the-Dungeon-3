@@ -1,6 +1,4 @@
-using UnityEditor.Tilemaps;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 public class RoomDataDebugger : MonoBehaviour
 {

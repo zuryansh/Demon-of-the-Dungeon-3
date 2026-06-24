@@ -1,9 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using EditorAttributes;
-using static UnityEngine.UI.Image;
-using static UnityEditor.PlayerSettings;
-using UnityEditor.Tilemaps;
 
 //Room Generator and editor ONLY HAS INT MAP
 //all other systems use room Data after it has been generated from int map

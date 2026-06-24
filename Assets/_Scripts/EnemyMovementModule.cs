@@ -8,7 +8,7 @@ public abstract class EnemyMovementModule : MonoBehaviour
     protected Rigidbody2D rb;
     [SerializeField] bool FlipSpriteAccToDir;
     [ConditionalField(ConditionType.OR, nameof(FlipSpriteAccToDir))]
-    [SerializeField] SpriteRenderer spriteRenderer;
+    [SerializeField] protected SpriteRenderer spriteRenderer;
 
     public virtual void Init()
     {
@@ -34,11 +34,12 @@ public abstract class EnemyMovementModule : MonoBehaviour
         if (FlipSpriteAccToDir) FlipSprite();
     }
 
-    void FlipSprite()
+    protected virtual void FlipSprite()
     {
         if (spriteRenderer == null) Debug.LogWarning("Sprite renderer not found");
         else
         {
+
             if(rb.linearVelocity.x >0) spriteRenderer.flipX = false;
             else spriteRenderer.flipX= true;
         }

@@ -1,8 +1,5 @@
-using EditorAttributes;
-using Newtonsoft.Json;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Timeline;
-using UnityEngine.UIElements;
 
 public class EnemyBrain : MonoBehaviour
 {
@@ -29,24 +26,45 @@ public class EnemyBrain : MonoBehaviour
         attackModule = GetComponent<EnemyAttackModule>();
         CheckDependecies();
         movementModule.Brain = this;
-        //attackModule.Brain = this; 
+        attackModule.Brain = this;
 
         movementModule.Init();
+        attackModule.Init();
     }
 
     void CheckDependecies()
     {
         if (movementModule == null) Debug.LogError("Movement Module Not Found!");
-        //if (attackModule == null) Debug.LogError("Attack Module Not Found");
+        if (attackModule == null) Debug.LogError("Attack Module Not Found");
         if (animHelper == null) Debug.LogError("No Animation Helper Found");
         if (enemyData == null) Debug.LogError("ENEMY DATA NOT FOUND");
+    }
+
+
+    private void Update()
+    {
+        attackModule.Tick();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         movementModule.Tick();
+        
     }
 
+
+    public void OnHit(EffectContext context)
+    {
+        foreach (Effect effect in Data.OnHitEffects)
+        {
+            effect.Apply(context);
+        }
+    }
+
+    public void OnDeath()
+    {
+        Destroy(gameObject);
+    }
     
 }

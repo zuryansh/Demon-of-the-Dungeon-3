@@ -1,44 +1,43 @@
 using EditorAttributes;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+
+public enum AttackDataType { Player, Enemy }
 
 
 // holds stuff like list of attacks and normalised time windows as well as the animation for the attack
 [CreateAssetMenu(menuName ="attack")]
 public class AttackData : ScriptableObject
 {
-    
+
+    [SerializeField] AttackDataType attackType;
 
     [SerializeField] string attackName;
     [SerializeField] AnimationClip attackAnimation;
-
-    [Header("Timings (as fraction of total animation time) ")]
-    [SerializeField] float mouseLockTime;
-    [SerializeField] float nextAttackInputStartTime; //for next combo 
-    [SerializeField] float cancelAttackBeforeTime; // can cancel attack before this
+    [SerializeField] int animationPriority =0;
 
 
-    [Header("Timings (as sec to gen fractions) ")]
-    [SerializeField] float mouseLockTimeS;
-    [SerializeField] float nextAttackInputStartS; //for next combo 
-    [SerializeField] float cancelAttackBeforeTimeS; // can cancel attack before this
+    [SerializeField, ShowField(nameof(IsPlayerAttack))] float mouseLockTime;
+    [SerializeField, ShowField(nameof(IsPlayerAttack))]float nextAttackInputStartTime; //for next combo 
+    [SerializeField, ShowField(nameof(IsPlayerAttack))] float cancelAttackBeforeTime; // can cancel attack before this
 
+
+    [SerializeReference, SubclassSelector] List<Effect> effects;
+
+
+    bool IsPlayerAttack => attackType == AttackDataType.Player ;
 
 
     public string AttackName { get => attackName;  }
     public int AttackAnimation { get => Animator.StringToHash(attackAnimation.name);  }
+    public int AnimationPriority { get => animationPriority; }  
+    public List<Effect> Effects { get => effects; }
+
 
     public float MouseLockTime { get => mouseLockTime;  }
     public float NextAttackInputStartTime { get => nextAttackInputStartTime;  }
     public float CancelAttackBeforeTime { get => cancelAttackBeforeTime;  }
 
-    [Button("Gen Fractional Timings")]
-    void GenFractionalTimings()
-    {
-        mouseLockTime = nextAttackInputStartS/attackAnimation.length;
-        nextAttackInputStartTime = nextAttackInputStartS/ attackAnimation.length;
-        cancelAttackBeforeTime = cancelAttackBeforeTimeS/ attackAnimation.length;
-    }
+
 
 }

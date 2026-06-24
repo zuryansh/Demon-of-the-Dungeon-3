@@ -20,23 +20,3 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
-  effects:
-  - rid: 6524999442004705446
-  - rid: 6524999442004705447
-  - rid: 6524999442004705448
-  references:
-    version: 2
-    RefIds:
-    - rid: 6524999442004705446
-      type: {class: DamageEffect, ns: , asm: Assembly-CSharp}
-      data:
-        damage: 1
-    - rid: 6524999442004705447
-      type: {class: KnockBackEffect, ns: , asm: Assembly-CSharp}
-      data:
-        knockback: 1
-    - rid: 6524999442004705448
-      type: {class: SpawnParticlesEffect, ns: , asm: Assembly-CSharp}
-      data:
-        particlesPreab: {fileID: 2725978470722761693, guid: ee5ea9f624204f444ad1ed154d53fe90, type: 3}
-        useAttackDir: 1

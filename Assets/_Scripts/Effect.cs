@@ -1,6 +1,4 @@
 using System;
-using System.Diagnostics.Contracts;
-using UnityEditor;
 using UnityEngine;
 
 [Serializable]
@@ -18,10 +16,10 @@ public class DamageEffect: Effect
 
     public override void Apply(EffectContext context)
     {
-        IDamageable dmgable;
-        if(context.Target.TryGetComponent<IDamageable>(out dmgable))
+        Health dmgable;
+        if(context.Target.TryGetComponent<Health>(out dmgable))
         {
-            dmgable.TakeDamage(damage);
+            dmgable.TakeDamage(context,damage);
         }
     }
 }

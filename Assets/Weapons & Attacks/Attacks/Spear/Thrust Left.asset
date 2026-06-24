@@ -12,11 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8738c2175f86edb4a8463ed4359cf35d, type: 3}
   m_Name: Thrust Left
   m_EditorClassIdentifier: 
+  attackType: 0
   attackName: ThrustLeft
   attackAnimation: {fileID: 7400000, guid: 5801d1443af9de84e98d7754f331ace0, type: 2}
+  animationPriority: 0
   mouseLockTime: 0.1
   nextAttackInputStartTime: 0.3
   cancelAttackBeforeTime: 0.36
-  mouseLockTimeS: 0.05
-  nextAttackInputStartS: 0.1
-  cancelAttackBeforeTimeS: 0.15
+  effects:
+  - rid: 6524999508718518384
+  - rid: 6524999508718518385
+  references:
+    version: 2
+    RefIds:
+    - rid: 6524999508718518384
+      type: {class: DamageEffect, ns: , asm: Assembly-CSharp}
+      data:
+        damage: 10
+    - rid: 6524999508718518385
+      type: {class: KnockBackEffect, ns: , asm: Assembly-CSharp}
+      data:
+        knockback: 1

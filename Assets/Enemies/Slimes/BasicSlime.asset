@@ -10,9 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 21d4d2a612900f948891a8425f1b242d, type: 3}
-  m_Name: New Enemy SO
+  m_Name: BasicSlime
   m_EditorClassIdentifier: 
   enemyName: Basic Slime
   enemyType: 
   idleAnim: {fileID: 7400000, guid: a52986134f6260c42a92f25f4b59f5e1, type: 2}
   movementAnim: {fileID: 7400000, guid: e297d6b9db8769d4f9b87d5a600e9375, type: 2}
+  onHitEffects:
+  - rid: 6524999531808686211
+  references:
+    version: 2
+    RefIds:
+    - rid: 6524999531808686211
+      type: {class: SpawnParticlesEffect, ns: , asm: Assembly-CSharp}
+      data:
+        particlesPreab: {fileID: 2725978470722761693, guid: ee5ea9f624204f444ad1ed154d53fe90, type: 3}
+        useAttackDir: 1

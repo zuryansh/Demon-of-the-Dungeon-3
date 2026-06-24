@@ -582,6 +582,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 8292859834407402164}
   currentAnim: 0
+  currentAnimPriority: 0
 --- !u!1 &5369566557018632779
 GameObject:
   m_ObjectHideFlags: 0
@@ -728,7 +729,7 @@ MonoBehaviour:
   currentAttack:
     data: {fileID: 0}
     progress: 0
-  animHelper: {fileID: 0}
+  animHelper: {fileID: 3744293141097241458}
   isAttacking: 0
 --- !u!95 &2323608244783528134
 Animator:
@@ -766,6 +767,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 2323608244783528134}
   currentAnim: 0
+  currentAnimPriority: 0
 --- !u!1 &7421941241253774048
 GameObject:
   m_ObjectHideFlags: 0
@@ -780,6 +782,7 @@ GameObject:
   - component: {fileID: 1163729408822162373}
   - component: {fileID: 6388150004039351847}
   - component: {fileID: 1262220057639734426}
+  - component: {fileID: 2186658259818906100}
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
@@ -951,6 +954,26 @@ MonoBehaviour:
   - {fileID: 2239118277785588782}
   - {fileID: 1837015056235425017}
   currentWeapon: {fileID: 0}
+--- !u!114 &2186658259818906100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7421941241253774048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6e1b6d4a85a1ca4094adad3880d5256, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  curHealth: 100
+  OnDamage:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &7585721196516983094
 GameObject:
   m_ObjectHideFlags: 0

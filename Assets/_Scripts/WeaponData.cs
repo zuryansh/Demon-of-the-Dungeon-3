@@ -11,9 +11,7 @@ public class WeaponData : ScriptableObject
     [SerializeField] List<AttackData> attackCombo;
     [SerializeField] AnimationClip idleClip;
     [SerializeField] LayerMask enemyLayer;
-    [SerializeReference, SubclassSelector] List<Effect> effects;
 
-    public List<Effect> Effects { get => effects; }
     public List<AttackData> Combo => attackCombo;
     public int IdleAnim => Animator.StringToHash(idleClip.name);
 }

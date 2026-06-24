@@ -10,26 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8738c2175f86edb4a8463ed4359cf35d, type: 3}
-  m_Name: SpearSwipe
+  m_Name: BasicSlimeLunge
   m_EditorClassIdentifier: 
   attackType: 1
-  attackName: SpearSwipe
-  attackAnimation: {fileID: 7400000, guid: 955c0ad6e7bbe71448bf099d9b4ee0d6, type: 2}
-  animationPriority: 0
-  mouseLockTime: 0.1
-  nextAttackInputStartTime: 0.3
-  cancelAttackBeforeTime: 0.7
+  attackName: Basic Lunge
+  attackAnimation: {fileID: 7400000, guid: 922f14e08baf97347bd711ab54db2e85, type: 2}
+  animationPriority: 1
+  mouseLockTime: 0
+  nextAttackInputStartTime: 0
+  cancelAttackBeforeTime: 0
   effects:
-  - rid: 6524999508718518381
-  - rid: 6524999508718518382
+  - rid: 6524999508718518397
+  - rid: 6524999508718518398
   references:
     version: 2
     RefIds:
-    - rid: 6524999508718518381
-      type: {class: DamageEffect, ns: , asm: Assembly-CSharp}
-      data:
-        damage: 10
-    - rid: 6524999508718518382
+    - rid: 6524999508718518397
       type: {class: KnockBackEffect, ns: , asm: Assembly-CSharp}
       data:
-        knockback: 4
+        knockback: 10
+    - rid: 6524999508718518398
+      type: {class: DamageEffect, ns: , asm: Assembly-CSharp}
+      data:
+        damage: 5

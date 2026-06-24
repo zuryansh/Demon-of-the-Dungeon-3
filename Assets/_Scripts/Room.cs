@@ -1,8 +1,5 @@
-using EditorAttributes;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
-using UnityEditor.TerrainTools;
 using UnityEngine;
 
 public class Room : MonoBehaviour

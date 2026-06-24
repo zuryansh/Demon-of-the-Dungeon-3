@@ -1,8 +1,7 @@
-using EditorAttributes;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using System;
 
 [CreateAssetMenu(fileName = "Room Tile Pallete", menuName ="Rooms")]
 public class RoomPalleteSO : ScriptableObject

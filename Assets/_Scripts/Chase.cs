@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -13,7 +11,9 @@ public class Chase : EnemyMovementModule
     [SerializeField] float pushingRange = 1.2f;
     [SerializeField] Vector2 desiredPoint;
     [SerializeField] float seperationStrength = 2f;
+    [SerializeField] bool DebugRanges = false;
 
+    bool inRange;
     private readonly Collider2D[] nearbyEnemies = new Collider2D[16];
     ContactFilter2D enemyFilter;
     Vector2 desiredDir;
@@ -36,16 +36,17 @@ public class Chase : EnemyMovementModule
 
         desiredDir = Vector2.zero;
 
-        
 
+        inRange = Brain.SqrDistToPlayer < sightRange * sightRange && Brain.SqrDistToPlayer >= stoppingRange * stoppingRange;
 
-        if (Brain.SqrDistToPlayer < sightRange * sightRange && Brain.SqrDistToPlayer >= stoppingRange*stoppingRange)
+        if (inRange)
         {
             desiredDir += Brain.DirToPlayer;
+            
         }
 
         if (Brain.SqrDistToPlayer > stoppingRange * stoppingRange) ApplySeperation(); // dont aply if enemy super close to player
-        MoveInDir(desiredDir.normalized, speed);
+        MoveInDir(desiredDir.normalized, speed, ForceMode2D.Force);
         
         CheckAnimation();
     }
@@ -91,13 +92,25 @@ public class Chase : EnemyMovementModule
 
     private void OnDrawGizmos()
     {
-        if (Selection.Contains(gameObject))
+        if (DebugRanges)
         {
             Gizmos.color = Color.green;
             Gizmos.DrawWireSphere(transform.position, sightRange);
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, stoppingRange);
         }
+    }
+
+    protected override void FlipSprite()
+    {
+        if (spriteRenderer == null) Debug.LogWarning("Sprite renderer not found");
+        if (inRange)
+        {
+            if (Brain.DirToPlayer.x > 0) spriteRenderer.flipX = false;
+            else spriteRenderer.flipX = true;
+        }
+
+
     }
 
 }

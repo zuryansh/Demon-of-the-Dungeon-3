@@ -1,5 +1,4 @@
 using System;
-using UnityEditor.UI;
 using UnityEngine;
 
 [System.Serializable]
@@ -9,9 +8,9 @@ public class AttackRuntime
     public AttackData Data => data;
 
     [SerializeField] AttackData data;
+    [SerializeField] float progress=0f;
     float startTime;
     Animator animator;
-    [SerializeField] float progress=0f;
     float prevProgress = 0f;
 
     public event Action<bool> EToggleMouseLock;
@@ -22,7 +21,9 @@ public class AttackRuntime
         this.data = data;
         this.startTime = startTime;
         this.animator = animator;
-
+        if (Data == null) Debug.LogWarning("ASDSA");
+        progress = 0f;
+        prevProgress = 0f;
     }
 
     public void Tick()
@@ -40,8 +41,10 @@ public class AttackRuntime
 
         if(Crossed(prevProgress,progress, 1f))
         {
+            
             AttackFinish();
             EAttackFinish?.Invoke();
+            Dispose();
         }
     }
 
@@ -51,6 +54,7 @@ public class AttackRuntime
         EToggleMouseLock?.Invoke(false); //unlock mouse
     }
 
+    void Dispose() { EAttackFinish = null; EToggleMouseLock = null; }
     public bool CanBufferNextAttack()
     {
         return progress >= data.NextAttackInputStartTime;

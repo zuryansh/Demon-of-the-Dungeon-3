@@ -46,19 +46,21 @@ public class Weapon: MonoBehaviour, ICombatHandler
 
     void StartAttack(int index)
     {
+        Debug.Log("Attack Start");
         comboIndex = index;
         AttackData data= weaponData.Combo[index];
         if (data == null) Debug.LogError("DATA NOT FOUND");
         comboIsFinished = false;
         isAttacking = true;
         currentAttack = CreateRuntimeAttack(data);
-
         currentAttack.EAttackFinish += OnAttackFinish;
         currentAttack.EToggleMouseLock += OnToggleMouseLook;
-
+        currentAttack.EAttackFinish += test;
 
         animHelper.ChangeAnimation(currentAttack.Data.AttackAnimation);
     }
+
+    void test() => Debug.Log("attack ended");
 
     public void TryAttack()
     {
@@ -85,12 +87,15 @@ public class Weapon: MonoBehaviour, ICombatHandler
     {
         currentAttack.EAttackFinish -= OnAttackFinish;
         currentAttack.EToggleMouseLock -= OnToggleMouseLook;
+        currentAttack.EAttackFinish -= test;
+
 
         timeSinceLastAttack = Time.time;
 
         currentAttack = null;
         isAttacking = false;
         animHelper.ChangeAnimation(weaponData.IdleAnim);
+        Debug.Log(animHelper.Anim.GetCurrentAnimatorStateInfo(0).nameHash) ;
         if(hasBufferedAttack) { hasBufferedAttack = false; StartAttack(GetNextAttackInCombo()); }
     }
 
@@ -104,13 +109,13 @@ public class Weapon: MonoBehaviour, ICombatHandler
 
     public void NotifyHit(Collider2D collider, Vector3 dir)
     {
-        var target = collider.gameObject;
 
         Vector3 p = collider.ClosestPoint(transform.position);
 
         EffectContext context = new EffectContext(gameObject, collider.gameObject, p,dir);
 
-        foreach (Effect effect in weaponData.Effects)
+        if (currentAttack == null) Debug.Log("SAD");
+        foreach (Effect effect in currentAttack.Data.Effects)
             effect.Apply(context);
     }
 
