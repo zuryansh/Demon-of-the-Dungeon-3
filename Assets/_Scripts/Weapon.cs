@@ -24,8 +24,6 @@ public class Weapon: MonoBehaviour, ICombatHandler
     private void Start()
     {
         animHelper = GetComponent<AnimationHelper>();
-        if (animHelper == null) { Debug.Log("SD"); }
-
         currentAttack = null;
     }
 
@@ -46,7 +44,6 @@ public class Weapon: MonoBehaviour, ICombatHandler
 
     void StartAttack(int index)
     {
-        Debug.Log("Attack Start");
         comboIndex = index;
         AttackData data= weaponData.Combo[index];
         if (data == null) Debug.LogError("DATA NOT FOUND");
@@ -55,12 +52,10 @@ public class Weapon: MonoBehaviour, ICombatHandler
         currentAttack = CreateRuntimeAttack(data);
         currentAttack.EAttackFinish += OnAttackFinish;
         currentAttack.EToggleMouseLock += OnToggleMouseLook;
-        currentAttack.EAttackFinish += test;
 
-        animHelper.ChangeAnimation(currentAttack.Data.AttackAnimation);
+        animHelper.ChangeAnimation(currentAttack.Data.AttackAnimation, forceReplay :true);
     }
 
-    void test() => Debug.Log("attack ended");
 
     public void TryAttack()
     {
@@ -87,7 +82,6 @@ public class Weapon: MonoBehaviour, ICombatHandler
     {
         currentAttack.EAttackFinish -= OnAttackFinish;
         currentAttack.EToggleMouseLock -= OnToggleMouseLook;
-        currentAttack.EAttackFinish -= test;
 
 
         timeSinceLastAttack = Time.time;
@@ -95,7 +89,6 @@ public class Weapon: MonoBehaviour, ICombatHandler
         currentAttack = null;
         isAttacking = false;
         animHelper.ChangeAnimation(weaponData.IdleAnim);
-        Debug.Log(animHelper.Anim.GetCurrentAnimatorStateInfo(0).nameHash) ;
         if(hasBufferedAttack) { hasBufferedAttack = false; StartAttack(GetNextAttackInCombo()); }
     }
 
@@ -114,7 +107,6 @@ public class Weapon: MonoBehaviour, ICombatHandler
 
         EffectContext context = new EffectContext(gameObject, collider.gameObject, p,dir);
 
-        if (currentAttack == null) Debug.Log("SAD");
         foreach (Effect effect in currentAttack.Data.Effects)
             effect.Apply(context);
     }
