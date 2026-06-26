@@ -4,6 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
+
     Rigidbody2D rb;
     Camera cam;
     [SerializeField] float moveSpeed;
@@ -20,6 +21,10 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         movementVector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+
+        //ONLY FOR TESTING 
+        //TODO: REMOVE LATER
+        if(Input.GetKeyDown(KeyCode.Escape)) { Application.Quit(); }
     }
 
     private void FixedUpdate()
@@ -51,5 +56,7 @@ public class PlayerMovement : MonoBehaviour
     {
         transform.position = rooms[0].GlobalPosition;
     }
+
+
 
 }

@@ -6,12 +6,13 @@ public class ProximityAttack : EnemyAttackModule
     [SerializeField] float attackRange;
     [SerializeField] float timeBetweenAttacks;
     [SerializeField] bool canAttack = true;
+    [SerializeField] LookAtObj HitboxLookScript;
 
 
     public override void Init()
     {
         base.Init();
-
+        HitboxLookScript.target = Brain.Player.gameObject;
     }
 
     public override void Tick()

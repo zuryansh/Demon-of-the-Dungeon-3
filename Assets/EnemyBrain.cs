@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ public class EnemyBrain : MonoBehaviour
     public Vector2 DirToPlayer => (Player.position - transform.position).normalized;
     public EnemySO Data=> enemyData;
     public AnimationHelper AnimationHelper => animHelper;
+    public event Action<EnemyBrain> EOnDeath;
 
     [SerializeField] EnemySO enemyData;
     AnimationHelper animHelper;
@@ -64,6 +66,7 @@ public class EnemyBrain : MonoBehaviour
 
     public void OnDeath()
     {
+        EOnDeath?.Invoke(this);
         Destroy(gameObject);
     }
     

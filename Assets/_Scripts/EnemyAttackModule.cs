@@ -32,7 +32,7 @@ public  abstract class EnemyAttackModule : MonoBehaviour
         currentAttack = new AttackRuntime(attackData, Time.time, AnimHelper.Anim);
 
         currentAttack.EAttackFinish += OnAttackFinish;
-        AnimHelper.ChangeAnimation(currentAttack.Data.AttackAnimation, priority: currentAttack.Data.AnimationPriority);
+        AnimHelper.ChangeAnimation(currentAttack.Data.AttackAnimation, priority: currentAttack.Data.AnimationPriority, forceReplay:true);
     }
 
     public virtual void OnAttackFinish()

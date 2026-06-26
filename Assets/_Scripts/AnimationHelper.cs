@@ -20,7 +20,7 @@ public class AnimationHelper : MonoBehaviour
     {
         
         if (state == currentAnim && !forceReplay) return;
-        if (priority >= currentAnimPriority || anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.95f)
+        if (priority >= currentAnimPriority || anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1f)
         {
 
             currentAnim = state;
