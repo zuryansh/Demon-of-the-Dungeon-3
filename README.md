@@ -90,9 +90,9 @@ Not every part of the codebase follows these decisions evenly yet, and I'd rathe
 
 ## What's next
 
-- Cap the unbounded retry loop in `RoomGenerator`.
-- Lazy-cache `RoomPalleteSO.Pallete` with `OnValidate()` invalidation.
-- Fold `EnemyBrain.cs` / `ProximityAttack.cs` into `_Scripts` for consistency.
+- Adding a procedural Weapon Generation system that generates unique weapon loot. But the Weapon Base and animation will remain the same just with different effects.
+- Adding json Serialisation to Room Data to allow for custom authored rooms to be used in the assembly 
+- Better Integration of the rooms and enemies since they are currently only in seperate test environments
 - More enemy archetypes, taking advantage of the existing module composition.
 
 <!-- GIF: a future feature in progress, or a "before/after" of a fixed bug -->
