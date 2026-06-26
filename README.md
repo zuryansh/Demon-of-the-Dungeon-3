@@ -9,7 +9,7 @@ This is the **third attempt** at an idea I first tried in 9th grade and again in
 
 ---
 
-## What's actually in here
+## Contents
 
 - **Procedural dungeon generation** — `RoomGenerator` runs three interchangeable algorithms (random walk, random noise, Perlin noise) with automatic connectivity validation and retry-on-failure; `RoomAssembler` then lays the generated rooms out into a full dungeon using weighted anchor-based placement and collision-checked positioning.
 - **A combat system shared between the player and every enemy type** — one `AttackRuntime`/`Effect`/`Hitbox` pipeline drives both, instead of separate player and enemy combat code.
