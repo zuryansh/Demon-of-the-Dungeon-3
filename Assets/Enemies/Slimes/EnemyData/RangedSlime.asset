@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21d4d2a612900f948891a8425f1b242d, type: 3}
+  m_Name: RangedSlime
+  m_EditorClassIdentifier: 
+  enemyName: Ranged Slime
+  enemyType: 
+  idleAnim: {fileID: 7400000, guid: 9077c546d08753246b123494b553e6ad, type: 2}
+  movementAnim: {fileID: 7400000, guid: 6e77be4079c40134287acca5d768b9f9, type: 2}
+  onHitEffects:
+  - rid: 6524999602524913774
+  pointCost: 1
+  references:
+    version: 2
+    RefIds:
+    - rid: 6524999602524913774
+      type: {class: SpawnParticlesEffect, ns: , asm: Assembly-CSharp}
+      data:
+        particlesPreab: {fileID: 2725978470722761693, guid: ee5ea9f624204f444ad1ed154d53fe90, type: 3}
+        useAttackDir: 1

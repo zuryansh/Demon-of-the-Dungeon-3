@@ -31,6 +31,9 @@ public  abstract class EnemyAttackModule : MonoBehaviour
         isAttacking = true;
         currentAttack = new AttackRuntime(attackData, Time.time, AnimHelper.Anim);
 
+        EffectContext context = new EffectContext(gameObject, null, transform.position, Brain.DirToPlayer);
+        foreach (var effect in attackData.OnAttackStartEffects) effect.Apply(context);
+
         currentAttack.EAttackFinish += OnAttackFinish;
         AnimHelper.ChangeAnimation(currentAttack.Data.AttackAnimation, priority: currentAttack.Data.AnimationPriority, forceReplay:true);
     }
@@ -53,7 +56,7 @@ public  abstract class EnemyAttackModule : MonoBehaviour
 
         EffectContext context = new EffectContext(gameObject, collider.gameObject, p, dir);
 
-        foreach (Effect effect in currentAttack.Data.Effects)
+        foreach (Effect effect in currentAttack.Data.OnTargetHitEffects)
             effect.Apply(context);
     }
 

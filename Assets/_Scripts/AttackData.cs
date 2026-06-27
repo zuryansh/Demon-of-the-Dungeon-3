@@ -22,7 +22,8 @@ public class AttackData : ScriptableObject
     [SerializeField, ShowField(nameof(IsPlayerAttack))] float cancelAttackBeforeTime; // can cancel attack before this
 
 
-    [SerializeReference, SubclassSelector] List<Effect> effects;
+    [SerializeReference, SubclassSelector] List<Effect> onTargetHitEffects;
+    [SerializeReference, SubclassSelector] List<Effect> onAttackStartEffects;
 
 
     bool IsPlayerAttack => attackType == AttackDataType.Player ;
@@ -31,7 +32,8 @@ public class AttackData : ScriptableObject
     public string AttackName { get => attackName;  }
     public int AttackAnimation { get => Animator.StringToHash(attackAnimation.name);  }
     public int AnimationPriority { get => animationPriority; }  
-    public List<Effect> Effects { get => effects; }
+    public List<Effect> OnTargetHitEffects { get => onTargetHitEffects; }
+    public List<Effect> OnAttackStartEffects { get => onAttackStartEffects; }
 
 
     public float MouseLockTime { get => mouseLockTime;  }

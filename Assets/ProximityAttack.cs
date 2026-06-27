@@ -3,11 +3,11 @@ using DG.Tweening;
 
 public class ProximityAttack : EnemyAttackModule
 {
-    [SerializeField] float attackRange;
+    [SerializeField] float maxAttackRange;
     [SerializeField] float timeBetweenAttacks;
     [SerializeField] bool canAttack = true;
     [SerializeField] LookAtObj HitboxLookScript;
-
+    [SerializeField] bool jumpTowardsTarget;
 
     public override void Init()
     {
@@ -18,7 +18,7 @@ public class ProximityAttack : EnemyAttackModule
     public override void Tick()
     {
         base.Tick();
-        if(Brain.SqrDistToPlayer <= attackRange*attackRange)
+        if(Brain.SqrDistToPlayer <= maxAttackRange*maxAttackRange)
         {
             if (!isAttacking && canAttack)
             {
@@ -33,7 +33,7 @@ public class ProximityAttack : EnemyAttackModule
         canAttack = false;
         AnimatorStateInfo animatorStateInfo = Brain.AnimationHelper.Anim.GetCurrentAnimatorStateInfo(0);
 
-        transform.DOMove(transform.position + (Vector3)(Brain.DirToPlayer*attackRange/2), animatorStateInfo.length);
+        if(jumpTowardsTarget )transform.DOMove(transform.position + (Vector3)(Brain.DirToPlayer*maxAttackRange/2), animatorStateInfo.length);
     }
 
     public override void OnAttackFinish()

@@ -34,6 +34,8 @@ public class Chase : EnemyMovementModule
     {
         base.Tick();
 
+        //if (FlipSpriteAccToDir) FlipSprite();
+
         desiredDir = Vector2.zero;
 
 
@@ -103,8 +105,9 @@ public class Chase : EnemyMovementModule
 
     protected override void FlipSprite()
     {
+        Debug.Log("FLIP",gameObject);
         if (spriteRenderer == null) Debug.LogWarning("Sprite renderer not found");
-        if (inRange)
+        if (Brain.SqrDistToPlayer < sightRange * sightRange)
         {
             if (Brain.DirToPlayer.x > 0) spriteRenderer.flipX = false;
             else spriteRenderer.flipX = true;

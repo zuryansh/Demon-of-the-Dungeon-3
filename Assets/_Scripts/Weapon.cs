@@ -107,7 +107,7 @@ public class Weapon: MonoBehaviour, ICombatHandler
 
         EffectContext context = new EffectContext(gameObject, collider.gameObject, p,dir);
 
-        foreach (Effect effect in currentAttack.Data.Effects)
+        foreach (Effect effect in currentAttack.Data.OnTargetHitEffects)
             effect.Apply(context);
     }
 

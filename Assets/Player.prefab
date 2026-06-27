@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1170743016886372125}
   - component: {fileID: 8394266232760289458}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 8676889724091312348}
   - component: {fileID: 1835564198597178735}
   - component: {fileID: 9187366828764247952}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -200,7 +200,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1088835641916819990}
   - component: {fileID: 1530557605244508622}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -349,7 +349,7 @@ GameObject:
   - component: {fileID: 1121650819439682541}
   - component: {fileID: 7701942963208510020}
   - component: {fileID: 792446902648433147}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Hitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -448,7 +448,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2731594530009277749}
   - component: {fileID: 1450432655469026595}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: MouseLook
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -499,7 +499,7 @@ GameObject:
   - component: {fileID: 1837015056235425017}
   - component: {fileID: 8292859834407402164}
   - component: {fileID: 1403587290504052358}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -593,7 +593,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2065242679191153770}
   - component: {fileID: 2486765014533822059}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -684,7 +684,7 @@ GameObject:
   - component: {fileID: 2239118277785588782}
   - component: {fileID: 2323608244783528134}
   - component: {fileID: 3744293141097241458}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Spear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -851,7 +851,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 5
   m_Sprite: {fileID: -712631045867808456, guid: b670ab75dde984907b8570040daa08c5, type: 3}
-  m_Color: {r: 0.06890618, g: 0.8113208, b: 0.048474982, a: 1}
+  m_Color: {r: 0.047058813, g: 0.53822917, b: 0.8117647, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -984,7 +984,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4350274408547416106}
   - component: {fileID: 6546688551642557073}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}

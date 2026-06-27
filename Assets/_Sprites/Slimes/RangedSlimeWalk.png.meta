@@ -1,22 +1,22 @@
 fileFormatVersion: 2
-guid: b7ce6913af884ef44be5d9df8d972cb4
+guid: 76b0513ccb484cb4fa430468c9aa669a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2640139566188192598
-    second: BasicSlimeWalk_0
+      213: 1035824649713745146
+    second: RangedSlimeWalk_0
   - first:
-      213: -4440316541738839428
-    second: BasicSlimeWalk_1
+      213: 6274397803150845189
+    second: RangedSlimeWalk_1
   - first:
-      213: -1274010267277324431
-    second: BasicSlimeWalk_2
+      213: -6464240547943352305
+    second: RangedSlimeWalk_2
   - first:
-      213: 8081628575884260773
-    second: BasicSlimeWalk_3
+      213: 820758372333252678
+    second: RangedSlimeWalk_3
   - first:
-      213: -5039115925402017026
-    second: BasicSlimeWalk_4
+      213: 3862372671031069563
+    second: RangedSlimeWalk_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -125,111 +125,111 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: BasicSlimeWalk_0
+      name: RangedSlimeWalk_0
       rect:
         serializedVersion: 2
         x: 8
         y: 0
         width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        height: 15
+      alignment: 9
+      pivot: {x: 0.5625, y: 0.4666667}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: aac16e77d075c5bd0800000000000000
-      internalID: -2640139566188192598
+      spriteID: afcf7c7e70dff5e00800000000000000
+      internalID: 1035824649713745146
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BasicSlimeWalk_1
+      name: RangedSlimeWalk_1
       rect:
         serializedVersion: 2
         x: 41
         y: 0
         width: 18
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        height: 15
+      alignment: 9
+      pivot: {x: 0.6111111, y: 0.4666667}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c729d5f81a3d062c0800000000000000
-      internalID: -4440316541738839428
+      spriteID: 5052c4c0f83231750800000000000000
+      internalID: 6274397803150845189
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BasicSlimeWalk_2
+      name: RangedSlimeWalk_2
       rect:
         serializedVersion: 2
         x: 74
         y: 0
-        width: 19
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        width: 18
+        height: 15
+      alignment: 9
+      pivot: {x: 0.6111111, y: 0.4666667}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 17f0cb2796ec15ee0800000000000000
-      internalID: -1274010267277324431
+      spriteID: f08f82d78776a46a0800000000000000
+      internalID: -6464240547943352305
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BasicSlimeWalk_3
+      name: RangedSlimeWalk_3
       rect:
         serializedVersion: 2
         x: 107
         y: 0
         width: 18
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        height: 15
+      alignment: 9
+      pivot: {x: 0.6111111, y: 0.4666667}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5a53a381f56b72070800000000000000
-      internalID: 8081628575884260773
+      spriteID: 640f95d146be36b00800000000000000
+      internalID: 820758372333252678
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: BasicSlimeWalk_4
+      name: RangedSlimeWalk_4
       rect:
         serializedVersion: 2
-        x: 139
+        x: 141
         y: 0
         width: 16
-        height: 16
+        height: 15
       alignment: 9
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0.5625, y: 0.4666667}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ef22664a3c6711ab0800000000000000
-      internalID: -5039115925402017026
+      spriteID: b7bcbf60b77e99530800000000000000
+      internalID: 3862372671031069563
       vertices: []
       indices: 
       edges: []
@@ -238,7 +238,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: f75a28ba306cf0e4c9142831392710a4
+    spriteID: b16f664d594a65a4980c7960364b6bc8
     internalID: 0
     vertices: []
     indices: 
@@ -248,11 +248,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      BasicSlimeWalk_0: -2640139566188192598
-      BasicSlimeWalk_1: -4440316541738839428
-      BasicSlimeWalk_2: -1274010267277324431
-      BasicSlimeWalk_3: 8081628575884260773
-      BasicSlimeWalk_4: -5039115925402017026
+      RangedSlimeWalk_0: 1035824649713745146
+      RangedSlimeWalk_1: 6274397803150845189
+      RangedSlimeWalk_2: -6464240547943352305
+      RangedSlimeWalk_3: 820758372333252678
+      RangedSlimeWalk_4: 3862372671031069563
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -55,5 +55,23 @@ public class SpawnParticlesEffect : Effect
         particles.Play();
     }
 
+
+}
+
+[Serializable]
+public class SpawnProjectile : Effect
+{
+    [SerializeField] Rigidbody2D projectile;
+    [SerializeField] float speed;
+
+    public override void Apply(EffectContext context)
+    {
+        Quaternion spawnRot = Quaternion.FromToRotation(projectile.transform.right, context.EffectDir);
+
+        Rigidbody2D rb = MonoBehaviour.Instantiate(projectile, context.EffectPoint, spawnRot);
+        rb.linearVelocity = context.EffectDir *speed;
+
+        MonoBehaviour.Destroy(rb,5f);
+    }
 }
 

@@ -41,7 +41,7 @@ public class EnemySpawner : MonoBehaviour
 
         while (availablePoints >= 0 && currentEnemyCount <= maxEnemyCount)
         {
-            enemies.Add(SpawnEnemy(enemyPrefabList[Random.Range(0, enemyPrefabList.Count - 1)]));
+            enemies.Add(SpawnEnemy(enemyPrefabList[Random.Range(0, enemyPrefabList.Count )]));
         }
     }
 

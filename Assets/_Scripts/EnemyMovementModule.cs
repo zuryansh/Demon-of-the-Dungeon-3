@@ -6,7 +6,7 @@ public abstract class EnemyMovementModule : MonoBehaviour
 {
     public EnemyBrain Brain;
     protected Rigidbody2D rb;
-    [SerializeField] bool FlipSpriteAccToDir;
+    [SerializeField] protected bool FlipSpriteAccToDir;
     [ConditionalField(ConditionType.OR, nameof(FlipSpriteAccToDir))]
     [SerializeField] protected SpriteRenderer spriteRenderer;
 

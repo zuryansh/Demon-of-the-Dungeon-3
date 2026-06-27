@@ -19,17 +19,18 @@ MonoBehaviour:
   mouseLockTime: 0.3
   nextAttackInputStartTime: 0.1
   cancelAttackBeforeTime: 0.7
-  effects:
-  - rid: 6524999508718518393
-  - rid: 6524999508718518394
+  onTargetHitEffects:
+  - rid: 6524999602524913806
+  - rid: 6524999602524913809
+  onAttackStartEffects: []
   references:
     version: 2
     RefIds:
-    - rid: 6524999508718518393
+    - rid: 6524999602524913806
       type: {class: DamageEffect, ns: , asm: Assembly-CSharp}
       data:
-        damage: 10
-    - rid: 6524999508718518394
+        damage: 5
+    - rid: 6524999602524913809
       type: {class: KnockBackEffect, ns: , asm: Assembly-CSharp}
       data:
         knockback: 5
