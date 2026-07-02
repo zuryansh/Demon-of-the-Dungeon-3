@@ -17,16 +17,15 @@ public class AttackData : ScriptableObject
     [SerializeField] int animationPriority =0;
 
 
-    [SerializeField, ShowField(nameof(IsPlayerAttack))] float mouseLockTime;
-    [SerializeField, ShowField(nameof(IsPlayerAttack))]float nextAttackInputStartTime; //for next combo 
-    [SerializeField, ShowField(nameof(IsPlayerAttack))] float cancelAttackBeforeTime; // can cancel attack before this
+    [SerializeField, ShowField(nameof(attackType), AttackDataType.Player)] float mouseLockTime;
+    [SerializeField, ShowField(nameof(attackType), AttackDataType.Player)]float nextAttackInputStartTime; //for next combo 
+    [SerializeField, ShowField(nameof(attackType), AttackDataType.Player)] float cancelAttackBeforeTime; // can cancel attack before this
 
 
     [SerializeReference, SubclassSelector] List<Effect> onTargetHitEffects;
     [SerializeReference, SubclassSelector] List<Effect> onAttackStartEffects;
 
 
-    bool IsPlayerAttack => attackType == AttackDataType.Player ;
 
 
     public string AttackName { get => attackName;  }

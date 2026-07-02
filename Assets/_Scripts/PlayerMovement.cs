@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -55,6 +56,11 @@ public class PlayerMovement : MonoBehaviour
     void OnGenFinish(IReadOnlyList<Room> rooms)
     {
         transform.position = rooms[0].GlobalPosition;
+    }
+
+    public void TEST()
+    {
+        Debug.Log("TESTED");
     }
 
 

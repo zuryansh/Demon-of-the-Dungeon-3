@@ -105,7 +105,6 @@ public class Chase : EnemyMovementModule
 
     protected override void FlipSprite()
     {
-        Debug.Log("FLIP",gameObject);
         if (spriteRenderer == null) Debug.LogWarning("Sprite renderer not found");
         if (Brain.SqrDistToPlayer < sightRange * sightRange)
         {

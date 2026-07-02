@@ -29,7 +29,7 @@ MonoBehaviour:
     - rid: 6524999602524913804
       type: {class: DamageEffect, ns: , asm: Assembly-CSharp}
       data:
-        damage: 5
+        damage: 7
     - rid: 6524999602524913805
       type: {class: KnockBackEffect, ns: , asm: Assembly-CSharp}
       data:

@@ -12,7 +12,7 @@ public class ProximityAttack : EnemyAttackModule
     public override void Init()
     {
         base.Init();
-        HitboxLookScript.target = Brain.Player.gameObject;
+        if(HitboxLookScript!= null) HitboxLookScript.target = Brain.Player.gameObject;
     }
 
     public override void Tick()

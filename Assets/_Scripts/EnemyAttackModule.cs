@@ -62,11 +62,14 @@ public  abstract class EnemyAttackModule : MonoBehaviour
 
     private void OnEnable()
     {
+        if(attackHitbox!= null) 
         attackHitbox.EOnHitDetect += NotifyHit;
     }
     private void OnDisable()
     {
+        if (attackHitbox != null)
         attackHitbox.EOnHitDetect -= NotifyHit;
     }
+
 
 }

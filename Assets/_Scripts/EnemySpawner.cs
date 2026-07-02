@@ -1,19 +1,16 @@
 using EditorAttributes;
-using Newtonsoft.Json.Bson;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
     enum SpawnType { InCircle, InRoom }
-    bool spawnInCircle => spawnType == SpawnType.InCircle;
 
     [SerializeField] SpawnType spawnType;
-    [SerializeField, HideField(nameof(spawnInCircle))] Room parentRoom;
-    [SerializeField, ShowField(nameof(spawnInCircle))] float radius;
+    [SerializeField, HideField(nameof(spawnType), SpawnType.InCircle)] Room parentRoom;
+    [SerializeField, ShowField(nameof(spawnType), SpawnType.InCircle)] float radius;
     [SerializeField] int currentEnemyCount;
     [SerializeField] List<EnemyBrain> enemyPrefabList;
 
@@ -22,13 +19,33 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField, HideField(nameof(autoCalcPoints))] int maxEnemyCount = 10;
     [SerializeField] bool SpawnContinously;
 
-    List<EnemyBrain> enemies = new List<EnemyBrain>();
+    [SerializeField] PopupText counterText;
 
+    List<EnemyBrain> enemies = new List<EnemyBrain>();
+    bool isCounting;
 
     private void Update()
     {
-        if(currentEnemyCount ==0 && SpawnContinously) SpawnEnemies();
+        if (currentEnemyCount == 0 && SpawnContinously && !isCounting)
+        {
+
+            StartCoroutine(Countdown());
+        }
     }
+
+    IEnumerator Countdown()
+    {
+        isCounting = true;
+        Instantiate(counterText, transform.position, Quaternion.identity).Init("2",2f, 0.8f, true, 0.2f);
+        yield return new WaitForSeconds(1.2f);
+        Instantiate(counterText, transform.position, Quaternion.identity).Init("1",2f, 0.8f, true, 0.2f);
+        yield return new WaitForSeconds(1.2f);
+        isCounting = false;
+        SpawnEnemies();
+
+    }
+
+
 
     [Button("Spawn")]
     public void SpawnEnemies()
