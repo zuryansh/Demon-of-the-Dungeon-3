@@ -23,10 +23,9 @@ public class PlayerMovement : MonoBehaviour
     {
         movementVector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
-        //ONLY FOR TESTING 
-        //TODO: REMOVE LATER
-        if(Input.GetKeyDown(KeyCode.Escape)) { Application.Quit(); }
     }
+
+
 
     private void FixedUpdate()
     {
@@ -55,7 +54,6 @@ public class PlayerMovement : MonoBehaviour
     }
     void OnGenFinish(IReadOnlyList<Room> rooms)
     {
-        transform.position = rooms[0].GlobalPosition;
     }
 
     public void TEST()

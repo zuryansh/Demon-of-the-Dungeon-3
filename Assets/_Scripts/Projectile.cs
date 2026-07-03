@@ -4,6 +4,9 @@ using System.Collections.Generic;
 public class Projectile : MonoBehaviour
 {
     [SerializeReference, SubclassSelector] List<Effect> onHitEffects;
+    [SerializeField] int pierceCount;
+    [SerializeField] int projHit;
+    
     Hitbox hitbox;
 
 
@@ -12,8 +15,14 @@ public class Projectile : MonoBehaviour
         hitbox = GetComponent<Hitbox>();
     }
 
+    private void Start()
+    {
+        Destroy(gameObject, 5f);
+    }
+
     public void NotifyHit(Collider2D collider, Vector3 dir)
     {
+        projHit++;
 
         Vector3 p = collider.ClosestPoint(transform.position);
 
@@ -21,6 +30,7 @@ public class Projectile : MonoBehaviour
 
         foreach (Effect effect in onHitEffects)
             effect.Apply(context);
+        if(projHit >= pierceCount) Destroy(gameObject);
     }
 
     private void OnEnable()

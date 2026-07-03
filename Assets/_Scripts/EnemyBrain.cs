@@ -58,7 +58,6 @@ public class EnemyBrain : MonoBehaviour
 
     public void OnHit(EffectContext context)
     {
-        Debug.Log("ENEMT HIT");
         foreach (Effect effect in Data.OnHitEffects)
         {
             effect.Apply(context);

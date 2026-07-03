@@ -19,5 +19,5 @@ public class GameSceneManager : MonoBehaviour
         SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
     }
 
-    public void Quit() => Application.Quit();
+    public void Quit() { Debug.Log("QUIT"); Application.Quit(); }
 }

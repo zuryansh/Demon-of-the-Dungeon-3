@@ -1,5 +1,63 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &432659279899749495
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6392432352573389046}
+  - component: {fileID: 2988621220572858360}
+  m_Layer: 0
+  m_Name: EnemySpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6392432352573389046
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 432659279899749495}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6867898133782216146}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2988621220572858360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 432659279899749495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 883068311e8250e499eafb09cfaba44e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnType: 1
+  parentRoom: {fileID: 8257017177754270078}
+  radius: 0
+  currentEnemyCount: 0
+  enemyPrefabList:
+  - {fileID: 2851378718043903399, guid: 1b1cd5d0757fbe947b777ab1d0e76d07, type: 3}
+  - {fileID: 4886649593553187801, guid: e158ba43c349e634c81997a9692f7458, type: 3}
+  autoCalcPoints: 1
+  availablePoints: 30
+  maxEnemyCount: 10
+  SpawnContinously: 0
+  noOfWaves: 1
+  wavesDefeated: 0
+  counterText: {fileID: 7629674637004858496, guid: 7c66ca50871214041b8ebf28c934d65e, type: 3}
 --- !u!1 &7294925959831334373
 GameObject:
   m_ObjectHideFlags: 0
@@ -30,7 +88,8 @@ Transform:
   m_LocalPosition: {x: -41, y: 25.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 6392432352573389046}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &744110699096498839
@@ -69,5 +128,7 @@ MonoBehaviour:
   globalBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
-  doorPrefab: {fileID: 5280056065013452662, guid: f024aa78363ea4748b8120a164064c04, type: 3}
+  doorPrefab: {fileID: 6183569211736042676, guid: f024aa78363ea4748b8120a164064c04, type: 3}
   doors: []
+  enemySpawner: {fileID: 2988621220572858360}
+  hasPlayer: 0

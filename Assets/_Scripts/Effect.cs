@@ -71,7 +71,6 @@ public class SpawnProjectile : Effect
         Rigidbody2D rb = MonoBehaviour.Instantiate(projectile, context.EffectPoint, spawnRot);
         rb.linearVelocity = context.EffectDir *speed;
 
-        MonoBehaviour.Destroy(rb,5f);
     }
 }
 

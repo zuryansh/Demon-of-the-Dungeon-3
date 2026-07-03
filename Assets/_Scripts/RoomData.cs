@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
@@ -43,5 +44,11 @@ public class RoomData
     {
         return tilesDict[localPos];
     }
+
+    public List<RoomTile> GetTilesOfType(TileTypes type) 
+    {
+        return tiles.Where(t => t.TileType == type).ToList();
+    }
+
 
 }

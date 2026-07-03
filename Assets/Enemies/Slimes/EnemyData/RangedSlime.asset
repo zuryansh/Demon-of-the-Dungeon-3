@@ -25,5 +25,5 @@ MonoBehaviour:
     - rid: 6524999602524913774
       type: {class: SpawnParticlesEffect, ns: , asm: Assembly-CSharp}
       data:
-        particlesPreab: {fileID: 2725978470722761693, guid: ee5ea9f624204f444ad1ed154d53fe90, type: 3}
+        particlesPreab: {fileID: 5313175317198594345, guid: 0cdbe0e4b8390c04f8f4c9ae53bc63eb, type: 3}
         useAttackDir: 1

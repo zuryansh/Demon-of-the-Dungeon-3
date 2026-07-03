@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &7811685096837354228
+--- !u!1001 &3904495522193078084
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -9,24 +9,24 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2725978470722761693, guid: ee5ea9f624204f444ad1ed154d53fe90, type: 3}
-      propertyPath: InitialModule.startColor.maxColor.b
-      value: 0.24705882
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.6294419
       objectReference: {fileID: 0}
     - target: {fileID: 2725978470722761693, guid: ee5ea9f624204f444ad1ed154d53fe90, type: 3}
       propertyPath: InitialModule.startColor.maxColor.r
-      value: 0.5921569
+      value: 0.24678433
       objectReference: {fileID: 0}
     - target: {fileID: 2725978470722761693, guid: ee5ea9f624204f444ad1ed154d53fe90, type: 3}
       propertyPath: InitialModule.startColor.minColor.g
-      value: 0.4392157
+      value: 0.43284842
       objectReference: {fileID: 0}
     - target: {fileID: 2725978470722761693, guid: ee5ea9f624204f444ad1ed154d53fe90, type: 3}
       propertyPath: InitialModule.startColor.minColor.r
-      value: 0.25490198
+      value: 0.25250983
       objectReference: {fileID: 0}
     - target: {fileID: 4094631305392860848, guid: ee5ea9f624204f444ad1ed154d53fe90, type: 3}
       propertyPath: m_Name
-      value: OnHitSlime
+      value: OnHitPlayer
       objectReference: {fileID: 0}
     - target: {fileID: 5520239695902862327, guid: ee5ea9f624204f444ad1ed154d53fe90, type: 3}
       propertyPath: m_LocalPosition.x

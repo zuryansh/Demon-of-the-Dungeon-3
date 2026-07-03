@@ -1,19 +1,30 @@
+using System;
 using UnityEngine;
 
-[RequireComponent (typeof(Collider2D))]
+[RequireComponent (typeof(CircleCollider2D))]
 public class Teleporter : MonoBehaviour
 {
-    [SerializeField] Vector2 teleportTo;
 
-    void Teleport(GameObject obj)
+    public CircleCollider2D Collider => col;
+    
+    [SerializeField] protected Vector2 teleportTo;
+    [SerializeField] protected CircleCollider2D col;
+    [SerializeField] protected bool locked;
+
+
+    protected virtual void Teleport(GameObject obj)
     {
         obj.transform.position = teleportTo;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected void OnTriggerEnter2D(Collider2D collision)
     {
-        Teleport(collision.gameObject);
+       if(!locked) Teleport(collision.gameObject);
     }
+
+    public void SetLock(bool val) => locked = val;
 
     public void SetTeleportTo(Vector2 pos) { teleportTo = pos; }
 }
+
+

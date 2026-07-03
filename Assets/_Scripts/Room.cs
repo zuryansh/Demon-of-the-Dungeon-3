@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -8,13 +9,18 @@ public class Room : MonoBehaviour
     public Bounds GlobalBounds=>globalBounds;
     public Vector3 GlobalPosition => transform.position;
     public List<Room> ConnectedRooms =>connectedRooms;
+    public event Action<Room> onPlayerEnter;
+    public event Action onPlayerExit;
+    public bool RoomClear => enemySpawner.Defeated;
+
 
     [SerializeField] RoomDataDebugger debugger;
     [SerializeField] List<Room> connectedRooms= new List<Room>();
     [SerializeField] Bounds globalBounds;
-    [SerializeField] Teleporter doorPrefab;
-    [SerializeField] List<Teleporter> doors;
-
+    [SerializeField] Door doorPrefab;
+    [SerializeField] List<Door> doors;
+    [SerializeField] EnemySpawner enemySpawner;
+    public bool hasPlayer;
 
     RoomData data;
 
@@ -47,11 +53,12 @@ public class Room : MonoBehaviour
     {
         //var existingDoorPositions = doors.Select(t=> t.gameObject.transform.position).ToList();
 
-        foreach (Room room in connectedRooms)
+        foreach (Room attatchedRoom in connectedRooms)
         {
-            List<RoomTile> possibleSpawnTiles = GetRoomTilesClosestToPoint(room.GlobalPosition, TileTypes.Floor);
+            List<RoomTile> possibleSpawnTiles = GetRoomTilesClosestToPoint(attatchedRoom.GlobalPosition, TileTypes.Floor);
             Vector3 pos =GetGlobalTilePos(possibleSpawnTiles[0]);
-            //TODO deal with multiple doors on top of each other
+            
+            
             for (int i = 0; i < possibleSpawnTiles.Count; i++)
             {
 
@@ -59,27 +66,40 @@ public class Room : MonoBehaviour
                 bool allowed = true;
                 foreach (Teleporter door in doors)
                 {
-                    if (door.transform.position == pos) allowed = false;
+                    //if (door.transform.position == pos) allowed = false;
+                    //NOT A GENERAL SOLN FOR ALL COLLIDER SHAPES
+                    Collider2D hit = Physics2D.OverlapCircle(pos, doorPrefab.Collider.radius*doorPrefab.transform.lossyScale.x);
+                    if (hit != null) allowed = false;
                 }
                 if(allowed) break;
 
                 if (i == possibleSpawnTiles.Count - 1) Debug.LogWarning("NO DOOR POSITIONS FOUND ALL TILES FILLED");
             }
             
-            Teleporter spawnedDoor = Instantiate(doorPrefab, pos, Quaternion.identity);
+            Door spawnedDoor = Instantiate(doorPrefab, pos, Quaternion.identity);
             spawnedDoor.transform.parent = transform;
-            spawnedDoor.SetTeleportTo(room.GlobalPosition);
+            spawnedDoor.Init(this, attatchedRoom);
             doors.Add(spawnedDoor);
         }
     }
 
+    /// <summary>
+    /// returns a list of room tiles sorted by distance from specified point
+    /// </summary>
+    /// <param name="point"></param>
+    /// <returns></returns>
     List<RoomTile> GetRoomTilesClosestToPoint(Vector2 point)
     {
         List<RoomTile> sortedByDist = Data.Tiles.OrderBy(tile => (GetGlobalTilePos(tile) - point).sqrMagnitude).ToList();
         return sortedByDist;
     }
 
-    List<RoomTile> GetRoomTilesClosestToPoint(Vector2 point, TileTypes filter)
+    /// <summary>
+    /// returns a list of room tiles sorted by distance from specified point with filter
+    /// </summary>
+    /// <param name="point"></param>
+    /// <returns></returns>
+    public List<RoomTile> GetRoomTilesClosestToPoint(Vector2 point, TileTypes filter)
     {
         List<RoomTile> sortedByDist = Data.Tiles
             .Where(t => t.TileType == filter).ToList()
@@ -88,15 +108,49 @@ public class Room : MonoBehaviour
         return sortedByDist;
     }
 
-    Vector2 GetGlobalTilePos(RoomTile tile) => tile.LocalPosition.ToV3()+GlobalPosition;
+    public Vector2 GetGlobalTilePos(RoomTile tile) => tile.LocalPosition.ToV3()+GlobalPosition;
 
     private void OnEnable()
     {
         RoomAssembler.EOnAssemblyFinished += OnAssemblyCompletion;
+        if(enemySpawner != null)
+        {
+            enemySpawner.OnAllWavesDefeated += RoomCleared;
+        }
     }
     private void OnDisable()
     {
         RoomAssembler.EOnAssemblyFinished -= OnAssemblyCompletion;
+    }
+
+    public void ActivateRoom()
+    {
+        onPlayerEnter?.Invoke(this);
+        if(enemySpawner != null && !RoomClear)
+        {
+            foreach(Door door in doors)
+            {
+                print("LOCk");
+                door.SetLock(true);
+            }
+
+        }
+        hasPlayer = true;
+    }
+
+    public void DeactivateRoom()
+    {
+        onPlayerExit?.Invoke();
+        hasPlayer = true;
+
+    }
+
+    void RoomCleared()
+    {
+        foreach (Door door in doors)
+        {
+            door.SetLock(false);
+        }
     }
 
     private void OnDrawGizmos()

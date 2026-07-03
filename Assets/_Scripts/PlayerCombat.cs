@@ -9,7 +9,7 @@ public class PlayerCombat : MonoBehaviour, ICombatant
 
     [SerializeField] List<Weapon> weapons;
     [SerializeField] Weapon currentWeapon;
-
+    [SerializeReference, SubclassSelector] List<Effect> onHitEffects;
     AnimationHelper Animhelper;
 
 
@@ -30,6 +30,12 @@ public class PlayerCombat : MonoBehaviour, ICombatant
     }
 
 
-
+    public void OnHit(EffectContext context)
+    {
+        foreach (Effect effect in onHitEffects)
+        {
+            effect.Apply(context);
+        }
+    }
 
 }

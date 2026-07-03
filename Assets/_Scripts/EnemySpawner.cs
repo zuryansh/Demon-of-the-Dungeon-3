@@ -1,4 +1,5 @@
 using EditorAttributes;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -7,6 +8,8 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     enum SpawnType { InCircle, InRoom }
+    public event Action OnAllWavesDefeated;
+    public bool Defeated => (wavesDefeated >= noOfWaves);
 
     [SerializeField] SpawnType spawnType;
     [SerializeField, HideField(nameof(spawnType), SpawnType.InCircle)] Room parentRoom;
@@ -18,11 +21,16 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField, HideField(nameof(autoCalcPoints))] int availablePoints = 30;
     [SerializeField, HideField(nameof(autoCalcPoints))] int maxEnemyCount = 10;
     [SerializeField] bool SpawnContinously;
-
+    [SerializeField] int noOfWaves = 0;
+    [SerializeField] int wavesDefeated ;
     [SerializeField] PopupText counterText;
+
 
     List<EnemyBrain> enemies = new List<EnemyBrain>();
     bool isCounting;
+    List<RoomTile> validTiles;
+
+
 
     private void Update()
     {
@@ -32,6 +40,9 @@ public class EnemySpawner : MonoBehaviour
             StartCoroutine(Countdown());
         }
     }
+
+    
+
 
     IEnumerator Countdown()
     {
@@ -48,8 +59,12 @@ public class EnemySpawner : MonoBehaviour
 
 
     [Button("Spawn")]
-    public void SpawnEnemies()
+    public void SpawnEnemies(Room room = null)
     {
+        if (!SpawnContinously && Defeated) return;
+
+        if(spawnType == SpawnType.InRoom) validTiles = parentRoom.Data.GetTilesOfType(TileTypes.Floor);
+
         if (autoCalcPoints)
         {
             CalcPointPools();
@@ -58,7 +73,7 @@ public class EnemySpawner : MonoBehaviour
 
         while (availablePoints >= 0 && currentEnemyCount <= maxEnemyCount)
         {
-            enemies.Add(SpawnEnemy(enemyPrefabList[Random.Range(0, enemyPrefabList.Count )]));
+            enemies.Add(SpawnEnemy(enemyPrefabList[UnityEngine.Random.Range(0, enemyPrefabList.Count )]));
         }
     }
 
@@ -77,9 +92,8 @@ public class EnemySpawner : MonoBehaviour
     {
         if(spawnType == SpawnType.InRoom)
         {
-            //availablePoints = parentRoom.RoomTiles.Count / 20 + 10;
-            //maxEnemyCount = parentRoom.RoomTiles.Count / 100 + 5;
-            Debug.LogError("NOT IMPLEMETED YET");
+            availablePoints = validTiles.Count / 20 + 10;
+            maxEnemyCount = validTiles.Count / 100 + 5;
         }
         else if(spawnType == SpawnType.InCircle)
         {
@@ -93,12 +107,13 @@ public class EnemySpawner : MonoBehaviour
         Vector2 pos = Vector2.negativeInfinity;
         if (spawnType == SpawnType.InRoom)
         {
-            //int n = Random.Range(0, parentRoom.RoomTiles.Count);
-            // pos = parentRoom.RoomTiles.AtIndex<Vector2Int>(n);
+            
+            int n = UnityEngine.Random.Range(0, validTiles.Count);
+            pos = parentRoom.GetGlobalTilePos(validTiles[n]);
         }
         else if (spawnType == SpawnType.InCircle)
         {
-            pos = Random.insideUnitCircle * radius;
+            pos = UnityEngine.Random.insideUnitCircle * radius;
             if (realtiveToSpawner) pos += (Vector2)transform.position;
         }
         if(pos == Vector2.negativeInfinity) { Debug.LogError("unable to find pos"); }
@@ -109,6 +124,31 @@ public class EnemySpawner : MonoBehaviour
     {
         enemies.Remove(enemy);
         currentEnemyCount--;
+        if(currentEnemyCount == 0)
+        {
+            wavesDefeated++;
+            if(wavesDefeated>= noOfWaves)
+            {
+                OnAllWavesDefeated?.Invoke();
+            }
+        }
+    }
+
+    private void OnEnable()
+    {
+        if (spawnType == SpawnType.InRoom)
+        {
+            if (parentRoom == null) Debug.LogError("No parent room assigned");
+            parentRoom.onPlayerEnter += SpawnEnemies;
+        }
+    }
+    private void OnDisable()
+    {
+        if (spawnType == SpawnType.InRoom)
+        {
+            if (parentRoom == null) Debug.LogError("No parent room assigned");
+            parentRoom.onPlayerEnter -= SpawnEnemies;
+        }
     }
 
 #if UNITY_EDITOR
