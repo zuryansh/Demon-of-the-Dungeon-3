@@ -1,32 +1,32 @@
 using UnityEngine;
 
-public class Singleton : MonoBehaviour
+public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
-    static Singleton _inst;
-    public static Singleton Inst
-    {
-        get
-        {
-            if (_inst == null)
-            {
-                _inst = FindFirstObjectByType<Singleton>();
-                if( _inst == null)
-                {
-                    _inst = new GameObject().AddComponent<Singleton>();
-                }
-            }
-            return _inst;
-        }
+    public static T Instance { get; private set; }
 
+    protected virtual void Awake()
+    {
+        if(Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this as T;
     }
 
-    private void Awake()
+    protected virtual void OnApplicationQuit()
     {
-        if( _inst != null )
-        {
-            Destroy(this);
-        }
+        Instance = null;
+        Destroy(gameObject);
     }
 
+}
 
+public abstract class PersistentSingletion<T> : Singleton<T> where T : MonoBehaviour
+{
+    protected override void Awake()
+    {
+        base.Awake();
+        DontDestroyOnLoad(gameObject);
+    }
 }

@@ -5,12 +5,14 @@ public  abstract class EnemyAttackModule : MonoBehaviour
 {
     public EnemyBrain Brain;
     public AnimationHelper AnimHelper => Brain.AnimationHelper;
+    
 
     [SerializeField] protected AttackData attackData;
     [SerializeField] protected AttackRuntime currentAttack;
     [SerializeField] protected bool isAttacking;
     [SerializeField] protected Hitbox attackHitbox;
-    
+    [SerializeField] protected LayerMask obstacleLayer;
+
     protected float timeSinceLastAttack;
 
     public virtual void Init()
@@ -23,7 +25,9 @@ public  abstract class EnemyAttackModule : MonoBehaviour
         {
             currentAttack.Tick();
         }
+
     }
+
 
 
     public virtual void StartAttack()
@@ -71,5 +75,12 @@ public  abstract class EnemyAttackModule : MonoBehaviour
         attackHitbox.EOnHitDetect -= NotifyHit;
     }
 
+
+
+    private void OnDrawGizmos()
+    {
+
+        Gizmos.DrawRay(new Ray(transform.position, Brain.DirToPlayer*Brain.SqrDistToPlayer));
+    }
 
 }

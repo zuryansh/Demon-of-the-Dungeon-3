@@ -30,6 +30,7 @@ MonoBehaviour:
       type: {class: DamageEffect, ns: , asm: Assembly-CSharp}
       data:
         damage: 5
+        spawnDmgNo: 0
     - rid: 6524999602524913801
       type: {class: KnockBackEffect, ns: , asm: Assembly-CSharp}
       data:

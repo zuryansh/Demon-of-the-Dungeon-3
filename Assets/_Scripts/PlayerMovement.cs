@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -13,10 +12,12 @@ public class PlayerMovement : MonoBehaviour
     Vector3 towardsMouse;
 
 
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         cam = Camera.main;
+
     }
 
     void Update()

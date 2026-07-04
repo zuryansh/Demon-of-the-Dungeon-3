@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyBrain : MonoBehaviour
 {
-
+    // ADD Line Of Sight
     public Transform Player;
     public float SqrDistToPlayer => (transform.position - Player.position).sqrMagnitude;
     public Vector2 DirToPlayer => (Player.position - transform.position).normalized;

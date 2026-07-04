@@ -29,3 +29,4 @@ MonoBehaviour:
       type: {class: DamageEffect, ns: , asm: Assembly-CSharp}
       data:
         damage: 5
+        spawnDmgNo: 0

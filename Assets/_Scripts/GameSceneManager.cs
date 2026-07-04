@@ -1,23 +1,82 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-
-public class GameSceneManager : MonoBehaviour
+public class GameSceneManager : PersistentSingletion<GameSceneManager>
 {
-    //make a system where this scene picks up on each scene data in the current hierachy and loads all the scenes that they require everytime
-    // if possible make all the methods satic
+    public Dictionary<string, SceneData> SceneLookup = new();
+    [SerializeField] private List<SceneData> allSceneDatas;
 
-    private void Awake()
+    readonly HashSet<string> requested = new();
+
+
+    protected override void Awake()
     {
-        
+        base.Awake();
+        SceneLookup.Clear();
+        foreach (SceneData sceneData in allSceneDatas)
+            SceneLookup.Add(sceneData.AttatchedToScene, sceneData);
     }
 
+    private void Start()
+    {
+        // seed existing scenes first, then start listening for new ones
+        for (int i = 0; i < SceneManager.sceneCount; i++)
+            OnSceneLoaded(SceneManager.GetSceneAt(i), LoadSceneMode.Additive);
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        SceneData data = Lookup(scene.name);
+        if (data != null) LoadDependencies(data);
+    }
+
+    public void LoadDependencies(SceneData sceneData)
+    {
+        foreach (SceneData dependency in sceneData.Dependencies)
+        {
+            string name = dependency.AttatchedToScene;
+            Debug.Log($"Checking {name}: isLoaded={SceneManager.GetSceneByName(name).isLoaded} queued={requested.Contains(name)}");
+            if (SceneManager.GetSceneByName(name).isLoaded || requested.Contains(name))
+                continue;
+            requested.Add(name);
+            SceneManager.LoadSceneAsync(name, LoadSceneMode.Additive);
+        }
+    }
+
+    public SceneData Lookup(string sceneName)
+    {
+        if (SceneLookup.TryGetValue(sceneName, out SceneData sceneData))
+            return sceneData;
+        Debug.LogError($"No SceneData found for scene '{sceneName}'.");
+        return null;
+    }
 
     public void RestartGame()
     {
-        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
+        SceneManager.LoadScene(
+            SceneManager.GetActiveScene().buildIndex,
+            LoadSceneMode.Single);
     }
 
-    public void Quit() { Debug.Log("QUIT"); Application.Quit(); }
+    public void Quit()
+    {
+        Debug.Log("QUIT");
+        Application.Quit();
+    }
+
+    public static string GetCurrentSceneName()
+    {
+        return SceneManager.GetActiveScene().name;
+    }
 }

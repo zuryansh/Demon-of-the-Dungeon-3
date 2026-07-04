@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class UIManager : MonoBehaviour
+public class UIManager : PersistentSingletion<UIManager>
 {
     [SerializeField] UnityEvent<bool> OnGamePauseToggle;
     [SerializeField] bool paused;

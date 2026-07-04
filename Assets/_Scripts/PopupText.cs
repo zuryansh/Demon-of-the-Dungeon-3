@@ -12,7 +12,7 @@ public class PopupText : MonoBehaviour
     float fadeDuration=0f;
 
 
-
+    //REDO TO STATIC CLASS THAT SPAWNS POPUPS WITH PROPERTIES;
 
     public void Init(string text,float scale, float activeDuration ,bool doFade, float fadeDuration,bool doAnimation = false)
     {

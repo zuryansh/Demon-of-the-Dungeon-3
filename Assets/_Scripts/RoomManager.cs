@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
-public class RoomManager : Singleton 
+public class RoomManager : Singleton<RoomManager>
 {
 
 
