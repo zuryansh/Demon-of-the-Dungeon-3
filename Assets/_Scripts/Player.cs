@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class PlayerMovement : MonoBehaviour
+public class Player : MonoBehaviour
 {
 
     Rigidbody2D rb;
@@ -23,6 +23,11 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         movementVector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            UIManager.Instance.TogglePause();
+        }
 
     }
 
@@ -57,9 +62,9 @@ public class PlayerMovement : MonoBehaviour
     {
     }
 
-    public void TEST()
+    public void OnDeath()
     {
-        Debug.Log("TESTED");
+        UIManager.Instance.GameOver();
     }
 
 

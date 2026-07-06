@@ -7,8 +7,8 @@ public class GameSceneManager : PersistentSingletion<GameSceneManager>
 {
     public Dictionary<string, SceneData> SceneLookup = new();
     [SerializeField] private List<SceneData> allSceneDatas;
+     HashSet<string> requested = new();
 
-    readonly HashSet<string> requested = new();
 
 
     protected override void Awake()
@@ -46,7 +46,7 @@ public class GameSceneManager : PersistentSingletion<GameSceneManager>
         foreach (SceneData dependency in sceneData.Dependencies)
         {
             string name = dependency.AttatchedToScene;
-            Debug.Log($"Checking {name}: isLoaded={SceneManager.GetSceneByName(name).isLoaded} queued={requested.Contains(name)}");
+            //Debug.Log($"Checking {name}: isLoaded={SceneManager.GetSceneByName(name).isLoaded} queued={requested.Contains(name)}");
             if (SceneManager.GetSceneByName(name).isLoaded || requested.Contains(name))
                 continue;
             requested.Add(name);

@@ -22,7 +22,7 @@ public class EnemyBrain : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Player = FindAnyObjectByType<PlayerMovement>().transform; //CHANGE LATER
+        Player = FindAnyObjectByType<Player>().transform; //CHANGE LATER
         animHelper = GetComponent<AnimationHelper>();
         movementModule = GetComponent<EnemyMovementModule>();    
         attackModule = GetComponent<EnemyAttackModule>();
