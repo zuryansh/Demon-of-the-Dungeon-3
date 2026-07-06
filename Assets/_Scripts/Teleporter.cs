@@ -12,9 +12,10 @@ public class Teleporter : MonoBehaviour
     [SerializeField] protected bool locked;
 
 
-    protected virtual void Teleport(GameObject obj)
+    protected virtual void Teleport(GameObject obj, string tag = "")
     {
         obj.transform.position = teleportTo;
+        print($"Teleported: {obj.name}");
     }
 
     protected void OnTriggerEnter2D(Collider2D collision)

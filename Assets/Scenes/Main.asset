@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dependencies:
   - {fileID: 11400000, guid: b2d3d45ef05c16d459f29df12fee320a, type: 2}
-  attatchedToScene: {fileID: 102900000, guid: 8c9cfa26abfee488c85f1582747f6a02, type: 3}
+  attachedToSceneName: Main
+  attachedToScene: {fileID: 102900000, guid: 8c9cfa26abfee488c85f1582747f6a02, type: 3}

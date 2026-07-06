@@ -1,42 +1,70 @@
 using EditorAttributes;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
 [RequireComponent (typeof(Camera))]
 public class CameraStack : MonoBehaviour
 {
-    [SerializeField] bool debug;
+    Camera MainCam => Camera.main;
 
+
+    [SerializeField] bool debug;
     [SerializeField] Camera cam;
+    [SerializeField] int stackOrder;
     [SerializeField]bool isMain;
+
+
+
     private void Start()
     {
         if(cam == null)cam = GetComponent<Camera>();
-
-        GenerateStackIfMain();
+        AddToMainStack();
     }
-    //[Button("Gen Stack")]
+    [Button("Gen Stack")]
     [ContextMenu("Gen Stack")]
     void GenerateStackIfMain()
     {
-        isMain = Camera.main == cam;
 
         if (isMain)
         {
-            var baseData = cam.GetUniversalAdditionalCameraData();
+            var mainBaseData = cam.GetUniversalAdditionalCameraData();
 
             CameraStack[] stack = FindObjectsByType<CameraStack>(FindObjectsSortMode.None);
             foreach (CameraStack cameraStack in stack)
             {
-                if(debug)
-                Debug.Log(cameraStack.gameObject.name);
-                if (!baseData.cameraStack.Contains(cameraStack.cam) && cameraStack!=this)
+                if (debug)
+                    Debug.Log(cameraStack.gameObject.name);
+                if (!mainBaseData.cameraStack.Contains(cameraStack.cam) && cameraStack != this)
                 {
-                    baseData.cameraStack.Add(cameraStack.cam);
+                    mainBaseData.cameraStack.Add(cameraStack.cam);
+                    
                 }
             }
 
 
+        }
+    }
+
+    void AddToMainStack()
+    {
+        if (Camera.main == cam)
+            return;
+
+        var mainCamData = Camera.main.GetUniversalAdditionalCameraData();
+
+        if (!mainCamData.cameraStack.Contains(cam))
+        {
+            mainCamData.cameraStack.Add(cam);
+
+            // Sort the stack by each camera's CameraStack component.
+            mainCamData.cameraStack.Sort((a, b) =>
+            {
+                CameraStack stackA = a.GetComponent<CameraStack>();
+                CameraStack stackB = b.GetComponent<CameraStack>();
+
+                return stackA.stackOrder.CompareTo(stackB.stackOrder);
+            });
         }
     }
 

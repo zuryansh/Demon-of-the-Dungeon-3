@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -7,7 +8,8 @@ public class Health : MonoBehaviour
     public float curHealth;
     public UnityEvent<EffectContext> OnHit;
     public UnityEvent OnDeath;
-    public UnityEvent<float, float> OnHealthChange;
+    public UnityEvent<float, float> OnHealthChangeUnityEvent;
+    public event Action<float, float> EOnHealthChange;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -20,7 +22,8 @@ public class Health : MonoBehaviour
     {
         curHealth -= dmg;
         OnHit.Invoke(cntxt);
-        OnHealthChange.Invoke(curHealth, maxHealth);
+        OnHealthChangeUnityEvent.Invoke(curHealth, maxHealth);
+        EOnHealthChange?.Invoke(curHealth, maxHealth);
         if(curHealth <= 0 )
         {
             OnDeath.Invoke();

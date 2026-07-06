@@ -66,4 +66,6 @@ public class UIScreen : MonoBehaviour
     {
         GameSceneManager.Instance.Quit();
     }
+
+
 }

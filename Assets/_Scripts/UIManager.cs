@@ -5,6 +5,7 @@ using UnityEngine;
 public class UIManager : PersistentSingletion<UIManager>
 {
     public event Action<bool> OnGamePauseToggle;
+    public bool GamePaused => paused;
 
     [SerializeField] bool paused;
     
@@ -43,7 +44,6 @@ public class UIManager : PersistentSingletion<UIManager>
             );
             return;
         }
-        Debug.Log($"Registered: {screen.Type} ");
         UiScreens.Add(screen.Type, screen);
     }
 
@@ -69,6 +69,7 @@ public class UIManager : PersistentSingletion<UIManager>
         }
         UiScreens[type].Show();
     }
+
     public void Hide(UIMenuType type)
     {
         UiScreens[type].Hide();

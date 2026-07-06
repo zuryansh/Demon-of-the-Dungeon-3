@@ -2,16 +2,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class Player : MonoBehaviour
+public class Player : Singleton<Player> 
 {
+    public Health PlayerHealth => healthScript;
 
     Rigidbody2D rb;
     Camera cam;
     [SerializeField] float moveSpeed;
     [SerializeField] Vector2 movementVector;
+    [SerializeField] Health healthScript;
     Vector3 towardsMouse;
 
 
+    protected override void Awake()
+    {
+        base.Awake();
+    }
 
     void Start()
     {

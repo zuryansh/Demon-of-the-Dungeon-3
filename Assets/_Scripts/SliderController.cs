@@ -7,7 +7,10 @@ public class SliderController : MonoBehaviour
     [SerializeField] float displayTime;
     [SerializeField] CanvasGroup fader;
     [SerializeField] float fadeDuration;
+    [SerializeField] bool isPlayerHealthBar;
     Slider slider;
+
+
     private void Awake()
     {
         slider = GetComponent<Slider>();
@@ -31,8 +34,34 @@ public class SliderController : MonoBehaviour
         if (fader != null) fader.DOFade(0f, fadeDuration);
     }
 
+
+    private void OnEnable()
+    {
+        if (isPlayerHealthBar)
+        {
+            if (Player.Instance.PlayerHealth == null)
+            {
+                Debug.LogError("Player Health Bar Exists without Player");
+
+            }
+            else Player.Instance.PlayerHealth.EOnHealthChange += UpdateSliderVal;
+        }
+    }
+
     private void OnDestroy()
     {
+        if (isPlayerHealthBar)
+        {
+            if (Player.Instance != null)
+            {
+                if (Player.Instance.PlayerHealth == null)
+                {
+                    Debug.LogError("Player Health Bar Exists without Player");
+
+                }
+                else Player.Instance.PlayerHealth.EOnHealthChange -= UpdateSliderVal;
+            }
+        }
         if (fader != null) DOTween.Kill(fader);
     }
 

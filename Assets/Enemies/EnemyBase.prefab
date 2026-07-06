@@ -196,7 +196,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  OnHealthChange:
+  OnHealthChangeUnityEvent:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3366285789836468166}
@@ -270,7 +270,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: -1115722007
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!114 &2631121024680155079
@@ -667,7 +667,7 @@ PrefabInstance:
       objectReference: {fileID: 8753726611480777285}
     - target: {fileID: 4619917301223701082, guid: 7f040bd5ef63f004d84a8981668a4815, type: 3}
       propertyPath: displayTime
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4619917301223701082, guid: 7f040bd5ef63f004d84a8981668a4815, type: 3}
       propertyPath: fadeDuration

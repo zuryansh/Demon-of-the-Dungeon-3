@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a09a913492174140af6b654b8ed2d74, type: 3}
   m_Name: RoomAssembler
   m_EditorClassIdentifier: 
-  dependencies: []
-  attatchedToScene: {fileID: 102900000, guid: a9f8d30b423eb4c4d9f2af5398161f62, type: 3}
+  dependencies:
+  - {fileID: 11400000, guid: b2d3d45ef05c16d459f29df12fee320a, type: 2}
+  attachedToSceneName: RoomAssembler
+  attachedToScene: {fileID: 102900000, guid: a9f8d30b423eb4c4d9f2af5398161f62, type: 3}
