@@ -22,11 +22,13 @@ MonoBehaviour:
   onTargetHitEffects: []
   onAttackStartEffects:
   - rid: 6524999602524913778
+  onAttackEndEffects: []
   references:
     version: 2
     RefIds:
     - rid: 6524999602524913778
       type: {class: SpawnProjectile, ns: , asm: Assembly-CSharp}
       data:
-        projectile: {fileID: 8709957694562489530, guid: 67ad7e22309732147872ce641662f057, type: 3}
+        projectile: {fileID: 2627930888888434042, guid: 67ad7e22309732147872ce641662f057, type: 3}
         speed: 10
+        delay: 0

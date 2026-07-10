@@ -1,27 +1,38 @@
 using UnityEngine;
 using System.Collections.Generic;
-[RequireComponent(typeof(Hitbox))]
+
+[RequireComponent(typeof(Rigidbody2D))]
 public class Projectile : MonoBehaviour
 {
-    [SerializeReference, SubclassSelector] List<Effect> onHitEffects;
-    [SerializeField] int pierceCount;
-    [SerializeField] int projHit;
+    [SerializeField] float activeTime =5f;
+    [SerializeReference, SubclassSelector] protected List<Effect> onHitEffects;
+    [SerializeField] protected int pierceCount;
+    [SerializeField] protected int projHit;
+    [SerializeField] Hitbox hitbox;
     
-    Hitbox hitbox;
-
+    public Transform Sender;
+    protected Rigidbody2D rb;
 
     private void Awake()
     {
-        hitbox = GetComponent<Hitbox>();
+        if(hitbox == null )hitbox = GetComponent<Hitbox>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     private void Start()
     {
-        Destroy(gameObject, 5f);
+        Destroy(gameObject, activeTime);
     }
 
-    public void NotifyHit(Collider2D collider, Vector3 dir)
+    virtual public  void Launch(Vector3 vel)
     {
+        rb.linearVelocity = vel;
+    }
+
+    public virtual void NotifyHit(Collider2D collider, Vector3 dir)
+    {
+        Debug.Log("HIUT");
+
         projHit++;
 
         Vector3 p = collider.ClosestPoint(transform.position);
@@ -30,14 +41,19 @@ public class Projectile : MonoBehaviour
 
         foreach (Effect effect in onHitEffects)
             effect.Apply(context);
-        if(projHit >= pierceCount) Destroy(gameObject);
+        if (projHit >= pierceCount) OnPierceFinish();
     }
 
-    private void OnEnable()
+    protected virtual void OnPierceFinish()
+    {
+        Destroy(gameObject);
+    }
+
+   protected virtual void OnEnable()
     {
         hitbox.EOnHitDetect += NotifyHit;
     }
-    private void OnDisable()
+   protected virtual void OnDisable()
     {
         hitbox.EOnHitDetect -= NotifyHit;
     }

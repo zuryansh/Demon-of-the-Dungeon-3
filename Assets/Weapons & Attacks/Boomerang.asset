@@ -10,14 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac8781f33fe10b943b58a2718175b369, type: 3}
-  m_Name: Sword
+  m_Name: Boomerang
   m_EditorClassIdentifier: 
   attackCombo:
-  - {fileID: 11400000, guid: 57c0040851b5218449ffb31f072d7ca1, type: 2}
-  - {fileID: 11400000, guid: 20d104e74baced0419affb05211184c9, type: 2}
-  - {fileID: 11400000, guid: 57c0040851b5218449ffb31f072d7ca1, type: 2}
-  idleClip: {fileID: 7400000, guid: 34bc6edb3d436c640b2e0f04cd998554, type: 2}
+  - {fileID: 11400000, guid: 4abb388e50f4f9b4db6ac61d576e4915, type: 2}
+  idleClip: {fileID: 7400000, guid: 371e17af6f086044d8efe5289a9145ee, type: 2}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
-  comboEndCooldown: 0.2
+  comboEndCooldown: 1

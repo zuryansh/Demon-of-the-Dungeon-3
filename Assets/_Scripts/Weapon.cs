@@ -1,41 +1,50 @@
 
+using UnityEditor;
 using UnityEngine;
 
 [RequireComponent(typeof(AnimationHelper))]
 public class Weapon: MonoBehaviour, ICombatHandler
 {
+    public Vector2 MouseDir => (inputCam.ScreenToWorldPoint(Input.mousePosition) - visuals.position).normalized;
 
+    [SerializeField] Collider2D user;
+    [SerializeField] Transform visuals;
     [SerializeField] WeaponData weaponData;
-    [SerializeField] int comboIndex = 0;
     [SerializeField] Hitbox weaponHitbox;
-    [SerializeField] bool hasBufferedAttack;
     [SerializeField] MouseLook mouseLook;
     [SerializeField] float comboCyoteTime=1f;
-    [SerializeField] bool comboIsFinished = true;
-
     [SerializeField] AttackRuntime currentAttack;
 
-    [SerializeField ]AnimationHelper animHelper;
-    float timeSinceLastAttack=0f;
+    [SerializeField] int comboIndex = 0;
+    [SerializeField] bool hasBufferedAttack;
+    [SerializeField] bool comboIsFinished = true;
+
+    bool onCooldown = false;
+    AnimationHelper animHelper;
+    float timeSinceLastAttackEnd=0f;
+    Camera inputCam;
 
     [SerializeField] bool isAttacking;
 
-    float prevProgress;
+
     private void Start()
     {
+        inputCam = Camera.main;
         animHelper = GetComponent<AnimationHelper>();
         currentAttack = null;
     }
 
     private void Update()
     {
+        timeSinceLastAttackEnd += Time.deltaTime;
+
         if(isAttacking)
         {
             currentAttack.Tick();
         }
         else
         {
-            if(Time.time - timeSinceLastAttack > comboCyoteTime && !comboIsFinished)
+            if(timeSinceLastAttackEnd > comboCyoteTime && !comboIsFinished)
             {
                 OnComboFinish();
             }
@@ -53,16 +62,24 @@ public class Weapon: MonoBehaviour, ICombatHandler
         currentAttack.EAttackFinish += OnAttackFinish;
         currentAttack.EToggleMouseLock += OnToggleMouseLook;
 
+       
+
+        EffectContext context = new EffectContext(user.gameObject, null, visuals.position ,MouseDir.normalized);
+        foreach (var effect in data.OnAttackStartEffects) effect.Apply(context);
+
+
         animHelper.ChangeAnimation(currentAttack.Data.AttackAnimation, forceReplay :true);
     }
 
 
     public void TryAttack()
     {
+        if (onCooldown) return;
+
         if (isAttacking)
         {
             if (currentAttack != null &&
-                currentAttack.CanBufferNextAttack())
+                currentAttack.CanBufferNextAttack() && comboIndex < weaponData.Combo.Count-1) //only let buffer if not on the last attack in chain 
             {
                 hasBufferedAttack = true;
             }
@@ -80,32 +97,43 @@ public class Weapon: MonoBehaviour, ICombatHandler
 
     void OnAttackFinish()
     {
+        EffectContext context = new EffectContext( user.gameObject, null, visuals.position, MouseDir.normalized);
+        foreach (var effect in currentAttack.Data.OnAttackEndEffects) effect.Apply(context);
+
         currentAttack.EAttackFinish -= OnAttackFinish;
         currentAttack.EToggleMouseLock -= OnToggleMouseLook;
 
 
-        timeSinceLastAttack = Time.time;
+        timeSinceLastAttackEnd = 0f;
 
         currentAttack = null;
         isAttacking = false;
+
+
+
         animHelper.ChangeAnimation(weaponData.IdleAnim);
-        if(hasBufferedAttack) { hasBufferedAttack = false; StartAttack(GetNextAttackInCombo()); }
+        if(hasBufferedAttack) { hasBufferedAttack = false; StartAttack(GetNextAttackInCombo()); } 
     }
 
     void OnComboFinish()
     {
+
+
         comboIndex = 0;
 
         animHelper.ChangeAnimation(weaponData.IdleAnim);
         comboIsFinished = true;
+        onCooldown = true;
+        Invoke(nameof(ResetCooldown), weaponData.ComboEndCooldown);
     }
+    void ResetCooldown() => onCooldown = false;
 
     public void NotifyHit(Collider2D collider, Vector3 dir)
     {
 
         Vector3 p = collider.ClosestPoint(transform.position);
 
-        EffectContext context = new EffectContext(gameObject, collider.gameObject, p,dir);
+        EffectContext context = new EffectContext(user.gameObject, collider.gameObject, p,dir);
 
         foreach (Effect effect in currentAttack.Data.OnTargetHitEffects)
             effect.Apply(context);
@@ -133,5 +161,8 @@ public class Weapon: MonoBehaviour, ICombatHandler
     }
 
 
-
+    private void OnDrawGizmos()
+    {
+        if (Selection.Contains(gameObject)) Debug.DrawRay(visuals.transform.position, MouseDir);
+    }
 }

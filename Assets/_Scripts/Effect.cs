@@ -1,5 +1,7 @@
 using EditorAttributes;
 using System;
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [Serializable]
@@ -71,15 +73,24 @@ public class SpawnParticlesEffect : Effect
 [Serializable]
 public class SpawnProjectile : Effect
 {
-    [SerializeField] Rigidbody2D projectile;
+    [SerializeField] Projectile projectile;
     [SerializeField] float speed;
+    [SerializeField] float delay;
 
     public override void Apply(EffectContext context)
     {
-        Quaternion spawnRot = Quaternion.FromToRotation(projectile.transform.right, context.EffectDir);
+        GameSceneManager.Instance.StartCoroutine(Spawn(context));
+        
 
-        Rigidbody2D rb = MonoBehaviour.Instantiate(projectile, context.EffectPoint, spawnRot);
-        rb.linearVelocity = context.EffectDir *speed;
+    }
+
+    IEnumerator Spawn(EffectContext context)
+    {
+        Quaternion spawnRot = Quaternion.FromToRotation(projectile.transform.right, context.EffectDir);
+        yield return new WaitForSeconds(delay);
+        Projectile proj = MonoBehaviour.Instantiate(projectile, context.EffectPoint, spawnRot);
+        proj.Sender = context.Source.transform;
+        proj.Launch(context.EffectDir * speed);
 
     }
 }

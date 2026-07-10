@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8738c2175f86edb4a8463ed4359cf35d, type: 3}
   m_Name: SpearSwipe
   m_EditorClassIdentifier: 
-  attackType: 1
+  attackType: 0
   attackName: SpearSwipe
   attackAnimation: {fileID: 7400000, guid: 955c0ad6e7bbe71448bf099d9b4ee0d6, type: 2}
   animationPriority: 0

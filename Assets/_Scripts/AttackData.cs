@@ -24,6 +24,7 @@ public class AttackData : ScriptableObject
 
     [SerializeReference, SubclassSelector] List<Effect> onTargetHitEffects;
     [SerializeReference, SubclassSelector] List<Effect> onAttackStartEffects;
+    [SerializeReference, SubclassSelector] List<Effect> onAttackEndEffects;
 
 
 
@@ -33,6 +34,7 @@ public class AttackData : ScriptableObject
     public int AnimationPriority { get => animationPriority; }  
     public List<Effect> OnTargetHitEffects { get => onTargetHitEffects; }
     public List<Effect> OnAttackStartEffects { get => onAttackStartEffects; }
+    public List<Effect> OnAttackEndEffects { get => onAttackEndEffects; }
 
 
     public float MouseLockTime { get => mouseLockTime;  }

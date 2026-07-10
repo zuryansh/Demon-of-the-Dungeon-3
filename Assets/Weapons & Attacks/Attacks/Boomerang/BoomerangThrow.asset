@@ -10,28 +10,31 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8738c2175f86edb4a8463ed4359cf35d, type: 3}
-  m_Name: Thrust Left
+  m_Name: BoomerangThrow
   m_EditorClassIdentifier: 
   attackType: 0
-  attackName: ThrustLeft
-  attackAnimation: {fileID: 7400000, guid: 5801d1443af9de84e98d7754f331ace0, type: 2}
+  attackName: 
+  attackAnimation: {fileID: 7400000, guid: f2aaaa6d4fea9f6449f2830280446c43, type: 2}
   animationPriority: 0
-  mouseLockTime: 0.24
-  nextAttackInputStartTime: 0.3
+  mouseLockTime: 0.2
+  nextAttackInputStartTime: 1
   cancelAttackBeforeTime: 0.36
   onTargetHitEffects:
-  - rid: 6524999602524913802
-  - rid: 5677584699095777360
+  - rid: 5677584718897873049
   onAttackStartEffects: []
+  onAttackEndEffects:
+  - rid: 5677584718897873096
   references:
     version: 2
     RefIds:
-    - rid: 5677584699095777360
-      type: {class: StunEffect, ns: , asm: Assembly-CSharp}
-      data:
-        duration: 0.1
-    - rid: 6524999602524913802
+    - rid: 5677584718897873049
       type: {class: DamageEffect, ns: , asm: Assembly-CSharp}
       data:
         damage: 5
         spawnDmgNo: 0
+    - rid: 5677584718897873096
+      type: {class: SpawnProjectile, ns: , asm: Assembly-CSharp}
+      data:
+        projectile: {fileID: 2468689517085324198, guid: 1891539b16d05be4f9051b9b20d69e52, type: 3}
+        speed: 10
+        delay: 0
