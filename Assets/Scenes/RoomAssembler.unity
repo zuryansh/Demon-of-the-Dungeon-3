@@ -537,7 +537,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 727
+    m_Bits: 1751
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -610,6 +610,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debug: 0
   cam: {fileID: 519420031}
+  stackOrder: 0
   isMain: 1
 --- !u!1 &735200373
 GameObject:
@@ -1063,10 +1064,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2186658259818906100, guid: 9ea64f9ddac572940afcb668b93f3510, type: 3}
-      propertyPath: maxHealth
-      value: 200
-      objectReference: {fileID: 0}
     - target: {fileID: 7287259163836918980, guid: 9ea64f9ddac572940afcb668b93f3510, type: 3}
       propertyPath: m_LocalPosition.x
       value: 34
@@ -1110,14 +1107,6 @@ PrefabInstance:
     - target: {fileID: 7421941241253774048, guid: 9ea64f9ddac572940afcb668b93f3510, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 8183911089904164054, guid: 9ea64f9ddac572940afcb668b93f3510, type: 3}
-      propertyPath: m_SortingLayer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8183911089904164054, guid: 9ea64f9ddac572940afcb668b93f3510, type: 3}
-      propertyPath: m_SortingLayerID
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1402,7 +1391,7 @@ GameObject:
   - component: {fileID: 2037529225}
   - component: {fileID: 2037529224}
   - component: {fileID: 2037529223}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}

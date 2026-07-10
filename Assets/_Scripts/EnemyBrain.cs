@@ -1,20 +1,29 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.UI.Image;
 
-public class EnemyBrain : MonoBehaviour
+public class EnemyBrain : MonoBehaviour,IStunnable
 {
     // ADD Line Of Sight
     public Transform Player;
-    public float SqrDistToPlayer => (transform.position - Player.position).sqrMagnitude;
-    public Vector2 DirToPlayer => (Player.position - transform.position).normalized;
     public EnemySO Data=> enemyData;
     public AnimationHelper AnimationHelper => animHelper;
     public event Action<EnemyBrain> EOnDeath;
+    public bool HasLOS => hasLOS;
+    public Vector2 LastPlayerPos;
+
 
     [SerializeField] EnemySO enemyData;
-    AnimationHelper animHelper;
+    [SerializeField] bool hasLOS;
+    [SerializeField] float timeBetweenTicks = 0.1f;
+    [SerializeField] LayerMask obstacleLayer;
+    [SerializeField] LayerMask playerLayer;
 
+
+    AnimationHelper animHelper;
+    float timeSinceLastTick;
+    float timeSinceLastFixTick;
     EnemyMovementModule movementModule;
     EnemyAttackModule attackModule;
 
@@ -22,7 +31,9 @@ public class EnemyBrain : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+
         Player = FindAnyObjectByType<Player>().transform; //CHANGE LATER
+
         animHelper = GetComponent<AnimationHelper>();
         movementModule = GetComponent<EnemyMovementModule>();    
         attackModule = GetComponent<EnemyAttackModule>();
@@ -45,14 +56,27 @@ public class EnemyBrain : MonoBehaviour
 
     private void Update()
     {
-        attackModule.Tick();
+        timeSinceLastTick += Time.deltaTime;
+
+            Tick();
+        
+
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        timeSinceLastFixTick += Time.fixedDeltaTime;
+        //if(timeSinceLastFixTick > timeBetweenTicks)
+        //{
+            FixedTick();
+        //}
+    }
+
+    void FixedTick()
+    {
+        timeSinceLastFixTick = 0f;
         movementModule.Tick();
-        
     }
 
 
@@ -69,5 +93,34 @@ public class EnemyBrain : MonoBehaviour
         EOnDeath?.Invoke(this);
         Destroy(gameObject);
     }
+
+    public void Stun(float duration)
+    {
+        movementModule.Stun(duration);
+        attackModule.Stun(duration);
+    }
+
+    void Tick()
+    {
+        timeSinceLastTick = 0;
+        hasLOS = CheckLOS();
+        if (hasLOS) LastPlayerPos = Player.position;
+        attackModule.Tick();
+
+    }
+
+    bool CheckLOS()
+    {
+        Vector2 origin = transform.position;
+        Vector2 target = Player.transform.position;
+        Vector2 direction = (target - origin).normalized;
+        float distance = Vector2.Distance(origin, target);
+
+        RaycastHit2D hit = Physics2D.Raycast(origin, direction, distance, obstacleLayer | playerLayer);
+
+        Debug.DrawRay(origin, direction * distance, hit && hit.transform == Player.transform ? Color.green : Color.red);
+        return hit && hit.transform == Player.transform;
+    }
+
     
 }

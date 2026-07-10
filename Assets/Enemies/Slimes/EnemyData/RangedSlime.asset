@@ -18,7 +18,7 @@ MonoBehaviour:
   movementAnim: {fileID: 7400000, guid: 6e77be4079c40134287acca5d768b9f9, type: 2}
   onHitEffects:
   - rid: 6524999602524913774
-  pointCost: 2
+  pointCost: 4
   references:
     version: 2
     RefIds:

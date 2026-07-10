@@ -114,7 +114,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 0}
+  LastPlayerPos: {x: 0, y: 0}
   enemyData: {fileID: 0}
+  hasLOS: 0
+  timeBetweenTicks: 0.1
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!95 &5012764987704095770
 Animator:
   serializedVersion: 7
@@ -164,6 +173,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6e1b6d4a85a1ca4094adad3880d5256, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onHitSound:
+  - {fileID: 8300000, guid: 24aea3a639588da4e997b4237e788ca7, type: 3}
+  - {fileID: 8300000, guid: 753f14174908844409097ac0065cbd26, type: 3}
+  - {fileID: 8300000, guid: ae8e98d33ce1ee34ab5778ec5a043047, type: 3}
+  onDeathSound: []
   maxHealth: 20
   curHealth: 0
   OnHit:

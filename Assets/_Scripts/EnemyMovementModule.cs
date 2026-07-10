@@ -1,14 +1,20 @@
 using EditorAttributes;
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public abstract class EnemyMovementModule : MonoBehaviour
 {
     public EnemyBrain Brain;
+
+    protected virtual float SqrDistToPlayer => (transform.position.ToV2() - Brain.LastPlayerPos).sqrMagnitude;
+    protected virtual Vector2 DirToPlayer => -(transform.position.ToV2() - Brain.LastPlayerPos).normalized;
     protected Rigidbody2D rb;
+    
     [SerializeField] protected bool FlipSpriteAccToDir;
     [ConditionalField(ConditionType.OR, nameof(FlipSpriteAccToDir))]
     [SerializeField] protected SpriteRenderer spriteRenderer;
+
 
     public virtual void Init()
     {
@@ -19,7 +25,7 @@ public abstract class EnemyMovementModule : MonoBehaviour
     {
         Vector2 dir = direction.normalized;
 
-        Vector2 targetSpeed = dir.normalized * moveSpeed;
+        Vector2 targetSpeed = dir.normalized * moveSpeed ;
         Vector2 speedDif = targetSpeed - rb.linearVelocity;
         rb.AddForce(speedDif, forceMode); // impulse feels more snappy but FORCE feels more floaty
     }
@@ -45,5 +51,9 @@ public abstract class EnemyMovementModule : MonoBehaviour
         }
     }
 
+    public virtual void Stun(float duration)
+    {
+        StopAllMovement();
+    }
 
 }

@@ -35,6 +35,7 @@ public class Player : Singleton<Player>
             UIManager.Instance.TogglePause();
         }
 
+
     }
 
 

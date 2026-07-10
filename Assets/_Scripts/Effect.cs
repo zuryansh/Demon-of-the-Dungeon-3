@@ -84,3 +84,17 @@ public class SpawnProjectile : Effect
     }
 }
 
+[Serializable]
+public class StunEffect : Effect
+{
+    [SerializeField] float duration;
+
+    public override void Apply(EffectContext context)
+    {
+        if(context.Target.TryGetComponent<IStunnable>(out IStunnable stunable))
+        {
+            stunable.Stun(duration);
+        }
+    }
+}
+

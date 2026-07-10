@@ -22,10 +22,15 @@ MonoBehaviour:
   onTargetHitEffects:
   - rid: 6524999602524913799
   - rid: 6524999602524913801
+  - rid: 5677584699095777362
   onAttackStartEffects: []
   references:
     version: 2
     RefIds:
+    - rid: 5677584699095777362
+      type: {class: StunEffect, ns: , asm: Assembly-CSharp}
+      data:
+        duration: 0.4
     - rid: 6524999602524913799
       type: {class: DamageEffect, ns: , asm: Assembly-CSharp}
       data:

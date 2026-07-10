@@ -46,7 +46,7 @@ public class Room : MonoBehaviour
 
     void OnAssemblyCompletion(IReadOnlyList<Room> allRooms)
     {
-        SpawnDoors();
+        //SpawnDoors();
     }
 
     void SpawnDoors()
@@ -147,6 +147,8 @@ public class Room : MonoBehaviour
 
     void RoomCleared()
     {
+        SpawnDoors();
+
         foreach (Door door in doors)
         {
             door.SetLock(false);

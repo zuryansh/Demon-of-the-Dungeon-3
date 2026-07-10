@@ -1,11 +1,16 @@
 using UnityEngine;
 using DG.Tweening;
+using UnityEditor.Tilemaps;
 
 public class ProximityAttack : EnemyAttackModule
 {
+    public override bool CanAttack => !isAttacking &&
+        !isStunned && 
+        Brain.HasLOS &&
+        timeSinceLastAttack > timeBetweenAttacks;
+
     [SerializeField] float maxAttackRange;
     [SerializeField] float timeBetweenAttacks;
-    [SerializeField] bool canAttack = true;
     [SerializeField] LookAtObj HitboxLookScript;
     [SerializeField] bool jumpTowardsTarget;
 
@@ -18,30 +23,32 @@ public class ProximityAttack : EnemyAttackModule
     public override void Tick()
     {
         base.Tick();
-        if(Brain.SqrDistToPlayer <= maxAttackRange*maxAttackRange)
+        if(SqrDistToPlayer <= maxAttackRange*maxAttackRange)
         {
-            if (!isAttacking && canAttack)
+            if (CanAttack)
             {
                 StartAttack();
             }
         }
+        
     }
 
     public override void StartAttack()
     {
+        if (!CanAttack) return;
+        
         base.StartAttack();
-        canAttack = false;
         AnimatorStateInfo animatorStateInfo = Brain.AnimationHelper.Anim.GetCurrentAnimatorStateInfo(0);
 
-        if(jumpTowardsTarget )transform.DOMove(transform.position + (Vector3)(Brain.DirToPlayer*maxAttackRange/2), animatorStateInfo.length);
+        if(jumpTowardsTarget )transform.DOMove(transform.position + (Vector3)(DirToPlayer*maxAttackRange/2), animatorStateInfo.length);
     }
+
+
 
     public override void OnAttackFinish()
     {
         base.OnAttackFinish();
-        Invoke(nameof(ResetAttack), timeBetweenAttacks);
 
     }
 
-    void ResetAttack() => canAttack = true;
 }

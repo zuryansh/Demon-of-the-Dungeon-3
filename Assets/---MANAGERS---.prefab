@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1132212696965055781}
   - component: {fileID: 2426490485076213142}
   - component: {fileID: 5310891453088253085}
+  - component: {fileID: 1075668440907741506}
   m_Layer: 0
   m_Name: ---MANAGERS---
   m_TagString: Untagged
@@ -65,3 +66,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   paused: 0
+--- !u!114 &1075668440907741506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4698240675744380090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea2e8d52f8b563b48bf418fb5161db2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SFXSourcePrefab: {fileID: 132149268931510265, guid: 913d667552227a64a96ea787bd28a7c3, type: 3}
+  musicSourcePrefab: {fileID: 6095913440150167881, guid: a6bb20c64489e404ea2af2d73c631c1a, type: 3}

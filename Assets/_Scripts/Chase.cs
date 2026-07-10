@@ -1,10 +1,12 @@
+using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
 public class Chase : EnemyMovementModule
 {
-    
+
+
     [SerializeField] float sightRange;
     [SerializeField] float speed;
     [SerializeField] float stoppingRange;
@@ -13,6 +15,7 @@ public class Chase : EnemyMovementModule
     [SerializeField] float seperationStrength = 2f;
     [SerializeField] bool DebugRanges = false;
 
+    float ogSpeed;
     bool inRange;
     private readonly Collider2D[] nearbyEnemies = new Collider2D[16];
     ContactFilter2D enemyFilter;
@@ -27,6 +30,7 @@ public class Chase : EnemyMovementModule
         {
             layerMask = gameObject.layer
         };
+        ogSpeed = speed;
     }
 
     // Update is called once per frame
@@ -36,21 +40,37 @@ public class Chase : EnemyMovementModule
 
         //if (FlipSpriteAccToDir) FlipSprite();
 
-        desiredDir = Vector2.zero;
+        //desiredDir = Vector2.zero;
 
 
-        inRange = Brain.SqrDistToPlayer < sightRange * sightRange && Brain.SqrDistToPlayer >= stoppingRange * stoppingRange;
+        //inRange = Brain.SqrDistToPlayer < sightRange * sightRange && Brain.SqrDistToPlayer >= stoppingRange * stoppingRange;
 
-        if (inRange)
-        {
-            desiredDir += Brain.DirToPlayer;
-            
-        }
+        //if (inRange)
+        //{
+        //    desiredDir += Brain.DirToPlayer;
 
-        if (Brain.SqrDistToPlayer > stoppingRange * stoppingRange) ApplySeperation(); // dont aply if enemy super close to player
+        //}
+
+        ChasePostition();
+
+        if ((Brain.Player.position - transform.position).sqrMagnitude > stoppingRange * stoppingRange) ApplySeperation(); // dont aply if enemy super close to player
         MoveInDir(desiredDir.normalized, speed, ForceMode2D.Force);
         
         CheckAnimation();
+    }
+    
+    void ChasePostition()
+    {
+        desiredDir = Vector2.zero;
+
+
+        inRange = SqrDistToPlayer < sightRange * sightRange && SqrDistToPlayer >= stoppingRange * stoppingRange;
+
+        if (Brain.HasLOS) //if has los chase normally
+        {
+            if (inRange) desiredDir += DirToPlayer;
+        }
+        else if(SqrDistToPlayer > 0.1f)desiredDir += DirToPlayer; //if dosent have Los the chase last position depsite being in range and not at that position
     }
 
     private void ApplySeperation()
@@ -92,6 +112,7 @@ public class Chase : EnemyMovementModule
         else Brain.AnimationHelper.ChangeAnimation(Brain.Data.IdleAnim);
     }
 
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         if (DebugRanges)
@@ -101,18 +122,33 @@ public class Chase : EnemyMovementModule
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, stoppingRange);
         }
+        if(Selection.Contains(gameObject) && Brain != null) Gizmos.DrawWireSphere(Brain.LastPlayerPos, 1f);
     }
+
+#endif
 
     protected override void FlipSprite()
     {
         if (spriteRenderer == null) Debug.LogWarning("Sprite renderer not found");
-        if (Brain.SqrDistToPlayer < sightRange * sightRange)
+        if (SqrDistToPlayer < sightRange * sightRange)
         {
-            if (Brain.DirToPlayer.x > 0) spriteRenderer.flipX = false;
+            if (DirToPlayer.x > 0) spriteRenderer.flipX = false;
             else spriteRenderer.flipX = true;
         }
 
 
     }
 
+    public override void Stun(float duration)
+    {
+        base.Stun(duration);
+        speed = 0;
+        CancelInvoke(nameof(ResetStun));
+        Invoke(nameof(ResetStun), duration);
+    }
+
+    void ResetStun()
+    {
+        speed = ogSpeed;
+    }
 }

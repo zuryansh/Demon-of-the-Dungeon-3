@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 
@@ -5,15 +6,20 @@ public  abstract class EnemyAttackModule : MonoBehaviour
 {
     public EnemyBrain Brain;
     public AnimationHelper AnimHelper => Brain.AnimationHelper;
-    
+    public virtual bool CanAttack => !isAttacking && !isStunned && Brain.HasLOS ;
+
+    protected virtual float SqrDistToPlayer => (Brain.LastPlayerPos - transform.position.ToV2()).sqrMagnitude;
+    protected virtual Vector2 DirToPlayer => (Brain.LastPlayerPos - transform.position.ToV2()).normalized;
 
     [SerializeField] protected AttackData attackData;
     [SerializeField] protected AttackRuntime currentAttack;
     [SerializeField] protected bool isAttacking;
     [SerializeField] protected Hitbox attackHitbox;
     [SerializeField] protected LayerMask obstacleLayer;
-
+    [SerializeField]protected bool isStunned = false;
+    [SerializeField]protected bool canAttack;
     protected float timeSinceLastAttack;
+
 
     public virtual void Init()
     {
@@ -25,6 +31,10 @@ public  abstract class EnemyAttackModule : MonoBehaviour
         {
             currentAttack.Tick();
         }
+        
+        //if (isStunned) canAttack = false;
+        if (!isStunned) timeSinceLastAttack += Time.deltaTime ;
+        else timeSinceLastAttack = 0f;
 
     }
 
@@ -34,8 +44,9 @@ public  abstract class EnemyAttackModule : MonoBehaviour
     {
         isAttacking = true;
         currentAttack = new AttackRuntime(attackData, Time.time, AnimHelper.Anim);
+        timeSinceLastAttack = 0f;
 
-        EffectContext context = new EffectContext(gameObject, null, transform.position, Brain.DirToPlayer);
+        EffectContext context = new EffectContext(gameObject, null, transform.position, (Vector3)DirToPlayer);
         foreach (var effect in attackData.OnAttackStartEffects) effect.Apply(context);
 
         currentAttack.EAttackFinish += OnAttackFinish;
@@ -46,7 +57,6 @@ public  abstract class EnemyAttackModule : MonoBehaviour
     {
         currentAttack.EAttackFinish -= OnAttackFinish;
 
-        timeSinceLastAttack = Time.time;
 
         currentAttack = null;
         isAttacking = false;
@@ -80,7 +90,20 @@ public  abstract class EnemyAttackModule : MonoBehaviour
     private void OnDrawGizmos()
     {
 
-        Gizmos.DrawRay(new Ray(transform.position, Brain.DirToPlayer*Brain.SqrDistToPlayer));
+        //Gizmos.DrawRay(new Ray(transform.position, Brain.DirToPlayer*Brain.SqrDistToPlayer));
+    }
+
+    public virtual void Stun(float duration)
+    {
+        print("STunned");
+        isStunned = true;
+        Invoke(nameof(ResetStun), duration);
+    }
+
+    void ResetStun()
+    {
+        Debug.Log("REset");    
+        isStunned = false;
     }
 
 }

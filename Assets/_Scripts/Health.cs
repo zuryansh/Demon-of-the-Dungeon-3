@@ -4,6 +4,9 @@ using UnityEngine.Events;
 
 public class Health : MonoBehaviour
 {
+    
+    [SerializeField] AudioClip[] onHitSound;
+    [SerializeField] AudioClip[] onDeathSound;
     public float maxHealth;
     public float curHealth;
     public UnityEvent<EffectContext> OnHit;
@@ -24,8 +27,12 @@ public class Health : MonoBehaviour
         OnHit.Invoke(cntxt);
         OnHealthChangeUnityEvent.Invoke(curHealth, maxHealth);
         EOnHealthChange?.Invoke(curHealth, maxHealth);
+
+        if(onHitSound.Length!=0)AudioManager.Instance.PlayRandomSound(onHitSound, 1f, SoundType.Sfx);
+
         if(curHealth <= 0 )
         {
+            if(onDeathSound.Length != 0)AudioManager.Instance.PlayRandomSound(onDeathSound, 1f, SoundType.Sfx);
             OnDeath.Invoke();
         }
     }
