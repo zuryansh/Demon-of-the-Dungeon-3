@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum UIMenuType
 {
-    Pause, GameOver
+    Pause, GameOver, GameWin
 }
 
 public class UIScreen : MonoBehaviour
@@ -67,5 +67,14 @@ public class UIScreen : MonoBehaviour
         GameSceneManager.Instance.Quit();
     }
 
+    public void SwitchScenes(SceneData data)
+    {
+        GameSceneManager.Instance.SwitchScene(data);
+    }
+
+    public void ReloadScene()
+    {
+        GameSceneManager.Instance.ReloadCurrentScene();
+    }
 
 }

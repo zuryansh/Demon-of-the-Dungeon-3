@@ -102,6 +102,7 @@ public class StunEffect : Effect
 
     public override void Apply(EffectContext context)
     {
+        if (context.Target == null) return; 
         if(context.Target.TryGetComponent<IStunnable>(out IStunnable stunable))
         {
             stunable.Stun(duration);

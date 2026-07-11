@@ -27,6 +27,7 @@ public class PlayerCombat : MonoBehaviour, ICombatant
         }
         if (Input.GetKeyDown(KeyCode.Alpha1)) currentWeapon = weapons[0];
         else if(Input.GetKeyDown(KeyCode.Alpha2)) currentWeapon = weapons[1];
+        else if(Input.GetKeyDown(KeyCode.Alpha3)) currentWeapon = weapons[2];
     }
 
 

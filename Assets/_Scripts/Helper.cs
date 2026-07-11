@@ -294,4 +294,9 @@ public static class Helper
 
         return values[^1];
     }
+
+    public static bool IsInLayerMask(this GameObject gameObject, LayerMask layerMask)
+    {
+        return (layerMask.value & (1 << gameObject.layer)) != 0;
+    }
 }

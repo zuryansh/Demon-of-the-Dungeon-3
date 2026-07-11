@@ -24,6 +24,7 @@ MonoBehaviour:
   onAttackStartEffects: []
   onAttackEndEffects:
   - rid: 5677584718897873096
+  - rid: 5677584734300930174
   references:
     version: 2
     RefIds:
@@ -36,5 +37,9 @@ MonoBehaviour:
       type: {class: SpawnProjectile, ns: , asm: Assembly-CSharp}
       data:
         projectile: {fileID: 2468689517085324198, guid: 1891539b16d05be4f9051b9b20d69e52, type: 3}
-        speed: 10
+        speed: 13
         delay: 0
+    - rid: 5677584734300930174
+      type: {class: StunEffect, ns: , asm: Assembly-CSharp}
+      data:
+        duration: 0.2

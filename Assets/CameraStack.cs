@@ -18,9 +18,12 @@ public class CameraStack : MonoBehaviour
 
     private void Start()
     {
+        print("STARTED CAMERA STACk " + gameObject.name);
         if(cam == null)cam = GetComponent<Camera>();
         AddToMainStack();
     }
+
+
     [Button("Gen Stack")]
     [ContextMenu("Gen Stack")]
     void GenerateStackIfMain()
@@ -48,7 +51,7 @@ public class CameraStack : MonoBehaviour
 
     void AddToMainStack()
     {
-        if (Camera.main == cam)
+        if (Camera.main == cam || isMain)
             return;
 
         var mainCamData = Camera.main.GetUniversalAdditionalCameraData();

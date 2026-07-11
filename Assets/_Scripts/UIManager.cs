@@ -11,12 +11,12 @@ public class UIManager : PersistentSingletion<UIManager>
     
 
 
-    Dictionary<UIMenuType, UIScreen> UiScreens = new();
+    Dictionary<UIMenuType, UIScreen> screens = new();
 
 
     public void TogglePause()
     {
-        if (UiScreens.TryGetValue(UIMenuType.Pause, out UIScreen pauseMenu))
+        if (screens.TryGetValue(UIMenuType.Pause, out UIScreen pauseMenu))
         {
             paused = !paused;
             if ((paused))
@@ -35,7 +35,7 @@ public class UIManager : PersistentSingletion<UIManager>
 
     public void Register(UIScreen screen)
     {
-        if (UiScreens.TryGetValue(screen.Type, out UIScreen existing))
+        if (screens.TryGetValue(screen.Type, out UIScreen existing))
         {
             Debug.LogError(
                 $"A UIScreen of type {screen.Type} is already registered.\n" +
@@ -44,17 +44,17 @@ public class UIManager : PersistentSingletion<UIManager>
             );
             return;
         }
-        UiScreens.Add(screen.Type, screen);
+        screens.Add(screen.Type, screen);
     }
 
     public void Unregister(UIScreen screen)
     {
-        if (UiScreens.TryGetValue(screen.Type, out UIScreen existing) &&
+        if (screens.TryGetValue(screen.Type, out UIScreen existing) &&
             existing == screen)
         {
             Debug.Log($"Unregistered: {screen.Type} ");
 
-            UiScreens.Remove(screen.Type);
+            screens.Remove(screen.Type);
         }
     }
 
@@ -62,24 +62,33 @@ public class UIManager : PersistentSingletion<UIManager>
     {
         if (clearScreen)
         {
-            foreach (UIScreen screen in UiScreens.Values)
+            foreach (UIScreen screen in screens.Values)
             {
                 screen.Hide();
             }
         }
-        UiScreens[type].Show();
+        screens[type].Show();
     }
 
     public void Hide(UIMenuType type)
     {
-        UiScreens[type].Hide();
+        screens[type].Hide();
     }
 
     public void GameOver()
     {
-        if(UiScreens.TryGetValue(UIMenuType.GameOver, out UIScreen existing))
+        if(screens.TryGetValue(UIMenuType.GameOver, out UIScreen existing))
         {
             existing.Show();
         }
+    }
+
+    public void OnGameWin()
+    {
+        if(screens.TryGetValue(UIMenuType.GameWin, out UIScreen gameWinScreen))
+        {
+            gameWinScreen.Show();
+        }
+
     }
 }

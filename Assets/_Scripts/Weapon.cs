@@ -117,14 +117,18 @@ public class Weapon: MonoBehaviour, ICombatHandler
 
     void OnComboFinish()
     {
-
+        int prevIndex = comboIndex;
 
         comboIndex = 0;
 
         animHelper.ChangeAnimation(weaponData.IdleAnim);
         comboIsFinished = true;
-        onCooldown = true;
-        Invoke(nameof(ResetCooldown), weaponData.ComboEndCooldown);
+        if (prevIndex == weaponData.Combo.Count - 1)
+        { //only have cooldown for the last attack 
+
+            onCooldown = true;
+            Invoke(nameof(ResetCooldown), weaponData.ComboEndCooldown);
+        }
     }
     void ResetCooldown() => onCooldown = false;
 
@@ -161,8 +165,5 @@ public class Weapon: MonoBehaviour, ICombatHandler
     }
 
 
-    private void OnDrawGizmos()
-    {
-        if (Selection.Contains(gameObject)) Debug.DrawRay(visuals.transform.position, MouseDir);
-    }
+
 }

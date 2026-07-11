@@ -532,15 +532,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4421665943355019315, guid: 1b1cd5d0757fbe947b777ab1d0e76d07, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4720289584576207304, guid: 1b1cd5d0757fbe947b777ab1d0e76d07, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4720289584576207304, guid: 1b1cd5d0757fbe947b777ab1d0e76d07, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -999,11 +999,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2721065200814063542, guid: e158ba43c349e634c81997a9692f7458, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2721065200814063542, guid: e158ba43c349e634c81997a9692f7458, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4886649593553187801, guid: e158ba43c349e634c81997a9692f7458, type: 3}
       propertyPath: playerLayer.m_Bits
@@ -1015,7 +1015,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6421593773369243213, guid: e158ba43c349e634c81997a9692f7458, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7868638287027188679, guid: e158ba43c349e634c81997a9692f7458, type: 3}
       propertyPath: m_LocalPosition.x
@@ -18200,7 +18200,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1684055222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18449,10 +18449,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6893146634571579135, guid: 9ea64f9ddac572940afcb668b93f3510, type: 3}
-      propertyPath: comboCyoteTime
-      value: 0.1
-      objectReference: {fileID: 0}
     - target: {fileID: 7287259163836918980, guid: 9ea64f9ddac572940afcb668b93f3510, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

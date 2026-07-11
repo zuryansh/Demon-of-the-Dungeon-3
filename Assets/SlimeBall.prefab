@@ -206,10 +206,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f355dcd95e4b18e48b189326d0308f49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Sender: {fileID: 0}
+  activeTime: 5
   onHitEffects:
   - rid: 6524999643305869415
   pierceCount: 0
   projHit: 0
+  hitbox: {fileID: 0}
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 1024
   references:
     version: 2
     RefIds:

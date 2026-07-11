@@ -52,7 +52,7 @@ MonoBehaviour:
   - {fileID: 2851378718043903399, guid: 1b1cd5d0757fbe947b777ab1d0e76d07, type: 3}
   - {fileID: 4886649593553187801, guid: e158ba43c349e634c81997a9692f7458, type: 3}
   autoCalcPoints: 1
-  availablePoints: 30
+  availablePoints: 1
   maxEnemyCount: 10
   SpawnContinously: 0
   noOfWaves: 1

@@ -28,6 +28,7 @@ public class GameSceneManager : PersistentSingletion<GameSceneManager>
         SeedStartScene();
 
         SceneManager.sceneLoaded += OnSceneLoaded;
+        SceneManager.sceneUnloaded += OnSceneUnloaded;
     }
 
     void SeedStartScene()
@@ -40,7 +41,6 @@ public class GameSceneManager : PersistentSingletion<GameSceneManager>
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
-
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
@@ -88,7 +88,6 @@ public class GameSceneManager : PersistentSingletion<GameSceneManager>
         return null;
     }
 
-
     public void Quit()
     {
         Debug.Log("QUIT");
@@ -99,4 +98,64 @@ public class GameSceneManager : PersistentSingletion<GameSceneManager>
     {
         return SceneManager.GetActiveScene().name;
     }
+
+    public void OnSceneUnloaded(Scene scene)
+    {
+
+        SceneData data = Lookup(scene.name);
+        if (data != null) UnloadDependencies(data);
+    }
+
+    public void UnloadDependencies(SceneData sceneData)
+    {
+        foreach (SceneData dependency in sceneData.Dependencies)
+        {
+            string name = dependency.AttachedToScene;
+
+            if (!SceneManager.GetSceneByName(name).isLoaded) continue;
+            if (IsDependencyStillNeeded(name)) continue;
+
+            requested.Remove(name);
+            SceneManager.UnloadSceneAsync(name);
+        }
+    }
+
+    bool IsDependencyStillNeeded(string sceneName)
+    {
+        for (int i = 0; i < SceneManager.sceneCount; i++)
+        {
+            Scene scene = SceneManager.GetSceneAt(i);
+            SceneData data = Lookup(scene.name);
+            if (data == null) continue;
+
+            foreach (SceneData dependency in data.Dependencies)
+            {
+                if (dependency.AttachedToScene == sceneName) return true;
+            }
+        }
+        return false;
+    }
+
+    bool isSwitching;
+    //public void SwitchScene(SceneData sceneData)
+    //{
+    //    if (isSwitching) return;
+    //    ExecuteSwitch(sceneData);
+    //}
+
+
+
+    public void SwitchScene(SceneData sceneData)
+    {
+        requested.Clear();
+        SceneManager.LoadScene(sceneData.AttachedToScene, LoadSceneMode.Single);
+    }
+
+    public void ReloadCurrentScene()
+    {
+        SceneData current = Lookup(SceneManager.GetActiveScene().name);
+        if (current == null) return;
+        SwitchScene(current);
+    }
+
 }

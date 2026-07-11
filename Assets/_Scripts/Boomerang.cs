@@ -3,7 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class Boomerang : Projectile
 {
-    bool isReturning => Time.time - startTime > lingerTime || projHit >= pierceCount;
+    bool isReturning => Time.time - startTime > lingerTime || pierceFinished;
 
     [SerializeField] float lingerTime =2f;
     [SerializeField] float returnFactor;
@@ -48,8 +48,24 @@ public class Boomerang : Projectile
 
     protected override void OnPierceFinish()
     {
-        // do nothign
+        pierceFinished = true;
     }
+
+    //public override void NotifyHit(Collider2D collider, Vector3 dir)
+    //{
+    //    if (collider.gameObject.layer == wallLayer) OnPierceFinish();
+
+    //    projHit++;
+
+    //    Vector3 p = collider.ClosestPoint(transform.position);
+
+    //    EffectContext context = new EffectContext(gameObject, collider.gameObject, p, dir);
+
+    //    foreach (Effect effect in onHitEffects)
+    //        effect.Apply(context);
+    //    if (projHit >= pierceCount && !isReturning) OnPierceFinish();
+
+    //}
 
     protected override void OnDisable()
     {

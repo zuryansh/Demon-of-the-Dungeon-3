@@ -4,14 +4,17 @@ using System.Collections.Generic;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Projectile : MonoBehaviour
 {
+    public Transform Sender;
     [SerializeField] float activeTime =5f;
     [SerializeReference, SubclassSelector] protected List<Effect> onHitEffects;
     [SerializeField] protected int pierceCount;
     [SerializeField] protected int projHit;
     [SerializeField] Hitbox hitbox;
-    
-    public Transform Sender;
+    [SerializeField] protected LayerMask wallLayer;
+
+
     protected Rigidbody2D rb;
+    protected bool pierceFinished = false;
 
     private void Awake()
     {
@@ -31,7 +34,9 @@ public class Projectile : MonoBehaviour
 
     public virtual void NotifyHit(Collider2D collider, Vector3 dir)
     {
-        Debug.Log("HIUT");
+
+        if (collider.gameObject.IsInLayerMask(wallLayer)) { OnPierceFinish(); return; }
+        if (collider.gameObject == Sender.gameObject) return;
 
         projHit++;
 
@@ -46,6 +51,7 @@ public class Projectile : MonoBehaviour
 
     protected virtual void OnPierceFinish()
     {
+        pierceFinished = true;
         Destroy(gameObject);
     }
 

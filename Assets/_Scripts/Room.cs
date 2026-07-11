@@ -9,8 +9,9 @@ public class Room : MonoBehaviour
     public Bounds GlobalBounds=>globalBounds;
     public Vector3 GlobalPosition => transform.position;
     public List<Room> ConnectedRooms =>connectedRooms;
-    public event Action<Room> onPlayerEnter;
-    public event Action onPlayerExit;
+    public event Action<Room> EonPlayerEnter;
+    public event Action EonPlayerExit;
+    public static event Action<Room> EonRoomClear;
     public bool RoomClear => enemySpawner.Defeated;
 
 
@@ -20,6 +21,7 @@ public class Room : MonoBehaviour
     [SerializeField] Door doorPrefab;
     [SerializeField] List<Door> doors;
     [SerializeField] EnemySpawner enemySpawner;
+
     public bool hasPlayer;
 
     RoomData data;
@@ -121,11 +123,15 @@ public class Room : MonoBehaviour
     private void OnDisable()
     {
         RoomAssembler.EOnAssemblyFinished -= OnAssemblyCompletion;
+        if (enemySpawner != null)
+        {
+            enemySpawner.OnAllWavesDefeated -= RoomCleared;
+        }
     }
 
     public void ActivateRoom()
     {
-        onPlayerEnter?.Invoke(this);
+        EonPlayerEnter?.Invoke(this);
         if(enemySpawner != null && !RoomClear)
         {
             foreach(Door door in doors)
@@ -140,7 +146,7 @@ public class Room : MonoBehaviour
 
     public void DeactivateRoom()
     {
-        onPlayerExit?.Invoke();
+        EonPlayerExit?.Invoke();
         hasPlayer = true;
 
     }
@@ -153,6 +159,8 @@ public class Room : MonoBehaviour
         {
             door.SetLock(false);
         }
+
+        EonRoomClear?.Invoke(this);
     }
 
     private void OnDrawGizmos()

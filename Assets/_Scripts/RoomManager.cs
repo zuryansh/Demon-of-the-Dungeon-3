@@ -1,12 +1,14 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 public class RoomManager : Singleton<RoomManager>
 {
+    public Action<RoomManager> EOnAllRoomsCleared;
 
-
-    [SerializeField] List<Room> rooms;
+    [SerializeField] List<Room> rooms = new List<Room>();
+    [SerializeField] HashSet<Room> clearedRooms = new HashSet<Room>();
     [SerializeField] Door entryDoor;
     public Room ActiveRoom=> rooms.Where(r => r.hasPlayer == true).FirstOrDefault();
 
@@ -35,8 +37,19 @@ public class RoomManager : Singleton<RoomManager>
         {
             entryDoor.Init(null, rooms[0]);
         }
+
+        Room.EonRoomClear += RoomCleared;
     }
 
+    public void RoomCleared(Room room)
+    {
+        clearedRooms.Add(room);
+        if (clearedRooms.Count == rooms.Count) AllRoomsCleared();
+    }
 
-
+    void AllRoomsCleared()
+    {
+        EOnAllRoomsCleared?.Invoke(this);
+        UIManager.Instance.OnGameWin();
+    }
 }

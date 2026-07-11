@@ -821,7 +821,7 @@ MonoBehaviour:
   weaponData: {fileID: 11400000, guid: 5a2b2069c4a85a847bc36dd96fd619eb, type: 2}
   weaponHitbox: {fileID: 9063009738173617007}
   mouseLook: {fileID: 1450432655469026595}
-  comboCyoteTime: 0.3
+  comboCyoteTime: 0.1
   currentAttack:
     data: {fileID: 0}
     progress: 0
@@ -1147,9 +1147,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapons:
-  - {fileID: 6893146634571579135}
   - {fileID: 2239118277785588782}
   - {fileID: 1837015056235425017}
+  - {fileID: 6893146634571579135}
   currentWeapon: {fileID: 0}
   onHitEffects:
   - rid: 5677584538091913354
@@ -1389,7 +1389,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &69208495952518764
 Transform:
   m_ObjectHideFlags: 0

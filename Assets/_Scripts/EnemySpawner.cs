@@ -139,7 +139,7 @@ public class EnemySpawner : MonoBehaviour
         if (spawnType == SpawnType.InRoom)
         {
             if (parentRoom == null) Debug.LogError("No parent room assigned");
-            parentRoom.onPlayerEnter += SpawnEnemies;
+            parentRoom.EonPlayerEnter += SpawnEnemies;
         }
     }
     private void OnDisable()
@@ -147,7 +147,7 @@ public class EnemySpawner : MonoBehaviour
         if (spawnType == SpawnType.InRoom)
         {
             if (parentRoom == null) Debug.LogError("No parent room assigned");
-            parentRoom.onPlayerEnter -= SpawnEnemies;
+            parentRoom.EonPlayerEnter -= SpawnEnemies;
         }
     }
 
