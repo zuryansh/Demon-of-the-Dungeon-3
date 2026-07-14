@@ -1,3 +1,4 @@
+using EditorAttributes;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,9 +12,11 @@ public class WeaponData : ScriptableObject
     [SerializeField] List<AttackData> attackCombo;
     [SerializeField] AnimationClip idleClip;
     [SerializeField] LayerMask enemyLayer;
-    [SerializeField] float comboEndCooldown;
+    [SerializeField] bool hasComboEndCooldown;
+    [SerializeField, ShowField(nameof(comboEndCooldown))] float comboEndCooldown;
 
     public List<AttackData> Combo => attackCombo;
     public int IdleAnim => Animator.StringToHash(idleClip.name);
     public float ComboEndCooldown => comboEndCooldown;
+    public bool HasComboEndCooldown => hasComboEndCooldown;
 }

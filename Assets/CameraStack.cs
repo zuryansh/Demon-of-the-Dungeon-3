@@ -18,7 +18,6 @@ public class CameraStack : MonoBehaviour
 
     private void Start()
     {
-        print("STARTED CAMERA STACk " + gameObject.name);
         if(cam == null)cam = GetComponent<Camera>();
         AddToMainStack();
     }

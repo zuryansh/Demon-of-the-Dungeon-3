@@ -37,13 +37,20 @@ public class RoomAssembler : MonoBehaviour
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
         generator = FindFirstObjectByType<RoomGenerator>();
         if (useRandomSeed) seed = UnityEngine.Random.Range(0, 10000);
         prng = new System.Random(seed);
+        GameSceneManager.Instance.OnAllDependencyFinished += StartAssembly;
 
-        StartAssembly();
+        //StartAssembly();
+    }
+
+    private void OnDisable()
+    {
+        GameSceneManager.Instance.OnAllDependencyFinished -= StartAssembly;
+
     }
 
     List<RoomData> GetAllRoomsFromGenerator(int n)
@@ -59,6 +66,8 @@ public class RoomAssembler : MonoBehaviour
     [Button("Start Assembly")]
     void StartAssembly()
     {
+        print("START ASSEMBLY");
+
         if (!ValidateSettings())
         {
             Debug.LogError("Invalid assembler setup.");
@@ -179,7 +188,7 @@ public class RoomAssembler : MonoBehaviour
 
         Room spawnedRoom = Instantiate(roomPrefab, spawnPos.ToV3(), Quaternion.identity);
 
-        spawnedRoom.Init(data, connections);
+        spawnedRoom.Init(data, connections, placedRooms.Count);
 
         placedRooms.Add(spawnedRoom);
     }

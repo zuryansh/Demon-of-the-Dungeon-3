@@ -44,7 +44,7 @@ public class SliderController : MonoBehaviour
                 Debug.LogError("Player Health Bar Exists without Player");
 
             }
-            else Player.Instance.PlayerHealth.EOnHealthChange += UpdateSliderVal;
+            else Player.Instance.PlayerHealth.EOnHealthChange.AddListener(UpdateSliderVal);
         }
     }
 
@@ -59,7 +59,7 @@ public class SliderController : MonoBehaviour
                     Debug.LogError("Player Health Bar Exists without Player");
 
                 }
-                else Player.Instance.PlayerHealth.EOnHealthChange -= UpdateSliderVal;
+                else Player.Instance.PlayerHealth.EOnHealthChange.RemoveListener(UpdateSliderVal);
             }
         }
         if (fader != null) DOTween.Kill(fader);

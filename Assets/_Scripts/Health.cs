@@ -5,15 +5,18 @@ using UnityEngine.Events;
 public class Health : MonoBehaviour
 {
     
-    [SerializeField] AudioClip[] onHitSound;
-    [SerializeField] AudioClip[] onDeathSound;
-    public float maxHealth;
-    public float curHealth;
     public UnityEvent<EffectContext> OnHit;
     public UnityEvent OnDeath;
-    public UnityEvent<float, float> OnHealthChangeUnityEvent;
-    public event Action<float, float> EOnHealthChange;
+    public UnityEvent<float, float> EOnHealthChange;
 
+    [SerializeField] float maxHealth;
+    [SerializeField] float curHealth;
+    [SerializeField] float invincibilityTime;
+
+    [SerializeField] AudioClip[] onHitSound;
+    [SerializeField] AudioClip[] onDeathSound;
+
+    float timeSinceLastHit;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -21,12 +24,19 @@ public class Health : MonoBehaviour
         curHealth = maxHealth;
     }
 
+    private void Update()
+    {
+        timeSinceLastHit += Time.deltaTime;
+    }
+
     public void TakeDamage(EffectContext cntxt,float dmg)
     {
+        if (timeSinceLastHit < invincibilityTime) return;
+
+        timeSinceLastHit = 0;
         curHealth -= dmg;
         OnHit.Invoke(cntxt);
-        OnHealthChangeUnityEvent.Invoke(curHealth, maxHealth);
-        EOnHealthChange?.Invoke(curHealth, maxHealth);
+        EOnHealthChange.Invoke(curHealth, maxHealth);
 
         if(onHitSound.Length!=0)AudioManager.Instance.PlayRandomSound(onHitSound, 1f, SoundType.Sfx);
 

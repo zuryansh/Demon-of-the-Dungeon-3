@@ -92,7 +92,7 @@ public class EnemySpawner : MonoBehaviour
     {
         if(spawnType == SpawnType.InRoom)
         {
-            availablePoints = validTiles.Count / 20 + 10;
+            availablePoints = validTiles.Count / 30 + 10;
             maxEnemyCount = validTiles.Count / 100 + 5;
         }
         else if(spawnType == SpawnType.InCircle)

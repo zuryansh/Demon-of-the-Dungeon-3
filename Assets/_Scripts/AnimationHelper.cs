@@ -19,7 +19,7 @@ public class AnimationHelper : MonoBehaviour
     public void ChangeAnimation(int state, bool forceReplay = false, int priority =0)
     {
         
-        if (state == currentAnim && !forceReplay) return;
+        if (state == currentAnim && !forceReplay) {  return;  }
         if (priority >= currentAnimPriority || anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1f)
         {
 

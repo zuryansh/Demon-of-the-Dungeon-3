@@ -13,27 +13,25 @@ public class EnemyBrain : MonoBehaviour,IStunnable
     public bool HasLOS => hasLOS;
     public Vector2 LastPlayerPos;
 
-
     [SerializeField] EnemySO enemyData;
     [SerializeField] bool hasLOS;
     [SerializeField] float timeBetweenTicks = 0.1f;
     [SerializeField] LayerMask obstacleLayer;
     [SerializeField] LayerMask playerLayer;
-
+    [SerializeField] float startDelay;
 
     AnimationHelper animHelper;
-    float timeSinceLastTick;
-    float timeSinceLastFixTick;
     EnemyMovementModule movementModule;
     EnemyAttackModule attackModule;
-
+    float startTime;
+    bool canTick = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
 
         Player = FindAnyObjectByType<Player>().transform; //CHANGE LATER
-
+        startTime = Time.time;
         animHelper = GetComponent<AnimationHelper>();
         movementModule = GetComponent<EnemyMovementModule>();    
         attackModule = GetComponent<EnemyAttackModule>();
@@ -56,8 +54,8 @@ public class EnemyBrain : MonoBehaviour,IStunnable
 
     private void Update()
     {
-        timeSinceLastTick += Time.deltaTime;
-
+        if (!canTick && Time.time - startTime > startDelay) canTick = true;
+        //timeSinceLastTick += Time.deltaTime;
             Tick();
         
 
@@ -66,7 +64,7 @@ public class EnemyBrain : MonoBehaviour,IStunnable
     // Update is called once per frame
     void FixedUpdate()
     {
-        timeSinceLastFixTick += Time.fixedDeltaTime;
+        //timeSinceLastFixTick += Time.fixedDeltaTime;
         //if(timeSinceLastFixTick > timeBetweenTicks)
         //{
             FixedTick();
@@ -75,7 +73,8 @@ public class EnemyBrain : MonoBehaviour,IStunnable
 
     void FixedTick()
     {
-        timeSinceLastFixTick = 0f;
+        //timeSinceLastFixTick = 0f;
+        if (!canTick) return;
         movementModule.Tick();
     }
 
@@ -102,8 +101,10 @@ public class EnemyBrain : MonoBehaviour,IStunnable
 
     void Tick()
     {
-        timeSinceLastTick = 0;
-        hasLOS = CheckLOS();
+        if (!canTick) return;
+
+            //timeSinceLastTick = 0;
+            hasLOS = CheckLOS();
         if (hasLOS) LastPlayerPos = Player.position;
         attackModule.Tick();
 

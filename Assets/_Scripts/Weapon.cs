@@ -126,8 +126,11 @@ public class Weapon: MonoBehaviour, ICombatHandler
         if (prevIndex == weaponData.Combo.Count - 1)
         { //only have cooldown for the last attack 
 
-            onCooldown = true;
-            Invoke(nameof(ResetCooldown), weaponData.ComboEndCooldown);
+            if (weaponData.HasComboEndCooldown)
+            {
+                onCooldown = true;
+                Invoke(nameof(ResetCooldown), weaponData.ComboEndCooldown);
+            }
         }
     }
     void ResetCooldown() => onCooldown = false;

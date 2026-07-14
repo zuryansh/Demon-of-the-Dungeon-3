@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Room : MonoBehaviour
@@ -10,9 +11,11 @@ public class Room : MonoBehaviour
     public Vector3 GlobalPosition => transform.position;
     public List<Room> ConnectedRooms =>connectedRooms;
     public event Action<Room> EonPlayerEnter;
-    public event Action EonPlayerExit;
+    public event Action<Room> EonPlayerExit;
     public static event Action<Room> EonRoomClear;
     public bool RoomClear => enemySpawner.Defeated;
+    public List<Door> Doors => doors;
+    public int ID => id;
 
 
     [SerializeField] RoomDataDebugger debugger;
@@ -22,12 +25,14 @@ public class Room : MonoBehaviour
     [SerializeField] List<Door> doors;
     [SerializeField] EnemySpawner enemySpawner;
 
+    int id=0;
     public bool hasPlayer;
 
     RoomData data;
 
-    public void Init(RoomData data, List<Room> connectedRooms)
+    public void Init(RoomData data, List<Room> connectedRooms, int id)
     {
+        this.id = id;
         this.data = data;
         this.connectedRooms = connectedRooms;
 
@@ -48,7 +53,7 @@ public class Room : MonoBehaviour
 
     void OnAssemblyCompletion(IReadOnlyList<Room> allRooms)
     {
-        //SpawnDoors();
+        SpawnDoors();
     }
 
     void SpawnDoors()
@@ -81,7 +86,17 @@ public class Room : MonoBehaviour
             Door spawnedDoor = Instantiate(doorPrefab, pos, Quaternion.identity);
             spawnedDoor.transform.parent = transform;
             spawnedDoor.Init(this, attatchedRoom);
+            spawnedDoor.gameObject.SetActive(false);
             doors.Add(spawnedDoor);
+            
+        }
+    }
+
+    void ShowDoors()
+    {
+        foreach (Door door in doors)
+        {
+            door.gameObject.SetActive(true);
         }
     }
 
@@ -146,14 +161,14 @@ public class Room : MonoBehaviour
 
     public void DeactivateRoom()
     {
-        EonPlayerExit?.Invoke();
+        EonPlayerExit?.Invoke(this);
         hasPlayer = true;
 
     }
 
     void RoomCleared()
     {
-        SpawnDoors();
+        ShowDoors();
 
         foreach (Door door in doors)
         {
@@ -174,6 +189,7 @@ public class Room : MonoBehaviour
             }
         }
     }
+
 
 
 

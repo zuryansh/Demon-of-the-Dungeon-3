@@ -8,6 +8,7 @@ public class GameSceneManager : PersistentSingletion<GameSceneManager>
 {
     public Dictionary<string, SceneData> SceneLookup = new();
     public event Action OnAllDependencyFinished;
+    public event Action<SceneData> ENewSceneLoaded;
     
     [SerializeField] private List<SceneData> allSceneDatas;
      HashSet<string> requested = new();
@@ -46,6 +47,8 @@ public class GameSceneManager : PersistentSingletion<GameSceneManager>
     {
         SceneData data = Lookup(scene.name);
         if (data != null) LoadDependencies(data);
+
+        ENewSceneLoaded?.Invoke(data);
 
         // check if all requested scenes are now loaded
         bool allLoaded = true;

@@ -6,13 +6,18 @@ public class Player : Singleton<Player>
 {
     public Health PlayerHealth => healthScript;
 
+
     Rigidbody2D rb;
     Camera cam;
+
+    [SerializeField] SpriteRenderer visuals;
     [SerializeField] float moveSpeed;
     [SerializeField] Vector2 movementVector;
     [SerializeField] Health healthScript;
+    [SerializeField] AnimationClip runAnim;
+    [SerializeField] AnimationClip idleAnim;
     Vector3 towardsMouse;
-
+    AnimationHelper animHelper;
 
     protected override void Awake()
     {
@@ -22,19 +27,24 @@ public class Player : Singleton<Player>
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        animHelper = GetComponent<AnimationHelper>();
         cam = Camera.main;
 
     }
 
     void Update()
     {
+        FlipSprite();
         movementVector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
         if(Input.GetKeyDown(KeyCode.Escape))
         {
             UIManager.Instance.TogglePause();
         }
-
+        if(Input.GetKeyDown(KeyCode.M)) 
+        {
+            UIManager.Instance.ToggleMinimap();
+        }
 
     }
 
@@ -43,7 +53,14 @@ public class Player : Singleton<Player>
     private void FixedUpdate()
     {
         Move();
-
+        if(rb.linearVelocity.sqrMagnitude>0 )
+        {
+            animHelper.ChangeAnimation(Animator.StringToHash(runAnim.name));
+        }
+        else
+        {
+            animHelper.ChangeAnimation(Animator.StringToHash(idleAnim.name));
+        }
     }
 
     public void Move()
@@ -74,6 +91,15 @@ public class Player : Singleton<Player>
         UIManager.Instance.GameOver();
     }
 
+    protected virtual void FlipSprite()
+    {
+        if (visuals == null) Debug.LogWarning("Sprite renderer not found");
+        else
+        {
 
+            if (rb.linearVelocity.x < 0) visuals.flipX = true;
+            else visuals.flipX = false;
+        }
+    }
 
 }

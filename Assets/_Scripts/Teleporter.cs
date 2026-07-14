@@ -4,7 +4,7 @@ using UnityEngine;
 [RequireComponent (typeof(CircleCollider2D))]
 public class Teleporter : MonoBehaviour
 {
-
+    public Vector2 TeleportTo=> teleportTo;
     public CircleCollider2D Collider => col;
     
     [SerializeField] protected Vector2 teleportTo;

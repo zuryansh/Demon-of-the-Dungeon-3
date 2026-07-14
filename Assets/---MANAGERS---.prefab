@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2426490485076213142}
   - component: {fileID: 5310891453088253085}
   - component: {fileID: 1075668440907741506}
+  - component: {fileID: 4294820665447531346}
   m_Layer: 0
   m_Name: ---MANAGERS---
   m_TagString: Untagged
@@ -53,6 +54,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4a8e4efd2b1f1ac44878bcf689985cdd, type: 2}
   - {fileID: 11400000, guid: d1893dbc7b2409d4f95c09500b871786, type: 2}
   - {fileID: 11400000, guid: 235b06bb8afd1b3469492feddc8e32c6, type: 2}
+  - {fileID: 11400000, guid: 7867376d0d1ae2c4bac68123b16cd6c7, type: 2}
 --- !u!114 &5310891453088253085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80,3 +82,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SFXSourcePrefab: {fileID: 132149268931510265, guid: 913d667552227a64a96ea787bd28a7c3, type: 3}
   musicSourcePrefab: {fileID: 6095913440150167881, guid: a6bb20c64489e404ea2af2d73c631c1a, type: 3}
+--- !u!114 &4294820665447531346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4698240675744380090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: ecb2f8b56f52db144800f5524f2c6869, type: 2}

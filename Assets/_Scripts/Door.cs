@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class Door : Teleporter
 {
-
+    public Room AttatchedRoom => attatchedRoom;
+    public Room TeleportToRoom => teleportToRoom;
     [SerializeField] Room attatchedRoom;
     [SerializeField] Room teleportToRoom;
 

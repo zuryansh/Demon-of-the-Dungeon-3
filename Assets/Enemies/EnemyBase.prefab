@@ -124,6 +124,7 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
+  startDelay: 1
 --- !u!95 &5012764987704095770
 Animator:
   serializedVersion: 7
@@ -173,13 +174,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6e1b6d4a85a1ca4094adad3880d5256, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onHitSound:
-  - {fileID: 8300000, guid: 24aea3a639588da4e997b4237e788ca7, type: 3}
-  - {fileID: 8300000, guid: 753f14174908844409097ac0065cbd26, type: 3}
-  - {fileID: 8300000, guid: ae8e98d33ce1ee34ab5778ec5a043047, type: 3}
-  onDeathSound: []
-  maxHealth: 20
-  curHealth: 0
   OnHit:
     m_PersistentCalls:
       m_Calls:
@@ -210,7 +204,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  OnHealthChangeUnityEvent:
+  EOnHealthChange:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3366285789836468166}
@@ -225,6 +219,14 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  maxHealth: 20
+  curHealth: 0
+  invincibilityTime: 0
+  onHitSound:
+  - {fileID: 8300000, guid: 24aea3a639588da4e997b4237e788ca7, type: 3}
+  - {fileID: 8300000, guid: 753f14174908844409097ac0065cbd26, type: 3}
+  - {fileID: 8300000, guid: ae8e98d33ce1ee34ab5778ec5a043047, type: 3}
+  onDeathSound: []
 --- !u!1 &4750981326506217873
 GameObject:
   m_ObjectHideFlags: 0

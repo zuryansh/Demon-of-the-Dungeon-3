@@ -18,6 +18,20 @@ public class AudioManager : PersistentSingletion<AudioManager>
         base.Awake();
     }
 
+    private void Start()
+    {
+        GameSceneManager.Instance.ENewSceneLoaded += PlaySceneMusic;
+
+    }
+
+    void PlaySceneMusic(SceneData data)
+    {
+        if(data.BGMusic!= null)
+        {
+            PlaySound(data.BGMusic, data.Volume, SoundType.Music);
+        }
+    }
+
     public void PlaySound(AudioClip clip, float volume, SoundType type)
     {
         AudioSource source = null;
@@ -32,7 +46,8 @@ public class AudioManager : PersistentSingletion<AudioManager>
         source.clip = clip;
         source.volume = volume;
         source.Play();
-        Destroy(source.gameObject, clip.length);
+        if(type != SoundType.Music)
+            Destroy(source.gameObject, clip.length);
     }
 
     public void PlayRandomSound(AudioClip[] audioClips, float volume, SoundType type)

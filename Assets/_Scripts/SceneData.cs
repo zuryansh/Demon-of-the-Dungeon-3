@@ -10,8 +10,12 @@ public class SceneData : ScriptableObject
 {
     public List<SceneData> Dependencies => dependencies;
     public string AttachedToScene => attachedToSceneName;
+    public AudioClip BGMusic => bgMusic;
+    public float Volume => volume;
 
     [SerializeField] private List<SceneData> dependencies = new();
+    [SerializeField] AudioClip bgMusic;
+    [SerializeField] float volume=1f;
 
     [SerializeField, HideInInspector]
     private string attachedToSceneName;

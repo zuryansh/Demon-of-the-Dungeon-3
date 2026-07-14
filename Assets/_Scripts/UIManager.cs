@@ -13,6 +13,14 @@ public class UIManager : PersistentSingletion<UIManager>
 
     Dictionary<UIMenuType, UIScreen> screens = new();
 
+    public void ToggleMinimap()
+    {
+        if(screens.TryGetValue(UIMenuType.Minimap, out UIScreen map))
+        {
+            if(map.Showing) map.Hide();
+            else map.Show();
+        }
+    }
 
     public void TogglePause()
     {

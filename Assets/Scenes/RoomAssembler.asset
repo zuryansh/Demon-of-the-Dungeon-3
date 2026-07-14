@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dependencies:
   - {fileID: 11400000, guid: b2d3d45ef05c16d459f29df12fee320a, type: 2}
+  bgMusic: {fileID: 8300000, guid: 30b853b302708414987431ed70a42449, type: 3}
+  volume: 0.2
   attachedToSceneName: RoomAssembler
   attachedToScene: {fileID: 102900000, guid: a9f8d30b423eb4c4d9f2af5398161f62, type: 3}
