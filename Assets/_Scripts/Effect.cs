@@ -110,3 +110,13 @@ public class StunEffect : Effect
     }
 }
 
+[Serializable]
+public class ScreenShakeEffect : Effect
+{
+    [SerializeField] float force;
+
+    public override void Apply(EffectContext context)
+    {
+        CameraShake.Instance.Shake(force);
+    }
+}

@@ -30,5 +30,5 @@ MonoBehaviour:
       type: {class: SpawnProjectile, ns: , asm: Assembly-CSharp}
       data:
         projectile: {fileID: 2627930888888434042, guid: 67ad7e22309732147872ce641662f057, type: 3}
-        speed: 10
+        speed: 7
         delay: 0

@@ -8,18 +8,18 @@ public class RoomsTilesPlacer : MonoBehaviour
     [SerializeField] Tilemap colliderTilemap;
     private void OnEnable()
     {
-        RoomAssembler.EOnAssemblyFinished += VisualiseRoom;
+        RoomAssembler.EOnAssemblyFinished += VisualiseRooms;
         RoomAssembler.EClearGeneration += ClearTilemaps;
     }
 
     private void OnDisable()
     {
-        RoomAssembler.EOnAssemblyFinished -= VisualiseRoom;
+        RoomAssembler.EOnAssemblyFinished -= VisualiseRooms;
         RoomAssembler.EClearGeneration -= ClearTilemaps;
 
     }
 
-    void VisualiseRoom(IReadOnlyList<Room> rooms)
+    void VisualiseRooms(IReadOnlyList<Room> rooms)
     {
         foreach (Room room in rooms)
         {

@@ -9,7 +9,7 @@ public class Projectile : MonoBehaviour
     [SerializeReference, SubclassSelector] protected List<Effect> onHitEffects;
     [SerializeField] protected int pierceCount;
     [SerializeField] protected int projHit;
-    [SerializeField] Hitbox hitbox;
+    [SerializeField] protected Hitbox hitbox;
     [SerializeField] protected LayerMask wallLayer;
 
 
@@ -34,7 +34,7 @@ public class Projectile : MonoBehaviour
 
     public virtual void NotifyHit(Collider2D collider, Vector3 dir)
     {
-
+       
         if (collider.gameObject.IsInLayerMask(wallLayer)) { OnPierceFinish(); return; }
         if (collider.gameObject == Sender.gameObject) return;
 

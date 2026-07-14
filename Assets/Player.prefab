@@ -1191,7 +1191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visuals: {fileID: 3725472171492169269}
-  moveSpeed: 10
+  moveSpeed: 7.5
   movementVector: {x: 0, y: 0}
   healthScript: {fileID: 2186658259818906100}
   runAnim: {fileID: 7400000, guid: 7acbb359811d4bf41a7829fd0ff04124, type: 2}
@@ -1278,6 +1278,7 @@ MonoBehaviour:
   currentWeapon: {fileID: 0}
   onHitEffects:
   - rid: 5677584538091913354
+  - rid: 5677584809349611661
   references:
     version: 2
     RefIds:
@@ -1286,6 +1287,10 @@ MonoBehaviour:
       data:
         particlesPreab: {fileID: 1439765415917061273, guid: c786fdffbf562454981786025f68bea5, type: 3}
         useAttackDir: 1
+    - rid: 5677584809349611661
+      type: {class: ScreenShakeEffect, ns: , asm: Assembly-CSharp}
+      data:
+        force: 0.2
 --- !u!114 &2186658259818906100
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -13,7 +13,9 @@ public class Hitbox : MonoBehaviour
     [SerializeField] LayerMask layerMask;
 
     ContactFilter2D contactFilter;
-    List<Collider2D> temp = new List<Collider2D>();
+    List<RaycastHit2D> temp1 = new List<RaycastHit2D>();
+    List<Collider2D> temp2 = new List<Collider2D>();
+    Vector2 prevPos;
 
 
     void Start()
@@ -22,23 +24,47 @@ public class Hitbox : MonoBehaviour
         contactFilter = new ContactFilter2D();
         contactFilter.layerMask = layerMask;
         contactFilter.useLayerMask= true;
+        prevPos = transform.position;
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        temp.Clear();
 
-        if (Physics2D.OverlapCollider(col, contactFilter, temp) == 0)
-            return;
+        temp1.Clear();
+        temp2.Clear();
 
-        foreach (var collider in temp)
+        Vector2 currentPosition = transform.position;
+        Vector2 delta = currentPosition - prevPos;
+
+        if (delta.sqrMagnitude > Mathf.Epsilon)
         {
-            if (detectedColliders.Add(collider))
+            col.Cast(delta.normalized, contactFilter, temp1, delta.magnitude + 0.01f);
+
+            foreach (var hit in temp1)
             {
-                Vector3 dir = (collider.transform.position - col.transform.position).normalized;
-                EOnHitDetect?.Invoke(collider, dir);
+                if (detectedColliders.Add(hit.collider))
+                {
+                    Vector3 dir = (hit.transform.position - transform.position).normalized;
+                    EOnHitDetect?.Invoke(hit.collider, dir);
+                }
             }
         }
+
+        if (Physics2D.OverlapCollider(col, contactFilter, temp2) > 0)
+        {
+
+
+            foreach (var collider in temp2)
+            {
+                if (detectedColliders.Add(collider))
+                {
+                    Vector3 dir = (collider.transform.position - col.transform.position).normalized;
+                    EOnHitDetect?.Invoke(collider, dir);
+                }
+            }
+        }
+
+        prevPos = currentPosition;
     }
 
     Vector3 GetHitDirection()

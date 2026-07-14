@@ -28,8 +28,10 @@ public class Boomerang : Projectile
         ogSpeed = rb.linearVelocity.magnitude;
     }
 
+    bool reset = false;
     public void ReturnToSender()
     {
+        if(!reset) { hitbox.ResetHitbox(); reset = true; }
         Vector2 dir = (Sender.position - transform.position).normalized;
 
         Vector2 targetSpeed = dir.normalized * ogSpeed * returnFactor;
@@ -51,21 +53,12 @@ public class Boomerang : Projectile
         pierceFinished = true;
     }
 
-    //public override void NotifyHit(Collider2D collider, Vector3 dir)
-    //{
-    //    if (collider.gameObject.layer == wallLayer) OnPierceFinish();
+    public override void NotifyHit(Collider2D collider, Vector3 dir)
+    {
+        base.NotifyHit(collider,dir);
+        print("BOOMERANG HIT");
 
-    //    projHit++;
-
-    //    Vector3 p = collider.ClosestPoint(transform.position);
-
-    //    EffectContext context = new EffectContext(gameObject, collider.gameObject, p, dir);
-
-    //    foreach (Effect effect in onHitEffects)
-    //        effect.Apply(context);
-    //    if (projHit >= pierceCount && !isReturning) OnPierceFinish();
-
-    //}
+    }
 
     protected override void OnDisable()
     {
