@@ -633,18 +633,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: deaa76fc110ff62459aec5b74fa9bb04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  possibleNoOfAnchorRooms: 010000000200000003000000
-  anchorRoomsWeight:
-  - 0.7
-  - 0.25
-  - 0.05
-  maxAnchorDist: 70
-  maxConnections: 3
-  maxAttemptsToFindPos: 100
   seed: 0
-  useRandomSeed: 1
-  noOfRooms: 10
-  roomPosSearchRad: 100
+  data: {fileID: 11400000, guid: cbd7a85ca77444d4a8b9b07dcb4eeb60, type: 2}
   generator: {fileID: 0}
   placedRooms: []
   roomPrefab: {fileID: 8257017177754270078, guid: 5dd24b17158be1b4b8dcea1a3e036398, type: 3}
@@ -830,30 +820,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b323feef52646344ab2ac1944ddf8ab0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iterations: 19
-  walklength: 30
-  mapWidth: 100
-  mapHeight: 100
-  smoothing: 1
-  smoothingIterations: 1
-  walkerCount: 2
-  minRoomSize: 0
-  seed: 5499
-  algoUsed: 0
-  useRandomSeed: 1
-  smoothingCutoff: 3
-  tilePallete: {fileID: 11400000, guid: 2c0865efc45eb984697497fa934beed8, type: 2}
-  debugTileLayer: 0
+  data: {fileID: 11400000, guid: 777f5da5afefd444489e3e184cd99121, type: 2}
+  debugTileLayer: 1
   ShowDebug: 0
-  fillPercent: 0
-  cutoff: 0
   roomData:
-    id: 1111208800
+    id: 1074636852
     boundingBox:
-      m_Center: {x: 0, y: -5, z: 0}
-      m_Extent: {x: 14.5, y: 15.5, z: 0}
+      m_Center: {x: 0.5, y: 15.5, z: 0}
+      m_Extent: {x: 12, y: 30, z: 0}
     tilepallete: {fileID: 11400000, guid: 2c0865efc45eb984697497fa934beed8, type: 2}
   roomDebugger: {fileID: 1120997818}
+  seed: 1042
 --- !u!4 &1161107354
 Transform:
   m_ObjectHideFlags: 0

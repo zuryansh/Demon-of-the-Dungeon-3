@@ -1,3 +1,5 @@
+using EditorAttributes;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,7 +7,7 @@ using UnityEngine;
 public class Player : Singleton<Player> 
 {
     public Health PlayerHealth => healthScript;
-
+    public event Action<float> EOnPointsChanged;
 
     Rigidbody2D rb;
     Camera cam;
@@ -16,6 +18,7 @@ public class Player : Singleton<Player>
     [SerializeField] Health healthScript;
     [SerializeField] AnimationClip runAnim;
     [SerializeField] AnimationClip idleAnim;
+    [SerializeField] int souls;
     Vector3 towardsMouse;
     AnimationHelper animHelper;
 
@@ -74,17 +77,7 @@ public class Player : Singleton<Player>
 
     }
 
-    private void OnEnable()
-    {
-        RoomAssembler.EOnAssemblyFinished += OnGenFinish;
-    }
-    private void OnDisable()
-    {
-        RoomAssembler.EOnAssemblyFinished -= OnGenFinish;
-    }
-    void OnGenFinish(IReadOnlyList<Room> rooms)
-    {
-    }
+
 
     public void OnDeath()
     {
@@ -100,6 +93,15 @@ public class Player : Singleton<Player>
             if (rb.linearVelocity.x < 0) visuals.flipX = true;
             else visuals.flipX = false;
         }
+    }
+
+    [Button("Add Souls")]
+    public void AddPoints(int n)
+    {
+        if (n == 0) return;
+        souls += n;
+        
+        EOnPointsChanged?.Invoke(souls);
     }
 
 }

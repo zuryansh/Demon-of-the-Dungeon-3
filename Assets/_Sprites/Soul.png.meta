@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 212af0d5254270a49b6aafa167337fd6
+guid: c5c5002d7f3c608449fc8c8ff69a0d76
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8637876272605317312
-    second: imp_run_anim_f3_0
+      213: -7260111474371800604
+    second: Soul_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,23 +126,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: imp_run_anim_f3_0
+      name: Soul_0
       rect:
         serializedVersion: 2
-        x: 3
+        x: 0
         y: 0
-        width: 12
-        height: 14
-      alignment: 9
-      pivot: {x: 0.5, y: 0.42857146}
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 047b595ab49102880800000000000000
-      internalID: -8637876272605317312
+      spriteID: 4e1d45c6417ee3b90800000000000000
+      internalID: -7260111474371800604
       vertices: []
       indices: 
       edges: []
@@ -151,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 16b50d922741cd14b9c17b6c27eddd8b
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      imp_run_anim_f3_0: -8637876272605317312
+      Soul_0: -7260111474371800604
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -4,26 +4,22 @@ using EditorAttributes;
 using System;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using UnityEngine.Rendering;
 
 //THINGS TO ADD
 // scoring function to score possible positions
+[System.Serializable]
+public struct RoomTypeAndAmount
+{
+    public int NoOfRooms;
+    public RoomGenerationData GeneratorData;
+}
+
 
 public class RoomAssembler : MonoBehaviour
 {
-    [FoldoutGroup("Generation Attributes", true, nameof(noOfRooms),nameof(possibleNoOfAnchorRooms),nameof(maxConnections), nameof(anchorRoomsWeight),nameof(maxAnchorDist), nameof(roomPosSearchRad),nameof(maxAttemptsToFindPos),nameof(seed),nameof(useRandomSeed))]
-    [SerializeField] private EditorAttributes.Void groupHolder;
-
-    [SerializeField, HideProperty] List<int> possibleNoOfAnchorRooms = new List<int>();
-    [SerializeField, HideProperty, Range(0f,1f)] List<float> anchorRoomsWeight = new List<float>();
-    [SerializeField, HideProperty] float maxAnchorDist;
-    [SerializeField, HideProperty] int maxConnections;
-    [SerializeField, HideProperty] int maxAttemptsToFindPos;
-    [SerializeField, HideProperty] int seed;
-    [SerializeField, HideProperty] bool useRandomSeed;
-    [SerializeField,HideProperty] int noOfRooms;
-    [SerializeField,HideProperty] int roomPosSearchRad;
-
-
+    [SerializeField] int seed;
+    [SerializeField] RoomAssemblingData data;
     [SerializeField] RoomGenerator generator;
     [SerializeField] List<Room> placedRooms = new List<Room>(); //TODO REPLACE DEBUGGER WITH ROOM SCRIPT
     [SerializeField] Room roomPrefab;
@@ -35,12 +31,15 @@ public class RoomAssembler : MonoBehaviour
     public static Action<IReadOnlyList<Room>> EOnAssemblyFinished;
     public static Action EClearGeneration;
 
+    List<RoomTypeAndAmount> InMainGenRoomSettings;
+    List<RoomTypeAndAmount> OutMainGenRoomsSettings;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         generator = FindFirstObjectByType<RoomGenerator>();
-        if (useRandomSeed) seed = UnityEngine.Random.Range(0, 10000);
+        if (data.UseRandomSeed) seed = UnityEngine.Random.Range(0, 10000);
         prng = new System.Random(seed);
         GameSceneManager.Instance.OnAllDependencyFinished += StartAssembly;
 
@@ -53,12 +52,18 @@ public class RoomAssembler : MonoBehaviour
 
     }
 
-    List<RoomData> GetAllRoomsFromGenerator(int n)
+    List<RoomData> GetAllRoomsFromGenerator(int n, RoomPlacementTypes placementType)
     {
+
         List<RoomData> result = new List<RoomData>();
         for (int i = 0; i < n; i++)
         {
-            result.Add(generator.GetNewRoom());
+            //RoomGenerationData roomGenSettings = data.RoomTypesAndCounts.Choice().GeneratorData;
+            RoomGenerationData roomGenSettings;
+            if (placementType == RoomPlacementTypes.InMainGen)  roomGenSettings = InMainGenRoomSettings.Choice().GeneratorData;
+            else roomGenSettings = OutMainGenRoomsSettings.Choice().GeneratorData;
+
+            result.Add(generator.GetNewRoom(roomGenSettings));
         }
         return result;
     }
@@ -74,15 +79,12 @@ public class RoomAssembler : MonoBehaviour
             return;
         }
 
-        availaleRoomDatas = GetAllRoomsFromGenerator(noOfRooms);
-        PlaceLinearRoom();
-        PlaceLinearRoom();
+        InMainGenRoomSettings = data.RoomTypesAndCounts.Where(x => x.GeneratorData.RoomPlacementType == RoomPlacementTypes.InMainGen).ToList();
+        OutMainGenRoomsSettings = data.RoomTypesAndCounts.Where(x => x.GeneratorData.RoomPlacementType == RoomPlacementTypes.OutMainGen).ToList();
 
-        int roomsLeft = noOfRooms - placedRooms.Count;
-        for (int i = 0; i < roomsLeft; i++)
-        {
-            PlaceRoomWithRandomAnchors();
-        }
+
+        PlaceInMainGenRooms();
+        PlaceOutMainGenRooms();
 
         if (ValidateDungeon())
         {
@@ -90,27 +92,50 @@ public class RoomAssembler : MonoBehaviour
         }
     }
 
+    void PlaceInMainGenRooms()
+    {
+        availaleRoomDatas = GetAllRoomsFromGenerator(data.NoOfInMainGenRooms, RoomPlacementTypes.InMainGen);
+        PlaceLinearRoom();
+        PlaceLinearRoom();
+
+        int roomsLeft = data.NoOfInMainGenRooms - placedRooms.Count;
+        for (int i = 0; i < roomsLeft; i++)
+        {
+            PlaceRoomWithRandomAnchors();
+        }
+    }
+
+    void PlaceOutMainGenRooms()
+    {
+        availaleRoomDatas = GetAllRoomsFromGenerator(data.NoOfInMainGenRooms, RoomPlacementTypes.OutMainGen);
+        for (int i = 0;i < data.NoOfOutMainGenRooms; i++)
+        {
+            PlaceRoomInOutskrit();
+        }
+
+    }
+
     bool ValidateSettings()
     {
         return generator != null
             && roomPrefab != null
-            && noOfRooms > 0;
+            && data.NoOfInMainGenRooms > 0;
     }
     bool  ValidateDungeon()
     {
-        if(placedRooms.Count != noOfRooms) { Debug.LogError("Not Enough Rooms Placed!"); HandleInvalidDungeon(); return false; }
+        if(placedRooms.Count != (data.NoOfInMainGenRooms + data.NoOfOutMainGenRooms)) { Debug.LogError("Not Enough Rooms Placed!"); HandleInvalidDungeon(); return false; }
         return true;
     }
 
     void PlaceRoomWithRandomAnchors()
     {
-        if (placedRooms.Count > noOfRooms) return;
-        RoomData data = GetRandomRoomData();
-        List<Room> anchors = GetAnchorRooms(Helper.WeightedChoice(possibleNoOfAnchorRooms, anchorRoomsWeight, prng));
+        if (placedRooms.Count > (data.NoOfInMainGenRooms + data.NoOfOutMainGenRooms)) return;
+        RoomData roomData = GetRandomRoomData();
+        List<Room> anchors = GetAnchorRooms(Helper.WeightedChoice(data.PossibleNoOfAnchorRooms, data.AnchorRoomsWeight, prng));
 
-        Vector2Int position = GetRoomPositionUsingAnchors( data.BoundingBox, anchors);
+        Vector2Int position = GetRoomPositionUsingAnchors( roomData.BoundingBox, anchors);
 
-        PlaceRoomAtPosition(data, position, anchors);
+        PlaceRoomAtPosition(roomData, position, anchors);
 
     }
 
@@ -138,7 +163,8 @@ public class RoomAssembler : MonoBehaviour
         List<Room> anchors= new List<Room>();
 
         //pick anchor room and make sure its not too crowded
-        List<Room> validRooms = placedRooms.Where(r => r.ConnectedRooms.Count < maxConnections).ToList();
+        List<Room> validRooms = placedRooms.Where(r => r.ConnectedRooms.Count < data.MaxConnections).ToList();
+        
         if (validRooms.Count == 0)
         {
             Debug.LogWarning("No valid anchor rooms found.");
@@ -148,8 +174,8 @@ public class RoomAssembler : MonoBehaviour
         anchors.Add(primary);
 
 
-        List<Room> candidates = GetNearbyRoomsInRadius(primary.GlobalPosition, maxAnchorDist);
-        candidates = candidates.Where(r => r.ConnectedRooms.Count < maxConnections && r!=primary).ToList() ;
+        List<Room> candidates = GetNearbyRoomsInRadius(primary.GlobalPosition, data.MaxAnchorDist);
+        candidates = candidates.Where(r => r.ConnectedRooms.Count < data.MaxConnections && r!=primary).ToList() ;
         if(candidates.Count == 0) { Debug.LogWarning("No candidates found around primary anchor"); return anchors; }
 
         count = Math.Min(candidates.Count, count); 
@@ -196,9 +222,9 @@ public class RoomAssembler : MonoBehaviour
     [Button("Place Linear Room")]
     void PlaceLinearRoom()
     {
-        if (placedRooms.Count > noOfRooms) return;  
+        if (placedRooms.Count > (data.NoOfInMainGenRooms + data.NoOfOutMainGenRooms)) return;  
         Vector2Int spawnPos;
-        RoomData data = GetRandomRoomData();
+        RoomData roomData = GetRandomRoomData();
         if (placedRooms.Count == 0)
         {
             //place first room
@@ -206,11 +232,22 @@ public class RoomAssembler : MonoBehaviour
         }
         else
         {
-            spawnPos = GetValidRoomPosNear(data.BoundingBox, placedRooms[placedRooms.Count - 1].transform.position.ToV2().ToV2Int());
+            spawnPos = GetValidRoomPosNear(roomData.BoundingBox, placedRooms[placedRooms.Count - 1].transform.position.ToV2().ToV2Int());
         }
         List<Room> connections = (placedRooms.Count == 0) ? new() : new() { placedRooms[^1] }; //rooms[^1] = last element
-        PlaceRoomAtPosition(data,spawnPos, connections);
+        PlaceRoomAtPosition(roomData,spawnPos, connections);
 
+    }
+
+    void PlaceRoomInOutskrit()
+    {
+        if (placedRooms.Count > (data.NoOfInMainGenRooms + data.NoOfOutMainGenRooms)) return;
+        RoomData roomData = GetRandomRoomData();
+        List<Room> anchors = GetAnchorRooms(1);
+
+        Vector2Int position = GetRoomPositionUsingAnchors(roomData.BoundingBox, anchors);
+
+        PlaceRoomAtPosition(roomData, position, anchors);
     }
 
     RoomData GetRandomRoomData()
@@ -223,9 +260,9 @@ public class RoomAssembler : MonoBehaviour
 
     Vector2Int GetValidRoomPosNear(Bounds bounds, Vector2Int center, [CallerMemberName] string caller = "")
     {
-        for (int i = 0; i < maxAttemptsToFindPos; i++)
+        for (int i = 0; i < data.MaxAttemptsToFindPos; i++)
         {
-            Vector2 pos = UnityEngine.Random.insideUnitCircle * roomPosSearchRad + center;
+            Vector2 pos = UnityEngine.Random.insideUnitCircle * data.RoomPosSearchRad + center;
 
             bool intersects = false;
 
