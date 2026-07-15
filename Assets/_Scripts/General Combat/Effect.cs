@@ -1,7 +1,7 @@
 using EditorAttributes;
 using System;
 using System.Collections;
-using Unity.VisualScripting;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 [Serializable]
@@ -16,8 +16,6 @@ public class DamageEffect: Effect
 {
     [SerializeField] float damage;
     [SerializeField] bool spawnDmgNo;
-    //[SerializeField, ShowField(nameof(spawnDmgNo))] PopupText popupTextPrefab;
-    //[SerializeField, ShowField(nameof(spawnDmgNo))] float textSize;
 
     public override void Apply(EffectContext context)
     {
@@ -25,16 +23,10 @@ public class DamageEffect: Effect
         if(context.Target.TryGetComponent<Health>(out dmgable))
         {
             dmgable.TakeDamage(context,damage);
-            //if(spawnDmgNo)
-            //{
-            //    PopupText txt = MonoBehaviour.Instantiate(popupTextPrefab, context.EffectPoint, Quaternion.identity);
-            //    txt.Init(damage.ToString(), textSize, 0.5f,true, 0.2f);
-            //}
+
         }
     }
 }
-
-
 
 [Serializable]
 public class KnockBackEffect: Effect
@@ -120,3 +112,32 @@ public class ScreenShakeEffect : Effect
         CameraShake.Instance.Shake(force);
     }
 }
+[Serializable]
+public class SpawnLootItemEffect: Effect
+{
+    [SerializeField] LootItem item;
+    [SerializeField] bool spawnWithRandomVelocity;
+    [SerializeField, ShowField(nameof(spawnWithRandomVelocity))] float spawnSpeed;
+    [SerializeField, Range(0f, 1f)] float spawnChance;
+
+    public override void Apply(EffectContext context)
+    {
+        Spawn(context);
+    }
+
+    void Spawn(EffectContext context)
+    {
+        float n = UnityEngine.Random.Range(0f, 1f);
+        if ((n<=spawnChance))
+        {
+            LootItem lootItem = MonoBehaviour.Instantiate(item, context.EffectPoint, Quaternion.identity);
+            if (lootItem.RB != null)
+            {
+                lootItem.RB.AddForce(UnityEngine.Random.insideUnitCircle.normalized * spawnSpeed * 100);
+            }
+        }
+
+
+    }
+}
+

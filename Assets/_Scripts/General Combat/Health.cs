@@ -6,7 +6,7 @@ public class Health : MonoBehaviour
 {
     
     public UnityEvent<EffectContext> OnHit;
-    public UnityEvent OnDeath;
+    public UnityEvent<EffectContext> OnDeath;
     public UnityEvent<float, float> EOnHealthChange;
 
     [SerializeField] float maxHealth;
@@ -43,7 +43,7 @@ public class Health : MonoBehaviour
         if(curHealth <= 0 )
         {
             if(onDeathSound.Length != 0)AudioManager.Instance.PlayRandomSound(onDeathSound, 1f, SoundType.Sfx);
-            OnDeath.Invoke();
+            OnDeath.Invoke(cntxt);
         }
     }
 

@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a09a913492174140af6b654b8ed2d74, type: 3}
   m_Name: MainMenu
   m_EditorClassIdentifier: 
-  dependencies:
-  - {fileID: 11400000, guid: b2d3d45ef05c16d459f29df12fee320a, type: 2}
+  dependencies: []
   bgMusic: {fileID: 8300000, guid: 8008f57415fbafe43a8a17b902d09a0c, type: 3}
   volume: 0.5
   attachedToSceneName: MainMenu

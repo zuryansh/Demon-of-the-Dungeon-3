@@ -87,9 +87,13 @@ public class EnemyBrain : MonoBehaviour,IStunnable
         }
     }
 
-    public void OnDeath()
+    public void OnDeath(EffectContext context)
     {
         EOnDeath?.Invoke(this);
+        foreach (Effect effect in Data.OnDeathEffects)
+        {
+            effect.Apply(context);
+        }
         Destroy(gameObject);
     }
 

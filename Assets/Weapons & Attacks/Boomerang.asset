@@ -18,5 +18,5 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
-  hasComboEndCooldown: 1
-  comboEndCooldown: 0.7
+  hasComboEndCooldown: 0
+  comboEndCooldown: 0.5

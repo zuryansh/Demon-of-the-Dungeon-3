@@ -75,8 +75,8 @@ public class Room : MonoBehaviour
                 {
                     //if (door.transform.position == pos) allowed = false;
                     //NOT A GENERAL SOLN FOR ALL COLLIDER SHAPES
-                    Collider2D hit = Physics2D.OverlapCircle(pos, doorPrefab.Collider.radius*doorPrefab.transform.lossyScale.x);
-                    if (hit != null) allowed = false;
+                    Collider2D hit = Physics2D.OverlapCircle(pos,doorPrefab.Collider.radius*doorPrefab.transform.lossyScale.x*1.5f);
+                    if (hit != null || pos == GlobalPosition) allowed = false;
                 }
                 if(allowed) break;
 
@@ -86,9 +86,15 @@ public class Room : MonoBehaviour
             Door spawnedDoor = Instantiate(doorPrefab, pos, Quaternion.identity);
             spawnedDoor.transform.parent = transform;
             spawnedDoor.Init(this, attatchedRoom);
-            spawnedDoor.gameObject.SetActive(false);
+            //spawnedDoor.gameObject.SetActive(false); //dont do it here it will make the cast invalid
+
             doors.Add(spawnedDoor);
             
+        }
+
+        foreach (Door door in doors)
+        {
+            door.gameObject.SetActive(false);
         }
     }
 

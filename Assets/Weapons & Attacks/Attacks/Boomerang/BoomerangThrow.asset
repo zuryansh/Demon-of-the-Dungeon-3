@@ -21,10 +21,9 @@ MonoBehaviour:
   cancelAttackBeforeTime: 0.36
   onTargetHitEffects:
   - rid: 5677584718897873049
-  onAttackStartEffects: []
-  onAttackEndEffects:
-  - rid: 5677584718897873096
-  - rid: 5677584734300930174
+  onAttackStartEffects:
+  - rid: 5677584824784912666
+  onAttackEndEffects: []
   references:
     version: 2
     RefIds:
@@ -33,13 +32,9 @@ MonoBehaviour:
       data:
         damage: 5
         spawnDmgNo: 0
-    - rid: 5677584718897873096
+    - rid: 5677584824784912666
       type: {class: SpawnProjectile, ns: , asm: Assembly-CSharp}
       data:
         projectile: {fileID: 2468689517085324198, guid: 1891539b16d05be4f9051b9b20d69e52, type: 3}
         speed: 13
         delay: 0
-    - rid: 5677584734300930174
-      type: {class: StunEffect, ns: , asm: Assembly-CSharp}
-      data:
-        duration: 0.2

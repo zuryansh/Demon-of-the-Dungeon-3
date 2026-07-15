@@ -19,6 +19,8 @@ MonoBehaviour:
   onHitEffects:
   - rid: 6524999602524913774
   - rid: 5677584809349611654
+  onDeathEffects:
+  - rid: 5677584824784912621
   pointCost: 4
   references:
     version: 2
@@ -27,6 +29,13 @@ MonoBehaviour:
       type: {class: ScreenShakeEffect, ns: , asm: Assembly-CSharp}
       data:
         force: 0.15
+    - rid: 5677584824784912621
+      type: {class: SpawnLootItemEffect, ns: , asm: Assembly-CSharp}
+      data:
+        item: {fileID: 8803561016170566170, guid: fb3555d76de0a3444acd9105fd372c6e, type: 3}
+        spawnWithRandomVelocity: 1
+        spawnSpeed: 4
+        spawnChance: 0.3
     - rid: 6524999602524913774
       type: {class: SpawnParticlesEffect, ns: , asm: Assembly-CSharp}
       data:

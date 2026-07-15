@@ -196,7 +196,7 @@ MonoBehaviour:
       - m_Target: {fileID: 305467625534704045}
         m_TargetAssemblyTypeName: EnemyBrain, Assembly-CSharp
         m_MethodName: OnDeath
-        m_Mode: 1
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

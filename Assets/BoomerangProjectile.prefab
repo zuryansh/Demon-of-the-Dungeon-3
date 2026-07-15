@@ -391,9 +391,8 @@ MonoBehaviour:
   activeTime: 5
   onHitEffects:
   - rid: 5677584718897873156
-  - rid: 5677584734300930175
   - rid: 5677584734300930176
-  pierceCount: 4
+  pierceCount: 3
   projHit: 0
   hitbox: {fileID: 6843572708813636323}
   wallLayer:
@@ -408,12 +407,8 @@ MonoBehaviour:
     - rid: 5677584718897873156
       type: {class: DamageEffect, ns: , asm: Assembly-CSharp}
       data:
-        damage: 5
+        damage: 3
         spawnDmgNo: 0
-    - rid: 5677584734300930175
-      type: {class: StunEffect, ns: , asm: Assembly-CSharp}
-      data:
-        duration: 0.2
     - rid: 5677584734300930176
       type: {class: KnockBackEffect, ns: , asm: Assembly-CSharp}
       data:

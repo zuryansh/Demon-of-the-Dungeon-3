@@ -13,7 +13,7 @@ public class WeaponData : ScriptableObject
     [SerializeField] AnimationClip idleClip;
     [SerializeField] LayerMask enemyLayer;
     [SerializeField] bool hasComboEndCooldown;
-    [SerializeField, ShowField(nameof(comboEndCooldown))] float comboEndCooldown;
+    [SerializeField, ShowField(nameof(hasComboEndCooldown))] float comboEndCooldown;
 
     public List<AttackData> Combo => attackCombo;
     public int IdleAnim => Animator.StringToHash(idleClip.name);
