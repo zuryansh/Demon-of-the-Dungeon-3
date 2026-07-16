@@ -638,6 +638,8 @@ MonoBehaviour:
   generator: {fileID: 0}
   placedRooms: []
   roomPrefab: {fileID: 8257017177754270078, guid: 5dd24b17158be1b4b8dcea1a3e036398, type: 3}
+  enemyRoomPrefab: {fileID: 1699071753359692967, guid: a9bccfa1722ad2844a8550d2c5288658, type: 3}
+  treasureRoomPrefab: {fileID: 8210087005110785913, guid: cb32635eca6a6af41858b479f97ce205, type: 3}
   firstRoomPos: {x: 20, y: 20}
   availaleRoomDatas: []
 --- !u!1 &978190582
@@ -829,6 +831,7 @@ MonoBehaviour:
       m_Center: {x: 0.5, y: 15.5, z: 0}
       m_Extent: {x: 12, y: 30, z: 0}
     tilepallete: {fileID: 11400000, guid: 2c0865efc45eb984697497fa934beed8, type: 2}
+    functionType: 0
   roomDebugger: {fileID: 1120997818}
   seed: 1042
 --- !u!4 &1161107354

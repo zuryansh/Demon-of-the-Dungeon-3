@@ -21,8 +21,10 @@ public class RoomAssembler : MonoBehaviour
     [SerializeField] int seed;
     [SerializeField] RoomAssemblingData data;
     [SerializeField] RoomGenerator generator;
-    [SerializeField] List<Room> placedRooms = new List<Room>(); //TODO REPLACE DEBUGGER WITH ROOM SCRIPT
+    [SerializeField] List<Room> placedRooms = new List<Room>(); 
     [SerializeField] Room roomPrefab;
+    [SerializeField] Room enemyRoomPrefab;
+    [SerializeField] Room treasureRoomPrefab;
     [SerializeField] Vector2Int firstRoomPos;
 
     System.Random prng;
@@ -35,7 +37,7 @@ public class RoomAssembler : MonoBehaviour
     List<RoomTypeAndAmount> OutMainGenRoomsSettings;
 
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Awake()
     {
         generator = FindFirstObjectByType<RoomGenerator>();
@@ -43,7 +45,7 @@ public class RoomAssembler : MonoBehaviour
         prng = new System.Random(seed);
         GameSceneManager.Instance.OnAllDependencyFinished += StartAssembly;
 
-        //StartAssembly();
+
     }
 
     private void OnDisable()
@@ -121,6 +123,7 @@ public class RoomAssembler : MonoBehaviour
             && roomPrefab != null
             && data.NoOfInMainGenRooms > 0;
     }
+
     bool  ValidateDungeon()
     {
         if(placedRooms.Count != (data.NoOfInMainGenRooms + data.NoOfOutMainGenRooms)) { Debug.LogError("Not Enough Rooms Placed!"); HandleInvalidDungeon(); return false; }
@@ -210,9 +213,12 @@ public class RoomAssembler : MonoBehaviour
 
     public void PlaceRoomAtPosition(RoomData data,Vector2Int spawnPos, List<Room> connections)
     {
+        Room spawnedRoom = null;
+        if (data.RoomFunction == RoomFunctionTypes.Enemy)
+            spawnedRoom = Instantiate(enemyRoomPrefab, spawnPos.ToV3(), Quaternion.identity);
 
-
-        Room spawnedRoom = Instantiate(roomPrefab, spawnPos.ToV3(), Quaternion.identity);
+        else if (data.RoomFunction == RoomFunctionTypes.Treasure)
+            spawnedRoom = Instantiate(treasureRoomPrefab, spawnPos.ToV3(), Quaternion.identity);
 
         spawnedRoom.Init(data, connections, placedRooms.Count);
 

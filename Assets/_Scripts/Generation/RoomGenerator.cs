@@ -100,7 +100,7 @@ public class RoomGenerator : MonoBehaviour
             }
         }
 
-        return new RoomData(shiftedTiles, genSettings.TilePallete);
+        return new RoomData(shiftedTiles, genSettings.TilePallete, genSettings.RoomFunction);
     }
 
     void Smooth(int fillValue, int emptyVal , RoomGenerationData genSettings)

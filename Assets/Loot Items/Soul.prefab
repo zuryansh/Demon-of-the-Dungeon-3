@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1301990112645273069}
   - component: {fileID: 8803561016170566170}
   m_Layer: 0
-  m_Name: LootItem
+  m_Name: Soul
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -171,10 +171,12 @@ MonoBehaviour:
   pickupRange: 7.5
   onCollectionEffects:
   - rid: 5677584824784912605
+  - rid: 5677584847917547681
   delay: 0.2
   pickupSounds:
   - {fileID: 8300000, guid: 43ab89e2296176c4483fa3dd633f92b7, type: 3}
   - {fileID: 8300000, guid: 7213729f81dc9574b8d16eaa7718d424, type: 3}
+  rb: {fileID: 1301990112645273069}
   value: 10
   references:
     version: 2
@@ -184,6 +186,14 @@ MonoBehaviour:
       data:
         particlesPreab: {fileID: 5073784639439628728, guid: a199b7da9f671bb4aac101e00399412c, type: 3}
         useAttackDir: 0
+    - rid: 5677584847917547681
+      type: {class: PlaySoundEffect, ns: , asm: Assembly-CSharp}
+      data:
+        clips:
+        - {fileID: 8300000, guid: 43ab89e2296176c4483fa3dd633f92b7, type: 3}
+        - {fileID: 8300000, guid: 7213729f81dc9574b8d16eaa7718d424, type: 3}
+        volumme: 0.6
+        type: 1
 --- !u!1 &941360385867195419
 GameObject:
   m_ObjectHideFlags: 0

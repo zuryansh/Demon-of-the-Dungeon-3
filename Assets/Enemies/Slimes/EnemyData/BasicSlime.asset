@@ -19,6 +19,7 @@ MonoBehaviour:
   onHitEffects:
   - rid: 6524999531808686211
   - rid: 5677584809349611653
+  - rid: 5677584847917547683
   onDeathEffects:
   - rid: 5677584824784912620
   pointCost: 1
@@ -33,9 +34,19 @@ MonoBehaviour:
       type: {class: SpawnLootItemEffect, ns: , asm: Assembly-CSharp}
       data:
         item: {fileID: 8803561016170566170, guid: fb3555d76de0a3444acd9105fd372c6e, type: 3}
+        count: 1
         spawnWithRandomVelocity: 1
         spawnSpeed: 4
-        spawnChance: 0.3
+        spawnChance: 0.337
+    - rid: 5677584847917547683
+      type: {class: PlaySoundEffect, ns: , asm: Assembly-CSharp}
+      data:
+        clips:
+        - {fileID: 8300000, guid: 24aea3a639588da4e997b4237e788ca7, type: 3}
+        - {fileID: 8300000, guid: ae8e98d33ce1ee34ab5778ec5a043047, type: 3}
+        - {fileID: 8300000, guid: 753f14174908844409097ac0065cbd26, type: 3}
+        volumme: 0.8
+        type: 1
     - rid: 6524999531808686211
       type: {class: SpawnParticlesEffect, ns: , asm: Assembly-CSharp}
       data:

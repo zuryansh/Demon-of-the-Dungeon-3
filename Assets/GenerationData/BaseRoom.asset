@@ -27,3 +27,4 @@ MonoBehaviour:
   cutoff: 0
   fillPercent: 0
   roomPlacementType: 0
+  functionType: 0

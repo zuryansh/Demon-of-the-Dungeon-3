@@ -1,14 +1,18 @@
 using EditorAttributes;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : Singleton<Player> 
 {
     public Health PlayerHealth => healthScript;
     public event Action<float> EOnPointsChanged;
+    public Vector2 MouseAndJoystickDir => mouseDir;
 
+    PlayerInput inputManager;
     Rigidbody2D rb;
     Camera cam;
 
@@ -21,33 +25,80 @@ public class Player : Singleton<Player>
     [SerializeField] int souls;
     Vector3 towardsMouse;
     AnimationHelper animHelper;
+    Vector2 mouseDir;
 
     protected override void Awake()
     {
         base.Awake();
+        inputManager = GetComponent<PlayerInput>();
+        rb = GetComponent<Rigidbody2D>();
+        animHelper = GetComponent<AnimationHelper>();
     }
 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        animHelper = GetComponent<AnimationHelper>();
+        UIManager.Instance.OnGamePauseToggle += HandlePause;
         cam = Camera.main;
 
     }
 
+    public void HandleMovementInput(InputAction.CallbackContext c)
+    {
+        movementVector = c.ReadValue<Vector2>();
+    }
+    public void HandleMapInput(InputAction.CallbackContext c)
+    {
+        if(c.started) UIManager.Instance.ToggleMinimap();
+    }
+
+    public void HandlePauseInput(InputAction.CallbackContext c)
+    {
+        if (c.canceled)
+        {
+            print("PAUSE INPUIT");
+            UIManager.Instance.TogglePause();
+        }
+    }
+
+
+    void HandlePause(bool paused)
+    {
+        StartCoroutine(Switch(paused));
+
+        IEnumerator Switch(bool paused)
+        {
+            
+            yield return null; //wait for one frame bec switching on same frame causes errors
+            if (paused)
+            {
+                inputManager.SwitchCurrentActionMap("UI");
+                print("Current Action Map is " + inputManager.currentActionMap.name);
+            }
+            else
+            {
+                inputManager.SwitchCurrentActionMap("Player");
+                print("Current Action Map is " + inputManager.currentActionMap.name);
+
+            }
+        }
+    }
+
+
     void Update()
     {
         FlipSprite();
-        movementVector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        mouseDir = GetDirToMouseOrJoystick();
+        if (mouseDir.sqrMagnitude < 0.001f) mouseDir = Vector2.right;
+        //movementVector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            UIManager.Instance.TogglePause();
-        }
-        if(Input.GetKeyDown(KeyCode.M)) 
-        {
-            UIManager.Instance.ToggleMinimap();
-        }
+        //if(Input.GetKeyDown(KeyCode.Escape))
+        //{
+        //    UIManager.Instance.TogglePause();
+        //}
+        //if(Input.GetKeyDown(KeyCode.M)) 
+        //{
+        //    UIManager.Instance.ToggleMinimap();
+        //}
 
     }
 
@@ -103,5 +154,25 @@ public class Player : Singleton<Player>
         
         EOnPointsChanged?.Invoke(souls);
     }
+    
+    public Vector2 GetDirToMouseOrJoystick()
+    {
+        if (inputManager.currentControlScheme == "Keyboard")
+        {
+            Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+            mouseWorld.z = transform.position.z;
 
+            return (mouseWorld - transform.position).normalized;
+        }
+
+        // Gamepad
+        InputAction aimAction = inputManager.actions["Aim"];
+        return aimAction.ReadValue<Vector2>().normalized;
+
+    }
+
+    void OnDrawGizmos()
+    {
+        Gizmos.DrawRay(transform.position, MouseAndJoystickDir);    
+    }
 }

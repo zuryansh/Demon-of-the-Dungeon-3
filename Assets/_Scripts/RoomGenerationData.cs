@@ -6,6 +6,11 @@ public enum RoomPlacementTypes
     InMainGen, OutMainGen
 }
 
+public enum RoomFunctionTypes
+{
+    Enemy, Treasure
+}
+
 [CreateAssetMenu(menuName = "Generation Attributes/Room")]
 public class RoomGenerationData : ScriptableObject
 {
@@ -24,6 +29,7 @@ public class RoomGenerationData : ScriptableObject
     [SerializeField,  ShowField(nameof(algoUsed), GenerationAlgo.PerlinNoise)] float cutoff; //1
     [SerializeField,  ShowField(nameof(algoUsed), GenerationAlgo.RandomNoise)] int fillPercent; //100
     [SerializeField] RoomPlacementTypes roomPlacementType;
+    [SerializeField] RoomFunctionTypes functionType;
 
     public int MapWidth { get => mapWidth; }
     public int MapHeight { get => mapHeight; }
@@ -40,5 +46,6 @@ public class RoomGenerationData : ScriptableObject
     public float Cutoff { get => cutoff; }
     public int FillPercent { get => fillPercent; }
     public RoomPlacementTypes RoomPlacementType => roomPlacementType;
+    public RoomFunctionTypes RoomFunction => functionType;
 
 }

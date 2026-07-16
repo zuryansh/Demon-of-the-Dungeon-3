@@ -116,6 +116,7 @@ public class ScreenShakeEffect : Effect
 public class SpawnLootItemEffect: Effect
 {
     [SerializeField] LootItem item;
+    [SerializeField] int count;
     [SerializeField] bool spawnWithRandomVelocity;
     [SerializeField, ShowField(nameof(spawnWithRandomVelocity))] float spawnSpeed;
     [SerializeField, Range(0f, 1f)] float spawnChance;
@@ -130,14 +131,37 @@ public class SpawnLootItemEffect: Effect
         float n = UnityEngine.Random.Range(0f, 1f);
         if ((n<=spawnChance))
         {
-            LootItem lootItem = MonoBehaviour.Instantiate(item, context.EffectPoint, Quaternion.identity);
-            if (lootItem.RB != null)
+            for (int i = 0; i < count; i++)
             {
-                lootItem.RB.AddForce(UnityEngine.Random.insideUnitCircle.normalized * spawnSpeed * 100);
+                LootItem lootItem = MonoBehaviour.Instantiate(item, context.EffectPoint, Quaternion.identity);
+                if (spawnWithRandomVelocity && lootItem.RB != null)
+                {
+                    Debug.Log("HERE");
+                    lootItem.RB.AddForce(UnityEngine.Random.insideUnitCircle * spawnSpeed * 100);
+                }
             }
+
         }
 
 
     }
 }
 
+[Serializable]
+public class PlaySoundEffect : Effect
+{
+    [SerializeField] AudioClip[] clips;
+    [SerializeField] float volumme=1f;
+    [SerializeField] SoundType type;
+
+    public override void Apply(EffectContext context)
+    {
+        if (clips.Length == 1)
+            AudioManager.Instance.PlaySound(clips[0], volumme, type);
+        else if (clips.Length > 1)
+        {
+            AudioManager.Instance.PlayRandomSound(clips, volumme, type);
+        }
+    }
+
+}

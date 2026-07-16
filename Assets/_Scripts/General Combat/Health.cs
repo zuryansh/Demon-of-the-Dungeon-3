@@ -13,8 +13,8 @@ public class Health : MonoBehaviour
     [SerializeField] float curHealth;
     [SerializeField] float invincibilityTime;
 
-    [SerializeField] AudioClip[] onHitSound;
-    [SerializeField] AudioClip[] onDeathSound;
+
+    
 
     float timeSinceLastHit;
 
@@ -38,11 +38,9 @@ public class Health : MonoBehaviour
         OnHit.Invoke(cntxt);
         EOnHealthChange.Invoke(curHealth, maxHealth);
 
-        if(onHitSound.Length!=0)AudioManager.Instance.PlayRandomSound(onHitSound, 1f, SoundType.Sfx);
 
         if(curHealth <= 0 )
         {
-            if(onDeathSound.Length != 0)AudioManager.Instance.PlayRandomSound(onDeathSound, 1f, SoundType.Sfx);
             OnDeath.Invoke(cntxt);
         }
     }

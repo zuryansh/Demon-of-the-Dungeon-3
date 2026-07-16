@@ -5,7 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(AnimationHelper))]
 public class Weapon: MonoBehaviour, ICombatHandler
 {
-    public Vector2 MouseDir => (inputCam.ScreenToWorldPoint(Input.mousePosition) - visuals.position).normalized;
+    //public Vector2 MouseDir => (inputCam.ScreenToWorldPoint(Input.mousePosition) - visuals.position).normalized;
+    public Vector2 MouseDir => Player.Instance.MouseAndJoystickDir;
 
     [SerializeField] Collider2D user;
     [SerializeField] Transform visuals;
@@ -14,7 +15,7 @@ public class Weapon: MonoBehaviour, ICombatHandler
     [SerializeField] MouseLook mouseLook;
     [SerializeField] float comboCyoteTime=1f;
     [SerializeField] AttackRuntime currentAttack;
-
+    [SerializeField] LayerMask hitLayers;
     [SerializeField] int comboIndex = 0;
     [SerializeField] bool hasBufferedAttack;
     [SerializeField] bool comboIsFinished = true;
@@ -23,6 +24,7 @@ public class Weapon: MonoBehaviour, ICombatHandler
     AnimationHelper animHelper;
     float timeSinceLastAttackEnd=0f;
     Camera inputCam;
+    ContactFilter2D contactFilter;
 
     [SerializeField] bool isAttacking;
 
@@ -32,6 +34,7 @@ public class Weapon: MonoBehaviour, ICombatHandler
         inputCam = Camera.main;
         animHelper = GetComponent<AnimationHelper>();
         currentAttack = null;
+        contactFilter = new ContactFilter2D { layerMask = hitLayers };
     }
 
     private void Update()
@@ -62,15 +65,23 @@ public class Weapon: MonoBehaviour, ICombatHandler
         currentAttack.EAttackFinish += OnAttackFinish;
         currentAttack.EToggleMouseLock += OnToggleMouseLook;
 
-       
-
-        EffectContext context = new EffectContext(user.gameObject, null, visuals.position ,MouseDir.normalized);
+        // need to get dir this way because the way the mouse points and the way we attack is diff
+        //mainly to make joystick work
+        Vector2 dir = GetDirToRaycastHit(visuals.position,MouseDir);
+        EffectContext context = new EffectContext(user.gameObject, null, visuals.position ,dir);
         foreach (var effect in data.OnAttackStartEffects) effect.Apply(context);
 
 
         animHelper.ChangeAnimation(currentAttack.Data.AttackAnimation, forceReplay :true);
     }
 
+
+    Vector2 GetDirToRaycastHit(Vector2 referencePoint,Vector2 dir)
+    {
+        RaycastHit2D[] hits = new RaycastHit2D[1];
+        Physics2D.Raycast(visuals.position, dir,contactFilter, hits);
+        return (hits[0].point - referencePoint).normalized;
+    }
 
     public void TryAttack()
     {

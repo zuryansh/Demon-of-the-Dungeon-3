@@ -11,21 +11,24 @@ public class RoomData
     public List<RoomTile> Tiles => tiles;
     public Bounds BoundingBox => boundingBox;
     public RoomPalleteSO Tilepallete=> tilepallete;
+    public RoomFunctionTypes RoomFunction => functionType;
 
 
     [SerializeField] int id;
     [SerializeField] List<RoomTile> tiles;
     [SerializeField] Bounds boundingBox;
     [SerializeField] RoomPalleteSO tilepallete;
+    [SerializeField] RoomFunctionTypes functionType;
     
     Dictionary<Vector2Int, RoomTile> tilesDict = new Dictionary<Vector2Int, RoomTile>();
 
 
-    public RoomData(List<RoomTile> tiles, RoomPalleteSO pallete)
+    public RoomData(List<RoomTile> tiles, RoomPalleteSO pallete, RoomFunctionTypes functionType)
     {
         this.id = Time.time.GetHashCode();
         this.tiles = tiles;
         this.tilepallete = pallete;
+        this.functionType = functionType;
         boundingBox = new Bounds(Vector3.zero, Vector3.zero);
 
         //calc global bounds and generate Tile Dic

@@ -9,7 +9,7 @@ public class MouseLook : MonoBehaviour
     private void FixedUpdate()
     {
         if (Locked) return;
-        Vector3 difference = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+        Vector3 difference = Player.Instance.MouseAndJoystickDir;
 
         difference.Normalize();
 

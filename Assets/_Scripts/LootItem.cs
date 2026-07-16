@@ -14,16 +14,15 @@ public class LootItem : MonoBehaviour
     [SerializeField, ShowField(nameof(gravitateTowardsPlayer))] float pickupRange;
     [SerializeReference, SubclassSelector] List<Effect> onCollectionEffects;
     [SerializeField] float delay;
-    [SerializeField] AudioClip[] pickupSounds;
+    [SerializeField] protected Rigidbody2D rb;
 
     protected Player player;
-    protected Rigidbody2D rb;
 
     protected virtual void Start()
     {
         player = Player.Instance;
         if (player == null) Debug.LogError("PLayer not found");
-        rb = GetComponent<Rigidbody2D>();
+        if(rb ==null) rb = GetComponent<Rigidbody2D>();
         Invoke(nameof(Delay), delay);
     }
 
@@ -92,7 +91,6 @@ public class LootItem : MonoBehaviour
     protected virtual void Pickup(Player player)
     {
         // nothing here for now;
-        if(pickupSounds.Length > 0)AudioManager.Instance.PlayRandomSound(pickupSounds, 0.4f, SoundType.Sfx);
         EffectContext cntxt = new EffectContext(gameObject, player.gameObject, transform.position, transform.right);
         foreach (Effect effect in onCollectionEffects)
         {

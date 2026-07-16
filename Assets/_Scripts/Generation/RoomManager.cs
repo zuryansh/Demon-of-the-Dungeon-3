@@ -10,7 +10,7 @@ public class RoomManager : Singleton<RoomManager>
     [SerializeField] List<Room> rooms = new List<Room>();
     [SerializeField] HashSet<Room> clearedRooms = new HashSet<Room>();
     [SerializeField] Door entryDoor;
-    public Room ActiveRoom=> rooms.Where(r => r.hasPlayer == true).FirstOrDefault();
+    public Room ActiveRoom=> rooms.Where(r => r.HasPlayer == true).FirstOrDefault();
 
 
     private void Start()

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Room : MonoBehaviour
@@ -13,20 +12,22 @@ public class Room : MonoBehaviour
     public event Action<Room> EonPlayerEnter;
     public event Action<Room> EonPlayerExit;
     public static event Action<Room> EonRoomClear;
-    public bool RoomClear => enemySpawner.Defeated;
+    public virtual bool RoomClear => playerVisited;
     public List<Door> Doors => doors;
     public int ID => id;
+    public bool HasPlayer;
 
 
-    [SerializeField] RoomDataDebugger debugger;
-    [SerializeField] List<Room> connectedRooms= new List<Room>();
-    [SerializeField] Bounds globalBounds;
-    [SerializeField] Door doorPrefab;
-    [SerializeField] List<Door> doors;
-    [SerializeField] EnemySpawner enemySpawner;
+    [SerializeField] protected RoomDataDebugger debugger;
+    [SerializeField] protected List<Room> connectedRooms= new List<Room>();
+    [SerializeField] protected Bounds globalBounds;
+    [SerializeField] protected Door doorPrefab;
+    [SerializeField] protected List<Door> doors;
+    //[SerializeField] protected EnemySpawner enemySpawner;
 
     int id=0;
-    public bool hasPlayer;
+    bool playerVisited;
+
 
     RoomData data;
 
@@ -51,7 +52,7 @@ public class Room : MonoBehaviour
 
     public void SetRoomData(RoomData data) { this.data = data; debugger.RoomData = data; }
 
-    void OnAssemblyCompletion(IReadOnlyList<Room> allRooms)
+    protected virtual void OnAssemblyCompletion(IReadOnlyList<Room> allRooms)
     {
         SpawnDoors();
     }
@@ -133,46 +134,46 @@ public class Room : MonoBehaviour
 
     public Vector2 GetGlobalTilePos(RoomTile tile) => tile.LocalPosition.ToV3()+GlobalPosition;
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         RoomAssembler.EOnAssemblyFinished += OnAssemblyCompletion;
-        if(enemySpawner != null)
-        {
-            enemySpawner.OnAllWavesDefeated += RoomCleared;
-        }
+        //if(enemySpawner != null)
+        //{
+        //    enemySpawner.OnAllWavesDefeated += RoomCleared;
+        //}
     }
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         RoomAssembler.EOnAssemblyFinished -= OnAssemblyCompletion;
-        if (enemySpawner != null)
-        {
-            enemySpawner.OnAllWavesDefeated -= RoomCleared;
-        }
+        //if (enemySpawner != null)
+        //{
+        //    enemySpawner.OnAllWavesDefeated -= RoomCleared;
+        //}
     }
 
-    public void ActivateRoom()
+    public virtual void ActivateRoom()
     {
         EonPlayerEnter?.Invoke(this);
-        if(enemySpawner != null && !RoomClear)
+        if(!RoomClear)
         {
             foreach(Door door in doors)
             {
-                print("LOCk");
                 door.SetLock(true);
             }
 
         }
-        hasPlayer = true;
+        HasPlayer = true;
     }
 
     public void DeactivateRoom()
     {
         EonPlayerExit?.Invoke(this);
-        hasPlayer = true;
+        HasPlayer = false;
+        playerVisited = true;
 
     }
 
-    void RoomCleared()
+    protected virtual void RoomCleared()
     {
         ShowDoors();
 
@@ -196,7 +197,16 @@ public class Room : MonoBehaviour
         }
     }
 
+    protected RoomTile GetRandomRoomTile(bool useFilter =false,TileTypes filter = TileTypes.Floor)
+    {
+        RoomTile[] tiles = data.Tiles.ToArray();
+        if (useFilter)
+        {
+            tiles = data.Tiles.Where(x => x.TileType == filter).ToArray();
+        }
 
+        return tiles.Choice();
+    }
 
 
 }
