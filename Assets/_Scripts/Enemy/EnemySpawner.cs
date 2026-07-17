@@ -5,7 +5,14 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class EnemySpawner : MonoBehaviour
+public interface ISpawner
+{
+    void Spawn();
+    public void OnSpawnRemoved(GameObject obj);
+    public void AddObjToList(GameObject obj);
+}
+
+public class EnemySpawner : MonoBehaviour , ISpawner
 {
     enum SpawnType { InCircle, InRoom }
     public event Action OnAllWavesDefeated;
@@ -26,7 +33,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] PopupText counterText;
 
 
-    List<EnemyBrain> enemies = new List<EnemyBrain>();
+    List<GameObject> enemies = new List<GameObject>();
     bool isCounting;
     List<RoomTile> validTiles;
 
@@ -52,14 +59,14 @@ public class EnemySpawner : MonoBehaviour
         Instantiate(counterText, transform.position, Quaternion.identity).Init("1",2f, 0.8f, true, 0.2f);
         yield return new WaitForSeconds(1.2f);
         isCounting = false;
-        SpawnEnemies();
+        Spawn();
 
     }
 
-
+    void SpawnEnemies(Room rooom) => Spawn();
 
     [Button("Spawn")]
-    public void SpawnEnemies(Room room = null)
+    public void Spawn()
     {
         if (!SpawnContinously && Defeated) return;
 
@@ -73,7 +80,7 @@ public class EnemySpawner : MonoBehaviour
 
         while (availablePoints >= 0 && currentEnemyCount <= maxEnemyCount)
         {
-            enemies.Add(SpawnEnemy(enemyPrefabList[UnityEngine.Random.Range(0, enemyPrefabList.Count )]));
+            enemies.Add(SpawnEnemy(enemyPrefabList.Choice()).gameObject);
         }
     }
 
@@ -82,7 +89,8 @@ public class EnemySpawner : MonoBehaviour
         Vector2 pos = GetSpawnPosition();
 
         EnemyBrain enemy = Instantiate(enemyObj, pos, Quaternion.identity);
-        enemy.EOnDeath += OnEnemyDeath;
+        //enemy.EOnDeath += OnSpawnRemoved;
+        enemy.SetSpawner(this);
         availablePoints -= enemy.Data.PointCost;
         currentEnemyCount++;
         return enemy;
@@ -92,7 +100,7 @@ public class EnemySpawner : MonoBehaviour
     {
         if(spawnType == SpawnType.InRoom)
         {
-            availablePoints = validTiles.Count / 30 + 10;
+            availablePoints = validTiles.Count / 20 + 10;
             maxEnemyCount = validTiles.Count / 100 + 5;
         }
         else if(spawnType == SpawnType.InCircle)
@@ -120,9 +128,10 @@ public class EnemySpawner : MonoBehaviour
         return pos;
     }
 
-    void OnEnemyDeath(EnemyBrain enemy)
+    public void OnSpawnRemoved(GameObject obj)
     {
-        enemies.Remove(enemy);
+        print(obj.name);
+        enemies.Remove(obj);
         currentEnemyCount--;
         if(currentEnemyCount == 0)
         {
@@ -150,6 +159,11 @@ public class EnemySpawner : MonoBehaviour
             parentRoom.EonPlayerEnter -= SpawnEnemies;
         }
     }
+    public void AddObjToList(GameObject obj)
+    {
+        enemies.Add(obj);
+        currentEnemyCount++;
+    }
 
 #if UNITY_EDITOR
     private void OnDrawGizmos()
@@ -160,5 +174,9 @@ public class EnemySpawner : MonoBehaviour
             Gizmos.DrawWireSphere(transform.position, radius);
         }
     }
+
+
+
+
 #endif
 }

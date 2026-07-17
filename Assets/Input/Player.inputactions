@@ -12,7 +12,7 @@
                     "id": "4955a033-bd10-428e-be16-be2ca4338fff",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "Press(behavior=1)",
+                    "interactions": "Press",
                     "initialStateCheck": true
                 },
                 {
@@ -41,15 +41,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "Aim",
-                    "type": "Value",
-                    "id": "a221aead-720d-41ea-8058-f2e3e0d0ab35",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -57,7 +48,7 @@
                     "name": "",
                     "id": "c0dcaa49-671d-4fd0-92c7-e2b9c86cbac7",
                     "path": "<Mouse>/leftButton",
-                    "interactions": "Press",
+                    "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard",
                     "action": "Attack",
@@ -237,17 +228,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Map",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "5d8ea176-2f04-45d1-b190-cb986cbf3653",
-                    "path": "<Gamepad>/rightStick",
-                    "interactions": "",
-                    "processors": "StickDeadzone",
-                    "groups": ";Gamepad",
-                    "action": "Aim",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

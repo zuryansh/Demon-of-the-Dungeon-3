@@ -1340,7 +1340,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 14b919a4a3f28d94b874b73fe87acfa8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -18333,11 +18333,10 @@ MonoBehaviour:
   radius: 10
   currentEnemyCount: 0
   enemyPrefabList:
-  - {fileID: 2851378718043903399, guid: 1b1cd5d0757fbe947b777ab1d0e76d07, type: 3}
-  - {fileID: 4886649593553187801, guid: e158ba43c349e634c81997a9692f7458, type: 3}
-  autoCalcPoints: 1
-  availablePoints: 16
-  maxEnemyCount: 8
+  - {fileID: 4511166735317055250, guid: ad0cfabcc1445ab4c88814f336a0115e, type: 3}
+  autoCalcPoints: 0
+  availablePoints: 60
+  maxEnemyCount: 1
   SpawnContinously: 1
   noOfWaves: 0
   wavesDefeated: 0
@@ -18491,6 +18490,71 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e06fb9747c29574ea47ed55d4c93155, type: 3}
+--- !u!1001 &2613154819685052676
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1187044855438767884, guid: ad0cfabcc1445ab4c88814f336a0115e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 8.71
+      objectReference: {fileID: 0}
+    - target: {fileID: 1187044855438767884, guid: ad0cfabcc1445ab4c88814f336a0115e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1187044855438767884, guid: ad0cfabcc1445ab4c88814f336a0115e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1187044855438767884, guid: ad0cfabcc1445ab4c88814f336a0115e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1187044855438767884, guid: ad0cfabcc1445ab4c88814f336a0115e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1187044855438767884, guid: ad0cfabcc1445ab4c88814f336a0115e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1187044855438767884, guid: ad0cfabcc1445ab4c88814f336a0115e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1187044855438767884, guid: ad0cfabcc1445ab4c88814f336a0115e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1187044855438767884, guid: ad0cfabcc1445ab4c88814f336a0115e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1187044855438767884, guid: ad0cfabcc1445ab4c88814f336a0115e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2617763837518180998, guid: ad0cfabcc1445ab4c88814f336a0115e, type: 3}
+      propertyPath: m_Name
+      value: BigSlime
+      objectReference: {fileID: 0}
+    - target: {fileID: 6379654221017922429, guid: ad0cfabcc1445ab4c88814f336a0115e, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6379654221017922429, guid: ad0cfabcc1445ab4c88814f336a0115e, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ad0cfabcc1445ab4c88814f336a0115e, type: 3}
 --- !u!1001 &2850918547636664792
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18748,3 +18812,4 @@ SceneRoots:
   - {fileID: 105743852}
   - {fileID: 2850918547636664792}
   - {fileID: 813951419223135925}
+  - {fileID: 2613154819685052676}

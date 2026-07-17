@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21d4d2a612900f948891a8425f1b242d, type: 3}
+  m_Name: BigSlime
+  m_EditorClassIdentifier: 
+  enemyName: BigSlime
+  enemyType: 0
+  idleAnim: {fileID: 7400000, guid: a4fc332b756b7be4899cc53b47113154, type: 2}
+  movementAnim: {fileID: 7400000, guid: a4fc332b756b7be4899cc53b47113154, type: 2}
+  onHitEffects:
+  - rid: 5677584871010861057
+  - rid: 5677584871010861058
+  - rid: 5677584871010861059
+  onDeathEffects:
+  - rid: 5677584871010861060
+  pointCost: 15
+  references:
+    version: 2
+    RefIds:
+    - rid: 5677584871010861057
+      type: {class: SpawnParticlesEffect, ns: , asm: Assembly-CSharp}
+      data:
+        particlesPreab: {fileID: 5313175317198594345, guid: 0cdbe0e4b8390c04f8f4c9ae53bc63eb, type: 3}
+        useAttackDir: 1
+    - rid: 5677584871010861058
+      type: {class: ScreenShakeEffect, ns: , asm: Assembly-CSharp}
+      data:
+        force: 0.15
+    - rid: 5677584871010861059
+      type: {class: PlaySoundEffect, ns: , asm: Assembly-CSharp}
+      data:
+        clips:
+        - {fileID: 8300000, guid: 24aea3a639588da4e997b4237e788ca7, type: 3}
+        - {fileID: 8300000, guid: ae8e98d33ce1ee34ab5778ec5a043047, type: 3}
+        - {fileID: 8300000, guid: 753f14174908844409097ac0065cbd26, type: 3}
+        volumme: 0.8
+        type: 1
+    - rid: 5677584871010861060
+      type: {class: SpawnLootItemEffect, ns: , asm: Assembly-CSharp}
+      data:
+        item: {fileID: 8803561016170566170, guid: fb3555d76de0a3444acd9105fd372c6e, type: 3}
+        count: 1
+        spawnWithRandomVelocity: 1
+        spawnSpeed: 4
+        spawnChance: 0.337

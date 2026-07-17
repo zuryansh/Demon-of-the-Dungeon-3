@@ -15,9 +15,9 @@ public  abstract class EnemyAttackModule : MonoBehaviour
     [SerializeField] protected AttackRuntime currentAttack;
     [SerializeField] protected bool isAttacking;
     [SerializeField] protected Hitbox attackHitbox;
-    [SerializeField] protected LayerMask obstacleLayer;
+    
+    //[SerializeField] protected LayerMask obstacleLayer;
     [SerializeField]protected bool isStunned = false;
-    [SerializeField]protected bool canAttack;
     protected float timeSinceLastAttack;
 
 
@@ -46,8 +46,10 @@ public  abstract class EnemyAttackModule : MonoBehaviour
         currentAttack = new AttackRuntime(attackData, Time.time, AnimHelper.Anim);
         timeSinceLastAttack = 0f;
 
-        EffectContext context = new EffectContext(gameObject, null, transform.position, (Vector3)DirToPlayer);
+        Vector2 effectPos = (Brain.EffectPoint != null)? Brain.EffectPoint.position : transform.position;
+        EffectContext context = new EffectContext(gameObject, null, effectPos, (Vector3)DirToPlayer);
         foreach (var effect in attackData.OnAttackStartEffects) effect.Apply(context);
+
 
         currentAttack.EAttackFinish += OnAttackFinish;
         AnimHelper.ChangeAnimation(currentAttack.Data.AttackAnimation, priority: currentAttack.Data.AnimationPriority, forceReplay:true);
@@ -60,7 +62,14 @@ public  abstract class EnemyAttackModule : MonoBehaviour
 
         currentAttack = null;
         isAttacking = false;
-        AnimHelper.ChangeAnimation(Brain.Data.IdleAnim);  
+
+        Vector2 effectPos = (Brain.EffectPoint != null) ? Brain.EffectPoint.position : transform.position;
+        EffectContext context = new EffectContext(gameObject, null, effectPos, (Vector3)DirToPlayer);
+        foreach (var effect in attackData.OnAttackEndEffects) effect.Apply(context);
+
+        AnimHelper.ChangeAnimation(Brain.Data.IdleAnim);
+        
+
     }
 
     public void NotifyHit(Collider2D collider, Vector3 dir)

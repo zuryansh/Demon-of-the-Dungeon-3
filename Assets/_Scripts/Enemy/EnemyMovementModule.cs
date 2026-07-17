@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public abstract class EnemyMovementModule : MonoBehaviour
+public  class EnemyMovementModule : MonoBehaviour
 {
     public EnemyBrain Brain;
 

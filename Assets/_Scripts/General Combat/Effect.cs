@@ -11,7 +11,16 @@ public abstract class Effect
     
 }
 [Serializable]
+public class DebugEffect: Effect
+{
+    [SerializeField] string message;
+    public override void Apply(EffectContext context)
+    {
+        Debug.Log(message);
+    }
+}
 
+[Serializable]
 public class DamageEffect: Effect
 {
     [SerializeField] float damage;
@@ -164,4 +173,16 @@ public class PlaySoundEffect : Effect
         }
     }
 
+}
+
+[Serializable]
+public class SpawnEnemyEffect : Effect
+{
+    [SerializeField] EnemyBrain[] enemies;
+    public override void Apply(EffectContext context)
+    {
+       EnemyBrain enemy=  MonoBehaviour.Instantiate(enemies.Choice(), context.EffectPoint, Quaternion.identity);
+       
+
+    }
 }

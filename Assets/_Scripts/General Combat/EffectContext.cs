@@ -39,3 +39,16 @@ public class EffectContext
     public Vector3 EffectPoint { get => effectPoint; }
     public Vector3 EffectDir { get => effectDir; }
 }
+
+//public class SpawnEffectContext : EffectContext
+//{
+//    public ISpawner Spawner => spawner;
+
+//    ISpawner spawner;
+
+//    public SpawnEffectContext(GameObject source,ISpawner parentSpawner, GameObject target, Vector3 effectPoint, Vector3 effectDir) : base(source, target, effectPoint, effectDir)
+//    {
+//        spawner = parentSpawner;
+
+//    }
+//}

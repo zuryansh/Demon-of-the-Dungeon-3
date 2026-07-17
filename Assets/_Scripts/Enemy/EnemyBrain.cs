@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.UI.Image;
 
 public class EnemyBrain : MonoBehaviour,IStunnable
 {
@@ -12,6 +10,9 @@ public class EnemyBrain : MonoBehaviour,IStunnable
     public event Action<EnemyBrain> EOnDeath;
     public bool HasLOS => hasLOS;
     public Vector2 LastPlayerPos;
+    public Transform EffectPoint => effectPoint;
+    public LayerMask ObstacleLayer => obstacleLayer;
+    public EnemySpawner ParentSpawner=> parentSpawner;
 
     [SerializeField] EnemySO enemyData;
     [SerializeField] bool hasLOS;
@@ -19,17 +20,19 @@ public class EnemyBrain : MonoBehaviour,IStunnable
     [SerializeField] LayerMask obstacleLayer;
     [SerializeField] LayerMask playerLayer;
     [SerializeField] float startDelay;
+    [SerializeField] Transform effectPoint;
 
     AnimationHelper animHelper;
     EnemyMovementModule movementModule;
     EnemyAttackModule attackModule;
     float startTime;
     bool canTick = false;
+     EnemySpawner parentSpawner;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        startDelay += UnityEngine.Random.Range(0f, 0.6f);
         Player = FindAnyObjectByType<Player>().transform; //CHANGE LATER
         startTime = Time.time;
         animHelper = GetComponent<AnimationHelper>();
@@ -42,6 +45,8 @@ public class EnemyBrain : MonoBehaviour,IStunnable
         movementModule.Init();
         attackModule.Init();
     }
+
+    public void SetSpawner(EnemySpawner spawner) => parentSpawner = spawner;
 
     void CheckDependecies()
     {
@@ -90,15 +95,20 @@ public class EnemyBrain : MonoBehaviour,IStunnable
     public void OnDeath(EffectContext context)
     {
         EOnDeath?.Invoke(this);
+
         foreach (Effect effect in Data.OnDeathEffects)
         {
             effect.Apply(context);
         }
-        Destroy(gameObject);
+        if(parentSpawner != null) parentSpawner.OnSpawnRemoved(gameObject);
+        Destroy(gameObject,0.05f);
     }
+
+  
 
     public void Stun(float duration)
     {
+        if (movementModule == null || attackModule == null) return;
         movementModule.Stun(duration);
         attackModule.Stun(duration);
     }

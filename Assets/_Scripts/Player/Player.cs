@@ -48,7 +48,7 @@ public class Player : Singleton<Player>
     }
     public void HandleMapInput(InputAction.CallbackContext c)
     {
-        if(c.started) UIManager.Instance.ToggleMinimap();
+        if(c.performed) UIManager.Instance.ToggleMinimap();
     }
 
     public void HandlePauseInput(InputAction.CallbackContext c)

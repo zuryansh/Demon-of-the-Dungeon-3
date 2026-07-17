@@ -33,7 +33,7 @@ public class PlayerCombat : MonoBehaviour, ICombatant
 
     public void HandleAttackInput(InputAction.CallbackContext c)
     {
-        if (c.started)
+        if (c.performed)
         {
             currentWeapon.TryAttack();
         }
