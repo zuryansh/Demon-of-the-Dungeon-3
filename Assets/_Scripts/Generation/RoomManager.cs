@@ -7,8 +7,9 @@ public class RoomManager : Singleton<RoomManager>
 {
     public Action<RoomManager> EOnAllRoomsCleared;
 
-    [SerializeField] List<Room> rooms = new List<Room>();
-    [SerializeField] HashSet<Room> clearedRooms = new HashSet<Room>();
+     List<Room> rooms = new List<Room>();
+    [SerializeField] List<Room> clearedRooms = new List<Room>();
+    [SerializeField] List<Room> unclearedRooms = new List<Room> ();
     [SerializeField] Door entryDoor;
     public Room ActiveRoom=> rooms.Where(r => r.HasPlayer == true).FirstOrDefault();
 
@@ -33,6 +34,7 @@ public class RoomManager : Singleton<RoomManager>
     void OnAssemblyFinish(IReadOnlyList<Room> r)
     {
         rooms = r as List<Room>;
+        unclearedRooms = r as List<Room>;
         if (entryDoor != null)
         {
             entryDoor.Init(null, rooms[0]);
@@ -44,7 +46,12 @@ public class RoomManager : Singleton<RoomManager>
     public void RoomCleared(Room room)
     {
         clearedRooms.Add(room);
-        if (clearedRooms.Count == rooms.Count) AllRoomsCleared();
+        unclearedRooms.Remove(room);
+        if (unclearedRooms.Count == 0)
+        {
+           print(" BUG CHECK");
+            AllRoomsCleared();
+        }
     }
 
     void AllRoomsCleared()

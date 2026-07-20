@@ -41,6 +41,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Emittera
+    uniqueID: 2309794177
+    locked: 0
   - name: Top
     uniqueID: 3179245289
     locked: 0
