@@ -38,6 +38,14 @@ public class EnemySpawner : MonoBehaviour , ISpawner
     List<RoomTile> validTiles;
 
 
+    private void Start()
+    {
+        if(spawnType == SpawnType.InRoom)
+        {
+            enemyPrefabList = parentRoom.Data.GenSettings.Enemies;
+        }
+    }
+
 
     private void Update()
     {

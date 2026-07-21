@@ -12,6 +12,7 @@ public class RoomData
     public Bounds BoundingBox => boundingBox;
     public RoomPalleteSO Tilepallete=> tilepallete;
     public RoomFunctionTypes RoomFunction => functionType;
+    public RoomGenerationData GenSettings => genSettings;
 
 
     [SerializeField] int id;
@@ -19,11 +20,12 @@ public class RoomData
     [SerializeField] Bounds boundingBox;
     [SerializeField] RoomPalleteSO tilepallete;
     [SerializeField] RoomFunctionTypes functionType;
+    RoomGenerationData genSettings;
     
     Dictionary<Vector2Int, RoomTile> tilesDict = new Dictionary<Vector2Int, RoomTile>();
 
 
-    public RoomData(List<RoomTile> tiles, RoomPalleteSO pallete, RoomFunctionTypes functionType)
+    public RoomData(List<RoomTile> tiles, RoomPalleteSO pallete, RoomFunctionTypes functionType, RoomGenerationData genSettings)
     {
         this.id = Time.time.GetHashCode();
         this.tiles = tiles;
@@ -40,6 +42,7 @@ public class RoomData
         }
         boundingBox.extents += new Vector3(0.5f, 0.5f, 0);
 
+        this.genSettings = genSettings;
 
     }
 

@@ -1,5 +1,6 @@
 using EditorAttributes;
 using UnityEngine;
+using System.Collections.Generic;
 
 public enum RoomPlacementTypes
 {
@@ -14,22 +15,23 @@ public enum RoomFunctionTypes
 [CreateAssetMenu(menuName = "Generation Attributes/Room")]
 public class RoomGenerationData : ScriptableObject
 {
-    [SerializeField] int mapWidth;
-    [SerializeField] int mapHeight;
-    [SerializeField] int minRoomSize;
-    [SerializeField] GenerationAlgo algoUsed;
-    [SerializeField] bool useRandomSeed;
+    [SerializeField] protected int mapWidth;
+    [SerializeField] protected int mapHeight;
+    [SerializeField] protected int minRoomSize;
+    [SerializeField] protected GenerationAlgo algoUsed;
+    [SerializeField] protected bool useRandomSeed;
     [SerializeField] RoomPalleteSO tilePallete;
-    [SerializeField, ShowField(nameof(algoUsed), GenerationAlgo.SimpleWalker)] int iterations = 10;
-    [SerializeField, ShowField(nameof(algoUsed), GenerationAlgo.SimpleWalker)] int walklength = 10;
-    [SerializeField, ShowField(nameof(algoUsed), GenerationAlgo.SimpleWalker)] bool smoothing;
-    [SerializeField, ShowField(nameof(algoUsed), GenerationAlgo.SimpleWalker)] int smoothingIterations;
-    [SerializeField, ShowField(nameof(algoUsed), GenerationAlgo.SimpleWalker)] private int walkerCount;
-    [SerializeField, ShowField(nameof(algoUsed), GenerationAlgo.SimpleWalker)] int smoothingCutoff;
-    [SerializeField,  ShowField(nameof(algoUsed), GenerationAlgo.PerlinNoise)] float cutoff; //1
-    [SerializeField,  ShowField(nameof(algoUsed), GenerationAlgo.RandomNoise)] int fillPercent; //100
-    [SerializeField] RoomPlacementTypes roomPlacementType;
-    [SerializeField] RoomFunctionTypes functionType;
+    [SerializeField, ShowField(nameof(algoUsed), GenerationAlgo.SimpleWalker)] protected int iterations = 10;
+    [SerializeField, ShowField(nameof(algoUsed), GenerationAlgo.SimpleWalker)] protected int walklength = 10;
+    [SerializeField, ShowField(nameof(algoUsed), GenerationAlgo.SimpleWalker)] protected bool smoothing;
+    [SerializeField, ShowField(nameof(algoUsed), GenerationAlgo.SimpleWalker)] protected int smoothingIterations;
+    [SerializeField, ShowField(nameof(algoUsed), GenerationAlgo.SimpleWalker)] protected int walkerCount;
+    [SerializeField, ShowField(nameof(algoUsed), GenerationAlgo.SimpleWalker)] protected int smoothingCutoff;
+    [SerializeField,  ShowField(nameof(algoUsed), GenerationAlgo.PerlinNoise)] protected float cutoff; //1
+    [SerializeField,  ShowField(nameof(algoUsed), GenerationAlgo.RandomNoise)] protected int fillPercent; //100
+    [SerializeField] protected RoomPlacementTypes roomPlacementType;
+    [SerializeField] protected RoomFunctionTypes functionType;
+    [SerializeField] List<EnemyBrain> enemyBrains;
 
     public int MapWidth { get => mapWidth; }
     public int MapHeight { get => mapHeight; }
@@ -47,5 +49,8 @@ public class RoomGenerationData : ScriptableObject
     public int FillPercent { get => fillPercent; }
     public RoomPlacementTypes RoomPlacementType => roomPlacementType;
     public RoomFunctionTypes RoomFunction => functionType;
+    public List<EnemyBrain> Enemies=> enemyBrains;
 
 }
+
+

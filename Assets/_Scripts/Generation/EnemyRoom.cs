@@ -6,9 +6,11 @@ public class EnemyRoom : Room
 
     [SerializeField] EnemySpawner enemySpawner;
 
+
     protected override void OnEnable()
     {
         base.OnEnable();
+
         if (enemySpawner != null)
         {
             enemySpawner.OnAllWavesDefeated += RoomCleared;

@@ -5024,7 +5024,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   seed: 9985
-  data: {fileID: 11400000, guid: cbd7a85ca77444d4a8b9b07dcb4eeb60, type: 2}
+  data: {fileID: 11400000, guid: 2afa6a35f2ed25c498450388e49c7091, type: 2}
   generator: {fileID: 0}
   placedRooms: []
   roomPrefab: {fileID: 8257017177754270078, guid: 5dd24b17158be1b4b8dcea1a3e036398, type: 3}
