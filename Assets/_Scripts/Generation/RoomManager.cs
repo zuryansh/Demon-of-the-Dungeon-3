@@ -2,22 +2,23 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using System.Linq.Expressions;
+using EditorAttributes;
 
 public class RoomManager : Singleton<RoomManager>
 {
     public Action<RoomManager> EOnAllRoomsCleared;
+    public SceneData NextFloorSceneData => nextFloorScene;
 
      List<Room> rooms = new List<Room>();
     [SerializeField] List<Room> clearedRooms = new List<Room>();
     [SerializeField] List<Room> unclearedRooms = new List<Room> ();
     [SerializeField] Door entryDoor;
+    [SerializeField] SceneData nextFloorScene;
+    [SubclassSelector, SerializeReference] List<Effect> onRoomClearEffects = new List<Effect>();
     public Room ActiveRoom=> rooms.Where(r => r.HasPlayer == true).FirstOrDefault();
 
 
-    private void Start()
-    {
-
-    }
 
 
     private void OnEnable()
@@ -45,18 +46,24 @@ public class RoomManager : Singleton<RoomManager>
 
     public void RoomCleared(Room room)
     {
+        EffectContext c = new EffectContext(room.gameObject, Player.Instance.gameObject, Player.Instance.transform.position, Vector2.right);
+        foreach (Effect effect  in onRoomClearEffects)
+        {
+            effect.Apply(c);
+        }
         clearedRooms.Add(room);
         unclearedRooms.Remove(room);
         if (unclearedRooms.Count == 0)
         {
-           print(" BUG CHECK");
             AllRoomsCleared();
         }
     }
-
+    [Button("TEST GAME WIN")]
     void AllRoomsCleared()
     {
         EOnAllRoomsCleared?.Invoke(this);
         UIManager.Instance.OnGameWin();
     }
+
+
 }

@@ -172,11 +172,9 @@ MonoBehaviour:
   onCollectionEffects:
   - rid: 5677584824784912605
   - rid: 5677584847917547681
-  delay: 0.2
-  pickupSounds:
-  - {fileID: 8300000, guid: 43ab89e2296176c4483fa3dd633f92b7, type: 3}
-  - {fileID: 8300000, guid: 7213729f81dc9574b8d16eaa7718d424, type: 3}
+  delay: 0.15
   rb: {fileID: 1301990112645273069}
+  canBePickedUp: 0
   value: 10
   references:
     version: 2

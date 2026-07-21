@@ -4,10 +4,6 @@ public class SoulPickup : LootItem
 {
     [SerializeField] int value;
 
-    protected override void OnTriggerEnter2D(Collider2D collision)
-    {
-        base.OnTriggerEnter2D(collision);
-    }
 
     protected override void Pickup(Player player)
     {

@@ -1,4 +1,5 @@
 using EditorAttributes;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -15,21 +16,23 @@ public class LootItem : MonoBehaviour
     [SerializeReference, SubclassSelector] List<Effect> onCollectionEffects;
     [SerializeField] float delay;
     [SerializeField] protected Rigidbody2D rb;
+    [SerializeField] protected bool canBePickedUp = false;
 
     protected Player player;
 
-    protected virtual void Start()
+    protected virtual IEnumerator Start()
     {
         player = Player.Instance;
         if (player == null) Debug.LogError("PLayer not found");
         if(rb ==null) rb = GetComponent<Rigidbody2D>();
-        Invoke(nameof(Delay), delay);
+        //Invoke(nameof(Delay), delay);
+        yield return new WaitForSeconds(delay);
+        canBePickedUp = true;
     }
 
-    bool grav;
     private void FixedUpdate()
     {
-        if (InRange && grav)
+        if (InRange && canBePickedUp)
         {
                 Gravitate(player.transform.position);
                 AlignToVelocity(transform, rb, -transform.up);
@@ -37,7 +40,7 @@ public class LootItem : MonoBehaviour
         }
     }
 
-    void Delay() => grav = true;
+    void Delay() => canBePickedUp = true;
 
     protected virtual void Gravitate(Vector3 position)
     {
@@ -65,27 +68,30 @@ public class LootItem : MonoBehaviour
         target.rotation = Quaternion.Euler(0f, 0f, newAngle);
     }
 
-    public static void AlignToVelocityInstant(Transform target, Rigidbody2D rb, Vector2 localDirection)
+
+    //protected virtual void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (canBePickedUp)
+    //    {
+    //        if (collision.CompareTag("Player"))
+    //        {
+    //            Pickup(collision.GetComponent<Player>());
+    //            Destroy(gameObject);
+    //        }
+    //    }
+    //}
+
+    protected virtual void OnTriggerStay2D(Collider2D collision)
     {
-        if (rb.linearVelocity.sqrMagnitude < 0.0001f)
-            return;
-
-        Vector2 velocityDir = rb.linearVelocity.normalized;
-        Vector2 currentDir = target.TransformDirection(localDirection);
-
-        float angle = Vector2.SignedAngle(currentDir, velocityDir);
-        target.Rotate(0f, 0f, angle);
-    }
-
-    protected virtual void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
+        if (canBePickedUp)
         {
-            Pickup(collision.GetComponent<Player>());
-            Destroy(gameObject);
+            if (collision.CompareTag("Player"))
+            {
+                Pickup(collision.GetComponent<Player>());
+                Destroy(gameObject);
+            }
         }
     }
-
 
 
     protected virtual void Pickup(Player player)

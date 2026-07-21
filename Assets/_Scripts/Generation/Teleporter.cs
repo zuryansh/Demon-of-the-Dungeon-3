@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [RequireComponent (typeof(CircleCollider2D))]
-public class Teleporter : MonoBehaviour
+public class Teleporter : Interactable
 {
     public Vector2 TeleportTo=> teleportTo;
     public CircleCollider2D Collider => col;
@@ -15,17 +15,19 @@ public class Teleporter : MonoBehaviour
     protected virtual void Teleport(GameObject obj, string tag = "")
     {
         obj.transform.position = teleportTo;
-        print($"Teleported: {obj.name}");
     }
 
-    protected void OnTriggerEnter2D(Collider2D collision)
-    {
-       if(!locked) Teleport(collision.gameObject);
-    }
+
 
     public void SetLock(bool val) => locked = val;
 
     public void SetTeleportTo(Vector2 pos) { teleportTo = pos; }
+
+    public override void Interact(GameObject interactor)
+    {
+        base.Interact(interactor);
+        Teleport(interactor);
+    }
 }
 
 

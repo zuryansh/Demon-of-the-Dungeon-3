@@ -80,4 +80,9 @@ public class UIScreen : MonoBehaviour
         GameSceneManager.Instance.ReloadCurrentScene();
     }
 
+    public void ContinueToNextFloor()
+    {
+        GameSceneManager.Instance.SwitchScene(RoomManager.Instance.NextFloorSceneData);
+    }
+
 }

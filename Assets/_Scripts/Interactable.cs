@@ -17,13 +17,20 @@ public class Interactable : MonoBehaviour
     [SerializeField, ShowField(nameof(HasAnimation))] AnimationClip interactClip;
     [SerializeReference, SubclassSelector] protected List<Effect> onInteractEffects;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.IsInLayerMask(interactableLayer)) 
-            Interact(collision.gameObject);
+        if(collision.gameObject.IsInLayerMask(interactableLayer))
+        {
+            if(collision.TryGetComponent(out Interactor interactor))
+            {
+
+                interactor.OnInteractableClose(this);
+            }
+        }
+            //Interact(collision.gameObject);
     }
 
-    protected virtual void Interact(GameObject interactor)
+    public virtual void Interact(GameObject interactor)
     {
         if (interactableOnce && interacted) return;
         interacted = true;

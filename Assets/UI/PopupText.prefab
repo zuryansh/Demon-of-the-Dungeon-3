@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5657292966731392345}
   - component: {fileID: 5656174213194052136}
   - component: {fileID: 8543864071376435581}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -146,7 +146,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8446678218031536979}
   - component: {fileID: 7629674637004858496}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: PopupText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -196,7 +196,7 @@ GameObject:
   - component: {fileID: 3761902761634005542}
   - component: {fileID: 3352421643598322209}
   - component: {fileID: 973739629435745849}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: PopupText
   m_TagString: Untagged
   m_Icon: {fileID: 0}

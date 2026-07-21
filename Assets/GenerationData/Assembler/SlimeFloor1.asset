@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b74daf4834da4af46bdb4314a7d99ff5, type: 3}
-  m_Name: BaseAssembly
+  m_Name: SlimeFloor1
   m_EditorClassIdentifier: 
   possibleNoOfAnchorRooms: 010000000200000003000000
   anchorRoomsWeight:
@@ -23,9 +23,9 @@ MonoBehaviour:
   useRandomSeed: 1
   roomPosSearchRad: 100
   roomTypesAndCounts:
-  - NoOfRooms: 8
+  - NoOfRooms: 6
     GeneratorData: {fileID: 11400000, guid: 777f5da5afefd444489e3e184cd99121, type: 2}
-  - NoOfRooms: 2
+  - NoOfRooms: 1
     GeneratorData: {fileID: 11400000, guid: 91a9ab0329db34242976b6c2719a3c66, type: 2}
-  noOfInMainGenRooms: 8
-  noOfOutMainGenRooms: 2
+  noOfInMainGenRooms: 6
+  noOfOutMainGenRooms: 1

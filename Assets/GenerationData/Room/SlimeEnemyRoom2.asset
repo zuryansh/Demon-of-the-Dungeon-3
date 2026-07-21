@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b168d30ffb7cca745addf11f63758d3f, type: 3}
-  m_Name: BaseRoom
+  m_Name: SlimeEnemyRoom2
   m_EditorClassIdentifier: 
   mapWidth: 100
   mapHeight: 100
@@ -28,3 +28,7 @@ MonoBehaviour:
   fillPercent: 0
   roomPlacementType: 0
   functionType: 0
+  enemyPrefabs:
+  - {fileID: 2851378718043903399, guid: 1b1cd5d0757fbe947b777ab1d0e76d07, type: 3}
+  - {fileID: 4886649593553187801, guid: e158ba43c349e634c81997a9692f7458, type: 3}
+  - {fileID: 4511166735317055250, guid: ad0cfabcc1445ab4c88814f336a0115e, type: 3}

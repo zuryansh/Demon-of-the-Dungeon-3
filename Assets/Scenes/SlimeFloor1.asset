@@ -10,9 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2a09a913492174140af6b654b8ed2d74, type: 3}
-  m_Name: test1
+  m_Name: SlimeFloor1
   m_EditorClassIdentifier: 
   dependencies:
-  - {fileID: 11400000, guid: 235b06bb8afd1b3469492feddc8e32c6, type: 2}
-  attachedToSceneName: test
-  attachedToScene: {fileID: 102900000, guid: 917a09555defdf14c9678650fa2084ac, type: 3}
+  - {fileID: 11400000, guid: b2d3d45ef05c16d459f29df12fee320a, type: 2}
+  bgMusic: {fileID: 8300000, guid: 30b853b302708414987431ed70a42449, type: 3}
+  volume: 0.2
+  attachedToSceneName: RoomAssembler
+  attachedToScene: {fileID: 102900000, guid: a9f8d30b423eb4c4d9f2af5398161f62, type: 3}
