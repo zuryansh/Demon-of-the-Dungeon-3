@@ -149,8 +149,8 @@ public class GameSceneManager : PersistentSingletion<GameSceneManager>
     {
         requested.Clear();
         await UIManager.Instance.SceneTranitionStart();
-        
-        SceneManager.LoadSceneAsync(sceneData.AttachedToScene, LoadSceneMode.Single);
+
+        _ = SceneManager.LoadSceneAsync(sceneData.AttachedToScene, LoadSceneMode.Single);
     }
 
     public void ReloadCurrentScene()

@@ -30,11 +30,11 @@ public class UIManager : PersistentSingletion<UIManager>
             paused = !paused;
             if ((paused))
             {
-                pauseMenu.Show();
+                _ = pauseMenu.Show();
             }
             else
             {
-                pauseMenu.Hide();
+                _ = pauseMenu.Hide();
             }
             Time.timeScale = (paused) ? 0 : 1;
             OnGamePauseToggle?.Invoke(paused);
@@ -73,22 +73,22 @@ public class UIManager : PersistentSingletion<UIManager>
         {
             foreach (UIScreen screen in screens.Values)
             {
-                screen.Hide();
+                _ = screen.Hide();
             }
         }
-        screens[type].Show();
+        _ = screens[type].Show();
     }
 
     public void Hide(UIMenuType type)
     {
-        screens[type].Hide();
+        _ = screens[type].Hide();
     }
 
     public void GameOver()
     {
         if(screens.TryGetValue(UIMenuType.GameOver, out UIScreen existing))
         {
-            existing.Show();
+            _ = existing.Show();
         }
     }
 
@@ -96,7 +96,7 @@ public class UIManager : PersistentSingletion<UIManager>
     {
         if(screens.TryGetValue(UIMenuType.GameWin, out UIScreen gameWinScreen))
         {
-            gameWinScreen.Show();
+            _ = gameWinScreen.Show();
         }
 
     }

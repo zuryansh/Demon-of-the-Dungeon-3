@@ -105,7 +105,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &755598909092799536
 Transform:
   m_ObjectHideFlags: 0
@@ -1897,7 +1897,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68efdadb043d54c49a96bb6c4085235d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  closeToInteractor: 0
   selectedInteractor: {fileID: 0}
   radius: 2
   interactText: {fileID: 3005317463451922571}
@@ -2196,7 +2195,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: -1115722007
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!114 &8011991008328854819

@@ -1,10 +1,55 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using TMPro;
 using UnityEngine;
 
 public static class Helper
 {
+    //by GPT
+    public static List<string> SplitIntoPages(TMP_Text text, string[] paragraphs)
+    {
+        List<string> pages = new();
+
+        foreach (string paragraph in paragraphs)
+        {
+            text.text = paragraph;
+            text.pageToDisplay = 1;
+            text.ForceMeshUpdate();
+            for (int i = 0; i < text.textInfo.characterCount; i++)
+            {
+                Debug.Log($"{text.textInfo.characterInfo[i].character} : {text.textInfo.characterInfo[i].pageNumber}");
+            }
+
+            int pageCount = text.textInfo.pageCount;
+
+            if (pageCount <= 1)
+            {
+                pages.Add(paragraph);
+                continue;
+            }
+
+            TMP_TextInfo info = text.textInfo;
+
+            for (int page = 0; page < pageCount; page++)
+            {
+                System.Text.StringBuilder sb = new();
+
+                for (int i = 0; i < info.characterCount; i++)
+                {
+                    TMP_CharacterInfo character = info.characterInfo[i];
+
+                    if (character.pageNumber == page)
+                        sb.Append(character.character);
+                }
+
+                pages.Add(sb.ToString());
+            }
+        }
+
+        return pages;
+    }
+
 
     public static int[,] CreateEmpty2dArray(int height, int width, int defaultValue)
     {
@@ -57,23 +102,8 @@ public static class Helper
         return neighbours;
     }
 
-    //public static void GetFloodFill(int[,] map, Vector2Int startPos, int fillVal, out HashSet<Vector2Int> outPositions)
-    //{
-    //    // start with a point
-    //    // find its neighhbours that have the same value
-    //    // set the neighbour as start point 
-    //    //repeat
-
-    //    if (map[startPos.x, startPos.y] != fillVal) return; //not a part of room
-    //    if (outPositions.Contains(startPos)) return; //already included in roompositions
-    //    outPositions.Add(startPos);
-    //    GetFloodFill(map, startPos + new Vector2Int(0, 1), fillVal, outPositions);
-    //    GetFloodFill(map, startPos + new Vector2Int(1, 0), fillVal, outPositions);
-    //    GetFloodFill(map, startPos + new Vector2Int(0, -1), fillVal, outPositions);
-    //    GetFloodFill(map, startPos + new Vector2Int(-1, 0), fillVal, outPositions);
-
-    //}
-
+    
+    //by GPT
     /// <summary>
     /// Gets flood Fill of all cells that are fill val
     /// </summary>
@@ -240,6 +270,7 @@ public static class Helper
         return count;
     }
 
+    //By GPT
     public static T Choice<T>(this IList<T> collection)
     {
         if (collection == null)
@@ -251,6 +282,7 @@ public static class Helper
 
         return collection[UnityEngine.Random.Range(0, collection.Count)];
     }
+    //By GPT
 
     public static T Choice<T>(this IList<T> collection, System.Random prng, [CallerMemberName] string caller = "")
     {
@@ -263,6 +295,7 @@ public static class Helper
 
         return collection[prng.Next(0, collection.Count)];
     }
+    //By GPT
 
     public static T WeightedChoice<T>(IList<T> values, IList<float> weights, System.Random rng)
     {
@@ -294,11 +327,13 @@ public static class Helper
 
         return values[^1];
     }
+    //By GPT
 
     public static bool IsInLayerMask(this GameObject gameObject, LayerMask layerMask)
     {
         return (layerMask.value & (1 << gameObject.layer)) != 0;
     }
+    //By GPT
 
     public static T RollLeastLikely<T>(List<T> values, List<float> probabilities)
     {
