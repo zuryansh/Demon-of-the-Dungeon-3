@@ -34,7 +34,7 @@ public class Interactable : MonoBehaviour
     {
         if (interactableOnce && interacted) return;
         interacted = true;
-        EffectContext c = new EffectContext(gameObject, interactor, transform.position, transform.up);
+        EffectContext c = new EffectContext(gameObject, interactor, transform.position, transform.right);
         foreach (Effect effect in onInteractEffects)
         {
             effect.Apply(c);

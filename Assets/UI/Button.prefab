@@ -122,7 +122,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2993632705049547496}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3431205214189387207}
+        m_TargetAssemblyTypeName: OnHoverScale, Assembly-CSharp
+        m_MethodName: Bounce
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &3431205214189387207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,6 +155,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 54b28333060143c4da183d1ea4cf700c, type: 3}
   - {fileID: 8300000, guid: 8c05018f2c614a244a3d384f339f80ef, type: 3}
   volume: 0.7
+  offset: {x: 0.1, y: 0.1, z: 0.1}
 --- !u!114 &2392024934599227996
 MonoBehaviour:
   m_ObjectHideFlags: 0

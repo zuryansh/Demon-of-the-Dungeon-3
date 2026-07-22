@@ -1,16 +1,21 @@
 using DG.Tweening;
 using EditorAttributes;
+using System;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public enum UIMenuType
 {
-    Pause, GameOver, GameWin, Minimap
+    Pause, GameOver, GameWin, Minimap, Generic, SceneFader
+
 }
 
 public class UIScreen : MonoBehaviour
 {
     public UIMenuType Type => menuType;
     public bool Showing => showing;
+    public event Action EOnShowComplete;
+    public event Action EOnHideComplete;
 
     [SerializeField] bool fadeInOut;
     [SerializeField] GameObject menuParent;
@@ -27,28 +32,30 @@ public class UIScreen : MonoBehaviour
         UIManager.Instance.Register(this);
     }
 
-    public void Show()
+    public async Task Show()
     {
         menuParent.SetActive(true);
         showing = true;
         if (fadeInOut)
         {
             fadeGroup.alpha = 0f;
-            fadeGroup.DOFade(1f, fadeDuration);
+            await fadeGroup.DOFade(1f, fadeDuration).OnComplete(() => EOnShowComplete?.Invoke()).AsyncWaitForCompletion();
         }
+        else EOnShowComplete?.Invoke();
     }
 
-    public void Hide()
+    public async Task Hide()
     {
         showing = false;
         if (fadeInOut)
         {
-            fadeGroup.DOFade(0f, fadeDuration)
-                .OnComplete(() => menuParent.SetActive(false));
+            await fadeGroup.DOFade(0f, fadeDuration)
+                .OnComplete(() =>  { menuParent.SetActive(false); EOnHideComplete?.Invoke(); }).AsyncWaitForCompletion();
         }
         else
         {
             menuParent.SetActive(false);
+            EOnHideComplete?.Invoke();
         }
     }
 

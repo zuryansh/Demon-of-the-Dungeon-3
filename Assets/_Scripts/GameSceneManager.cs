@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -64,10 +63,12 @@ public class GameSceneManager : PersistentSingletion<GameSceneManager>
         if (allLoaded) OnAllDependenciesLoaded();
     }
 
-    void OnAllDependenciesLoaded()
+    async void OnAllDependenciesLoaded()
     {
         // do whatever needs to happen here
+       await UIManager.Instance.SceneTranitionEnd();
         OnAllDependencyFinished?.Invoke();
+        print("ALL DEPENDENCIES LOADED");
     }
 
     public void LoadDependencies(SceneData sceneData)
@@ -139,19 +140,17 @@ public class GameSceneManager : PersistentSingletion<GameSceneManager>
         return false;
     }
 
-    bool isSwitching;
-    //public void SwitchScene(SceneData sceneData)
-    //{
-    //    if (isSwitching) return;
-    //    ExecuteSwitch(sceneData);
-    //}
 
 
 
-    public void SwitchScene(SceneData sceneData)
+
+
+    public async void SwitchScene(SceneData sceneData)
     {
         requested.Clear();
-        SceneManager.LoadScene(sceneData.AttachedToScene, LoadSceneMode.Single);
+        await UIManager.Instance.SceneTranitionStart();
+        
+        SceneManager.LoadSceneAsync(sceneData.AttachedToScene, LoadSceneMode.Single);
     }
 
     public void ReloadCurrentScene()

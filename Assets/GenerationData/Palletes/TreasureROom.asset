@@ -16,3 +16,11 @@ MonoBehaviour:
   values:
   - {fileID: 11400000, guid: 0f9686b24923ed64891293d880971589, type: 2}
   - {fileID: 11400000, guid: ad9e0c64df2cc6446962bd3850c3ec0a, type: 2}
+  floorDecoTiles:
+  - {fileID: 0}
+  floorDecoSpawnChances:
+  - 1
+  wallDecoTiles:
+  - {fileID: 0}
+  wallDecoSpawnChances:
+  - 1

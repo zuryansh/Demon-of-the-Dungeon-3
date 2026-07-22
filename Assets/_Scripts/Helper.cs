@@ -299,4 +299,32 @@ public static class Helper
     {
         return (layerMask.value & (1 << gameObject.layer)) != 0;
     }
+
+    public static T RollLeastLikely<T>(List<T> values, List<float> probabilities)
+    {
+        if (values.Count != probabilities.Count)
+            throw new ArgumentException("Values and probabilities must have the same length.");
+        float roll = UnityEngine.Random.value;
+
+        T result = default;
+        float lowestPassingProbability = float.MaxValue;
+        bool found = false;
+
+        for (int i = 0; i < values.Count; i++)
+        {
+            float p = Mathf.Clamp01(probabilities[i]);
+
+            if (roll <= p && p < lowestPassingProbability)
+            {
+                lowestPassingProbability = p;
+                result = values[i];
+                found = true;
+            }
+        }
+
+        if (!found)
+            throw new InvalidOperationException("No item passed the roll.");
+
+        return result;
+    }
 }

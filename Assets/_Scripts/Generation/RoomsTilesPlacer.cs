@@ -6,6 +6,7 @@ public class RoomsTilesPlacer : MonoBehaviour
 {
     [SerializeField] Tilemap tilemap;
     [SerializeField] Tilemap colliderTilemap;
+    [SerializeField] Tilemap decorationTilemap;
     private void OnEnable()
     {
         RoomAssembler.EOnAssemblyFinished += VisualiseRooms;
@@ -24,6 +25,7 @@ public class RoomsTilesPlacer : MonoBehaviour
         foreach (Room room in rooms)
         {
             PlaceRoomTiles(room, tilemap, colliderTilemap);
+            PlaceDecorations(room);
         }
     }
 
@@ -36,6 +38,31 @@ public class RoomsTilesPlacer : MonoBehaviour
                 var tilemap = (tile.IsCollider)? colliderTilemap : nonColliderTilemap;
                 tilemap.SetTile((room.GlobalPosition + tile.LocalPosition.ToV3()).ToV3Int(), t);
             }
+        }
+    }
+
+
+    void PlaceDecorations(Room room)
+    {
+        foreach (RoomTile tile in room.Data.Tiles)
+        {
+            if (tile.HasDecoration)
+            {
+                RoomPalleteSO pallete = room.Data.Tilepallete;
+
+                TileBase deco = null;
+                if (tile.TileType == TileTypes.Floor)
+                {
+                    deco = pallete.GetRadnomFloorDeco();
+                }
+                else if (tile.TileType == TileTypes.Wall)
+                {
+                    deco = pallete.GetRadnomWallDeco();
+                }
+                if (deco != null) decorationTilemap.SetTile(room.GetGlobalTilePos(tile).ToV2Int().ToV3Int(), deco);
+
+            }
+
         }
     }
 

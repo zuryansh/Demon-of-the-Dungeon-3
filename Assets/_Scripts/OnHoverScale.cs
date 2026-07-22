@@ -9,6 +9,7 @@ public class OnHoverScale : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     [SerializeField] Transform applyTo;
     [SerializeField] AudioClip[] onHoverSounds;
     [SerializeField] float volume;
+    [SerializeField] Vector3 offset = Vector3.one * 0.1f;
 
     Vector3 ogScale;
 
@@ -20,7 +21,7 @@ public class OnHoverScale : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (onHoverSounds.Length != 0) AudioManager.Instance.PlayRandomSound(onHoverSounds, volume, SoundType.Sfx);
-        applyTo.DOScale(applyTo.localScale + (Vector3.one * 0.1f), highlighDuration).SetEase(highlightEase).SetUpdate(true);
+        applyTo.DOScale(applyTo.localScale + offset, highlighDuration).SetEase(highlightEase).SetUpdate(true);
     }
 
     public void OnPointerExit(PointerEventData eventData)
@@ -31,7 +32,7 @@ public class OnHoverScale : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void Bounce()
     {
-        applyTo.DOShakeScale(0.2f);
+        applyTo.DOShakeScale(0.2f, strength:0.5f);
     }
 
     void OnDestroy()

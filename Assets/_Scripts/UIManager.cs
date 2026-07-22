@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class UIManager : PersistentSingletion<UIManager>
@@ -17,8 +18,8 @@ public class UIManager : PersistentSingletion<UIManager>
     {
         if(screens.TryGetValue(UIMenuType.Minimap, out UIScreen map))
         {
-            if(map.Showing) map.Hide();
-            else map.Show();
+            if(map.Showing) _ = map.Hide();
+            else _ = map.Show();
         }
     }
 
@@ -98,5 +99,22 @@ public class UIManager : PersistentSingletion<UIManager>
             gameWinScreen.Show();
         }
 
+    }
+
+    public async Task SceneTranitionStart()
+    {
+        if(screens.TryGetValue(UIMenuType.SceneFader, out UIScreen faderScreen))
+        {
+            await faderScreen.Show();
+
+        }
+    }
+
+    public async Task SceneTranitionEnd()
+    {
+        if (screens.TryGetValue(UIMenuType.SceneFader, out UIScreen faderScreen))
+        {
+            await faderScreen.Hide();
+        }
     }
 }
