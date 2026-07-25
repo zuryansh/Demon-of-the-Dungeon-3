@@ -119,6 +119,7 @@ MonoBehaviour:
   menuParent: {fileID: 3848252458835970408}
   fadeDuration: 1
   fadeGroup: {fileID: 3575721421946075525}
+  startAlpha: 1
   menuType: 5
 --- !u!1 &656954495061793443
 GameObject:
@@ -299,6 +300,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0a30d1f440908454ab660a38cb2bad4f, type: 2}
   - {fileID: 11400000, guid: 5d14bea8598a0d44bb55203493c62cb7, type: 2}
   - {fileID: 11400000, guid: bde4fe045f3fc0b4f97f962ec07a649c, type: 2}
+  - {fileID: 11400000, guid: 91dd8960b45e27c45a674f316dd34b68, type: 2}
+  - {fileID: 11400000, guid: 1e1872e4740681e4991579a1c6c264bb, type: 2}
 --- !u!114 &5310891453088253085
 MonoBehaviour:
   m_ObjectHideFlags: 0

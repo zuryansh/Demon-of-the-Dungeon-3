@@ -50,6 +50,7 @@ public class RoomAssembler : MonoBehaviour
 
     private void OnDisable()
     {
+        if (GameSceneManager.Instance == null) { Debug.LogWarning("GAME MANAGAER SINGLETON WAS NULL COULD BE DUE TO APPLICATION QUIT"); return; }
         GameSceneManager.Instance.OnAllDependencyFinished -= StartAssembly;
 
     }

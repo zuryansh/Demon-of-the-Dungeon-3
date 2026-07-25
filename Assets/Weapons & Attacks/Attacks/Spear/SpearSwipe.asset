@@ -24,6 +24,7 @@ MonoBehaviour:
   - rid: 6524999602524913801
   - rid: 5677584699095777362
   onAttackStartEffects: []
+  onAttackEndEffects: []
   references:
     version: 2
     RefIds:

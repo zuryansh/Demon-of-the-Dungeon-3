@@ -254,6 +254,7 @@ MonoBehaviour:
   interactClip: {fileID: 0}
   onInteractEffects:
   - rid: 5677584960038633722
+  - rid: 5677585061807128726
   teleportTo: {x: 0, y: 0}
   col: {fileID: 8682657336227458753}
   locked: 0
@@ -268,3 +269,12 @@ MonoBehaviour:
       data:
         particlesPreab: {fileID: 3818576318826847216, guid: 4dda9285244a70a48a542091283c5f63, type: 3}
         useAttackDir: 0
+    - rid: 5677585061807128726
+      type: {class: PlaySoundEffect, ns: , asm: Assembly-CSharp}
+      data:
+        clips:
+        - {fileID: 8300000, guid: ca7c5aad3e7b1de4781385db9faa573f, type: 3}
+        - {fileID: 8300000, guid: 88d0dd948325a6644b2ee8bd1f560fd5, type: 3}
+        volumme: 0.4
+        type: 1
+        duration: 0

@@ -105,7 +105,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &755598909092799536
 Transform:
   m_ObjectHideFlags: 0
@@ -1622,6 +1622,7 @@ MonoBehaviour:
         - {fileID: 8300000, guid: 8572dc9429ad9ec4582384b6c43c5158, type: 3}
         volumme: 0.8
         type: 1
+        duration: 0
 --- !u!114 &2186658259818906100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2059,7 +2060,7 @@ GameObject:
   - component: {fileID: 69208495952518764}
   - component: {fileID: 8207215012263993987}
   m_Layer: 7
-  m_Name: Visuals
+  m_Name: Weapon Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

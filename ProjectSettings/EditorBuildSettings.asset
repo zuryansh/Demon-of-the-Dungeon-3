@@ -26,6 +26,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/DEMO END.unity
     guid: 1c7af755e21f30c409ff38cfe21756c7
+  - enabled: 1
+    path: Assets/Scenes/IntroCutscne.unity
+    guid: e101a26641dcd334891ba735364c60b0
+  - enabled: 1
+    path: Assets/Scenes/Tutorial.unity
+    guid: 72f028d9f37724e47a7b75c5d143b724
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

@@ -37,9 +37,16 @@ public class Player : Singleton<Player>
 
     void Start()
     {
+        canMove = false;
+        RoomAssembler.EOnAssemblyFinished += UnlockMovement;
         UIManager.Instance.OnGamePauseToggle += HandlePause;
         cam = Camera.main;
 
+    }
+
+    void UnlockMovement(IReadOnlyList<Room> rooms)
+    {
+        canMove = true;
     }
 
     public void HandleMovementInput(InputAction.CallbackContext c)
@@ -117,8 +124,10 @@ public class Player : Singleton<Player>
         }
     }
 
+    bool canMove;
     public void Move()
     {
+        if (!canMove) return;
         // get the maxSpeed
         Vector2 targetSpeed = movementVector * moveSpeed;
 
@@ -144,6 +153,12 @@ public class Player : Singleton<Player>
             if (rb.linearVelocity.x < 0) visuals.flipX = true;
             else visuals.flipX = false;
         }
+    }
+
+    private void OnDisable()
+    {
+        if(GameSceneManager.Instance == null) { Debug.LogWarning("GAME MANAGAER SINGLETON WAS NULL COULD BE DUE TO APPLICATION QUIT");return; }
+        UIManager.Instance.OnGamePauseToggle -= HandlePause;
     }
 
     [Button("Add Souls")]
@@ -175,4 +190,6 @@ public class Player : Singleton<Player>
     {
         Gizmos.DrawRay(transform.position, MouseAndJoystickDir);    
     }
+
+
 }

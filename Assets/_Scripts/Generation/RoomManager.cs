@@ -41,7 +41,11 @@ public class RoomManager : Singleton<RoomManager>
             entryDoor.Init(null, rooms[0]);
         }
 
-        Room.EonRoomClear += RoomCleared;
+        foreach (Room room in rooms)
+        {
+
+            room.EonRoomClear += RoomCleared;
+        }
     }
 
     public void RoomCleared(Room room)
@@ -57,8 +61,9 @@ public class RoomManager : Singleton<RoomManager>
         {
             AllRoomsCleared();
         }
+        room.EonRoomClear -= RoomCleared;
     }
-    [Button("TEST GAME WIN")]
+
     void AllRoomsCleared()
     {
         EOnAllRoomsCleared?.Invoke(this);

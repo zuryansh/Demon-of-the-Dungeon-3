@@ -1,5 +1,8 @@
 using UnityEngine;
 
+
+//SEE ABOUT PROBLEMS WITH ASYNC LOADING AND SINGLETONS
+//THEY SEEM TO THINK THAT 2 SINGLETONS ARE PRESENT IF IT IS FOUND WHILE ASYNC SCENE IS LOADNIG.
 public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
     public static T Instance { get; private set; }
@@ -14,11 +17,20 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
         Instance = this as T;
     }
 
-    protected virtual void OnApplicationQuit()
+
+
+    protected virtual void OnDestroy()
     {
-        Instance = null;
-        Destroy(gameObject);
+        if (Instance == this)
+            Instance = null;
     }
+
+
+    //protected virtual void OnApplicationQuit()
+    //{
+    //    Instance = null;
+    //    Destroy(gameObject);
+    //}
 
 }
 
@@ -33,4 +45,6 @@ public abstract class PersistentSingletion<T> : Singleton<T> where T : MonoBehav
 
         DontDestroyOnLoad(gameObject);
     }
+
+
 }

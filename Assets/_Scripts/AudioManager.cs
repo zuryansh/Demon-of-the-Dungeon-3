@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum SoundType
@@ -10,6 +11,8 @@ public class AudioManager : PersistentSingletion<AudioManager>
 {
     [SerializeField] AudioSource SFXSourcePrefab;
     [SerializeField] AudioSource musicSourcePrefab;
+
+    
 
 
 
@@ -32,7 +35,7 @@ public class AudioManager : PersistentSingletion<AudioManager>
         }
     }
 
-    public void PlaySound(AudioClip clip, float volume, SoundType type)
+    public AudioSource PlaySound(AudioClip clip, float volume, SoundType type, float duration = 0)
     {
         AudioSource source = null;
         if(type == SoundType.Music)
@@ -46,13 +49,16 @@ public class AudioManager : PersistentSingletion<AudioManager>
         source.clip = clip;
         source.volume = volume;
         source.Play();
+        float d = duration;
+        if (duration <= 0) {d = clip.length; }
         if(type != SoundType.Music)
-            Destroy(source.gameObject, clip.length);
+            Destroy(source.gameObject, d);
+        return source;
     }
 
-    public void PlayRandomSound(AudioClip[] audioClips, float volume, SoundType type)
+    public AudioSource PlayRandomSound(AudioClip[] audioClips, float volume, SoundType type, float duration = 0)
     {
-        PlaySound(audioClips.Choice(), volume, type);
+       return PlaySound(audioClips.Choice(), volume, type,duration);
     }
 
 

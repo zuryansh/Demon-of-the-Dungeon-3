@@ -11,11 +11,12 @@ public class CameraShake : Singleton<CameraShake>
     protected override void Awake()
     {
         base.Awake();
-        GetComponent<CameraShake>();
     }
 
     public void Shake(float force)
     {
         source.GenerateImpulseWithForce(force);
     }
+
+
 }

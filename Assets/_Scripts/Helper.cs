@@ -16,10 +16,7 @@ public static class Helper
             text.text = paragraph;
             text.pageToDisplay = 1;
             text.ForceMeshUpdate();
-            for (int i = 0; i < text.textInfo.characterCount; i++)
-            {
-                Debug.Log($"{text.textInfo.characterInfo[i].character} : {text.textInfo.characterInfo[i].pageNumber}");
-            }
+
 
             int pageCount = text.textInfo.pageCount;
 

@@ -44,8 +44,11 @@ public class Hitbox : MonoBehaviour
             {
                 if (detectedColliders.Add(hit.collider))
                 {
-                    Vector3 dir = (hit.transform.position - transform.position).normalized;
-                    EOnHitDetect?.Invoke(hit.collider, dir);
+                    if (hit.transform != null)
+                    {
+                        Vector3 dir = (hit.transform.position - transform.position).normalized;
+                        EOnHitDetect?.Invoke(hit.collider, dir);
+                    }
                 }
             }
         }

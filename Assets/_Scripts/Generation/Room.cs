@@ -11,7 +11,7 @@ public class Room : MonoBehaviour
     public List<Room> ConnectedRooms =>connectedRooms;
     public event Action<Room> EonPlayerEnter;
     public event Action<Room> EonPlayerExit;
-    public static event Action<Room> EonRoomClear;
+    public event Action<Room> EonRoomClear;
     public virtual bool RoomClear => playerVisited;
     public List<Door> Doors => doors;
     public int ID => id;

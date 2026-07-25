@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using DG.Tweening;
 using System.Collections;
+using EditorAttributes;
 
 public class Talker : Interactable
 {
@@ -14,6 +15,8 @@ public class Talker : Interactable
     [SerializeField] float stayTime;
     [SerializeField] TextMeshProUGUI text;
     [SerializeField] float timeForParaToAnimate;
+    [SerializeField] AudioClip talkingSound;
+    [SerializeField] bool autoScroll;
 
      bool inConversation;
      List<string> segmentedParas;
@@ -24,7 +27,6 @@ public class Talker : Interactable
 
     private void Start()
     {
-        print(dialogue.Paras);
         dialogueBox.SetActive(true);
 
         segmentedParas = Helper.SplitIntoPages(text, dialogue.Paras);
@@ -37,27 +39,29 @@ public class Talker : Interactable
         if(!isAnimating)timeSinceLastTalk += Time.deltaTime;
     }
 
-
+    [Button("Interact")]
     public override void Interact(GameObject interactor)
     {
-        base.Interact(interactor);
+        if(interactor != null)base.Interact(interactor);
 
         if(!isAnimating) StartCoroutine(Talk(segmentedParas));
         else skipToEnd = true;
     }
 
-    void StartConversation()
+    public void StartConversation()
     {
         dialogueBox.SetActive(true);
+        fader.alpha = 0f;
         fader.DOFade(1f, fadeTime);
         inConversation = true;
         dialogueIndex = 0;
+        //fader.DOFade(1f, fadeTime).OnComplete(()=> Talk(segmentedParas));
     }
 
     IEnumerator Talk(List<string> paras)
     {
-        if (dialogueIndex >= paras.Count) { EndConversation(); yield break; }
-        if(!inConversation) StartConversation();
+        //if (dialogueIndex >= paras.Count) { EndConversation(); yield break; }
+        if (!inConversation) { StartConversation(); }
 
         dialogueIndex %= paras.Count;
         skipToEnd = false;
@@ -66,6 +70,7 @@ public class Talker : Interactable
         string para = paras[dialogueIndex];
 
         isAnimating = true;
+        AudioSource source = AudioManager.Instance.PlaySound(talkingSound,0.5f,SoundType.Sfx);
         foreach (char letter in para)
         {
             text.text += letter;
@@ -73,7 +78,7 @@ public class Talker : Interactable
             else { text.text = para; break; }
         }
         isAnimating = false;
-
+        source.Stop();
         dialogueIndex++;
 
         timeSinceLastTalk = 0;
@@ -81,9 +86,13 @@ public class Talker : Interactable
     }
 
 
-
-    void EndConversation()
+    [Button("End Conversation")]
+    public void EndConversation()
     {
+        if (autoScroll)
+        {
+            if (dialogueIndex < segmentedParas.Count) { StartCoroutine(Talk(segmentedParas)); return; }
+        }
         inConversation = false;
         fader.DOFade(0f, fadeTime).OnComplete(() =>
         {
@@ -91,4 +100,15 @@ public class Talker : Interactable
         });
         dialogueIndex = 0;
     }
+
+    [Button("Refresh Dialogue")]
+    public void RefreshDialogue()
+    {
+        dialogueBox.SetActive(true);
+
+        segmentedParas = Helper.SplitIntoPages(text, dialogue.Paras);
+        dialogueBox.SetActive(false);
+    }
+
+
 }

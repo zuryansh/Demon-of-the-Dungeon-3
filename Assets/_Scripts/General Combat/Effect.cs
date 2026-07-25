@@ -2,7 +2,9 @@ using EditorAttributes;
 using System;
 using System.Collections;
 using Unity.VisualScripting.FullSerializer;
+using Unity.XR.OpenVR;
 using UnityEngine;
+using UnityEngine.Events;
 
 [Serializable]
 public abstract class Effect
@@ -145,7 +147,6 @@ public class SpawnLootItemEffect: Effect
                 LootItem lootItem = MonoBehaviour.Instantiate(item, context.EffectPoint, Quaternion.identity);
                 if (spawnWithRandomVelocity && lootItem.RB != null)
                 {
-                    Debug.Log("HERE");
                     lootItem.RB.AddForce(UnityEngine.Random.insideUnitCircle * spawnSpeed * 100);
                 }
             }
@@ -162,14 +163,15 @@ public class PlaySoundEffect : Effect
     [SerializeField] AudioClip[] clips;
     [SerializeField] float volumme=1f;
     [SerializeField] SoundType type;
+    [SerializeField] float duration =0f;
 
     public override void Apply(EffectContext context)
     {
         if (clips.Length == 1)
-            AudioManager.Instance.PlaySound(clips[0], volumme, type);
+            AudioManager.Instance.PlaySound(clips[0], volumme, type, duration);
         else if (clips.Length > 1)
         {
-            AudioManager.Instance.PlayRandomSound(clips, volumme, type);
+            AudioManager.Instance.PlayRandomSound(clips, volumme, type , duration);
         }
     }
 
@@ -184,5 +186,15 @@ public class SpawnEnemyEffect : Effect
        EnemyBrain enemy=  MonoBehaviour.Instantiate(enemies.Choice(), context.EffectPoint, Quaternion.identity);
        
 
+    }
+}
+
+[Serializable]
+public class UnityEventEffect : Effect
+{
+    [SerializeField] UnityEvent<EffectContext> onApply;
+    public override void Apply(EffectContext context)
+    {
+        onApply?.Invoke(context);
     }
 }

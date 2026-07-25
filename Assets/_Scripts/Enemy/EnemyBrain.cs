@@ -33,7 +33,7 @@ public class EnemyBrain : MonoBehaviour,IStunnable
     void Start()
     {
         startDelay += UnityEngine.Random.Range(0f, 0.6f);
-        Player = FindAnyObjectByType<Player>().transform; //CHANGE LATER
+        if(Player == null) Player = FindAnyObjectByType<Player>().transform; //CHANGE LATER
         startTime = Time.time;
         animHelper = GetComponent<AnimationHelper>();
         movementModule = GetComponent<EnemyMovementModule>();    

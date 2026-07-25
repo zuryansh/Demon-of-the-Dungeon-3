@@ -36,7 +36,7 @@ public class Projectile : MonoBehaviour
     {
        
         if (collider.gameObject.IsInLayerMask(wallLayer)) { OnPierceFinish(); return; }
-        if (collider.gameObject == Sender.gameObject) return;
+        if(Sender!= null) if (collider.gameObject == Sender.gameObject) return;
 
         projHit++;
 

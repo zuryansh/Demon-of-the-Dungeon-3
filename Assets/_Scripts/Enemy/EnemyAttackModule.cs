@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 
 
-public  abstract class EnemyAttackModule : MonoBehaviour
+public class EnemyAttackModule : MonoBehaviour
 {
     public EnemyBrain Brain;
     public AnimationHelper AnimHelper => Brain.AnimationHelper;
@@ -104,7 +104,6 @@ public  abstract class EnemyAttackModule : MonoBehaviour
 
     public virtual void Stun(float duration)
     {
-        print("STunned");
         isStunned = true;
         Invoke(nameof(ResetStun), duration);
     }
@@ -112,7 +111,7 @@ public  abstract class EnemyAttackModule : MonoBehaviour
     void ResetStun()
     {
         Debug.Log("REset");    
-        isStunned = false;
+        isStunned= false;
     }
 
 }

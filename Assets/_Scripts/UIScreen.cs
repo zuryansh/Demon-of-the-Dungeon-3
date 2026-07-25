@@ -6,7 +6,7 @@ using UnityEngine;
 
 public enum UIMenuType
 {
-    Pause, GameOver, GameWin, Minimap, Generic, SceneFader
+    Pause, GameOver, GameWin, Minimap, Generic, SceneFader, None
 
 }
 
@@ -21,6 +21,7 @@ public class UIScreen : MonoBehaviour
     [SerializeField] GameObject menuParent;
     [SerializeField, ShowField(nameof(fadeInOut))] float fadeDuration;
     [SerializeField, ShowField(nameof(fadeInOut))] CanvasGroup fadeGroup;
+    [SerializeField] float startAlpha;
     bool showing;
 
     [SerializeField] UIMenuType menuType;
@@ -29,7 +30,8 @@ public class UIScreen : MonoBehaviour
     void Start()
     {
         if(menuParent.activeInHierarchy) showing = true;
-        UIManager.Instance.Register(this);
+        if(Type != UIMenuType.None)UIManager.Instance.Register(this);
+        if(fadeGroup != null ) fadeGroup.alpha = startAlpha;
     }
 
     public async Task Show()
@@ -89,7 +91,7 @@ public class UIScreen : MonoBehaviour
 
     public void ContinueToNextFloor()
     {
-        GameSceneManager.Instance.SwitchScene(RoomManager.Instance.NextFloorSceneData);
+        GameSceneManager.Instance.SwitchScene(RoomManager.Instance.NextFloorSceneData); //TODO FIX LATER
     }
 
 }

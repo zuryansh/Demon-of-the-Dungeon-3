@@ -138,7 +138,6 @@ public class EnemySpawner : MonoBehaviour , ISpawner
 
     public void OnSpawnRemoved(GameObject obj)
     {
-        print(obj.name);
         enemies.Remove(obj);
         currentEnemyCount--;
         if(currentEnemyCount == 0)
