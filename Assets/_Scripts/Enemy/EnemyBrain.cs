@@ -92,14 +92,18 @@ public class EnemyBrain : MonoBehaviour,IStunnable
         }
     }
 
+    bool dead=false;
     public void OnDeath(EffectContext context)
     {
+        if(dead) return;
+        dead = true;
         EOnDeath?.Invoke(this);
 
         foreach (Effect effect in Data.OnDeathEffects)
         {
             effect.Apply(context);
         }
+        Debug.Log("ENEMY DIED!!!!!!!!");
         if(parentSpawner != null) parentSpawner.OnSpawnRemoved(gameObject);
         Destroy(gameObject,0.05f);
     }

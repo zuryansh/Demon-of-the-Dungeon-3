@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Room : MonoBehaviour
@@ -55,6 +57,7 @@ public class Room : MonoBehaviour
     protected virtual void OnAssemblyCompletion(IReadOnlyList<Room> allRooms)
     {
         SpawnDoors();
+        StartCoroutine(SetDoorToDoorConnections());
     }
 
     void SpawnDoors()
@@ -96,6 +99,23 @@ public class Room : MonoBehaviour
         foreach (Door door in doors)
         {
             door.gameObject.SetActive(false);
+        }
+    }
+
+    IEnumerator SetDoorToDoorConnections()
+    {
+        yield return new WaitForEndOfFrame();
+        var allDoors = connectedRooms.SelectMany(room => room.Doors);
+
+        foreach (Door door in doors)
+        {
+            Door targetDoor = allDoors.FirstOrDefault(d => d.AttatchedRoom == door.TeleportToRoom);
+
+            if (targetDoor != null)
+            {
+                door.SetTeleportToTeleporter(targetDoor);
+            }
+            else { Debug.LogWarning("Connectio not found!!!!!!!"); }
         }
     }
 

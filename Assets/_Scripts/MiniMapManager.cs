@@ -39,6 +39,7 @@ public class MiniMapManager : MonoBehaviour
     {
 
         yield return new WaitForEndOfFrame(); // wait for end of frame to let everything get populated first
+        yield return new WaitForEndOfFrame(); // wait for room door to door connections to be populated
         foreach (Room room in rooms)
         {
             mapBounds.Encapsulate(room.GlobalBounds);
@@ -84,7 +85,7 @@ public class MiniMapManager : MonoBehaviour
                 {   
 
                     drawnConnections.Add((door.TeleportToRoom, room));
-                    DrawConnection(door.transform.position, door.TeleportTo);
+                    DrawConnection(door.transform.position, door.TeleportToteleporter.transform.position);
                 }
                     
             }

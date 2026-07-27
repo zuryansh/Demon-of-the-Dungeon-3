@@ -7,6 +7,7 @@ public class Projectile : MonoBehaviour
     public Transform Sender;
     [SerializeField] float activeTime =5f;
     [SerializeReference, SubclassSelector] protected List<Effect> onHitEffects;
+    [SerializeReference, SubclassSelector] protected List<Effect> onLaunchEffects;
     [SerializeField] protected int pierceCount;
     [SerializeField] protected int projHit;
     [SerializeField] protected Hitbox hitbox;
@@ -30,6 +31,12 @@ public class Projectile : MonoBehaviour
     virtual public  void Launch(Vector3 vel)
     {
         rb.linearVelocity = vel;
+        Vector3 p = transform.position;
+
+        EffectContext context = new EffectContext(gameObject, null, p, vel.normalized);
+
+        foreach (Effect effect in onLaunchEffects)
+            effect.Apply(context);
     }
 
     public virtual void NotifyHit(Collider2D collider, Vector3 dir)

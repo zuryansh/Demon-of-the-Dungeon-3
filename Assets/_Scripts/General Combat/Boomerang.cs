@@ -56,7 +56,6 @@ public class Boomerang : Projectile
     public override void NotifyHit(Collider2D collider, Vector3 dir)
     {
         base.NotifyHit(collider,dir);
-        print("BOOMERANG HIT");
 
     }
 

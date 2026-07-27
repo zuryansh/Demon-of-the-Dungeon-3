@@ -16,7 +16,6 @@ public class AttackData : ScriptableObject
     [SerializeField] AnimationClip attackAnimation;
     [SerializeField] int animationPriority =0;
 
-
     [SerializeField, ShowField(nameof(attackType), AttackDataType.Player)] float mouseLockTime;
     [SerializeField, ShowField(nameof(attackType), AttackDataType.Player)]float nextAttackInputStartTime; //for next combo 
     [SerializeField, ShowField(nameof(attackType), AttackDataType.Player)] float cancelAttackBeforeTime; // can cancel attack before this

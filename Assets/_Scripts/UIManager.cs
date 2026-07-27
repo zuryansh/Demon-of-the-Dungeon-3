@@ -61,7 +61,6 @@ public class UIManager : PersistentSingletion<UIManager>
         if (screens.TryGetValue(screen.Type, out UIScreen existing) &&
             existing == screen)
         {
-            Debug.Log($"Unregistered: {screen.Type} ");
 
             screens.Remove(screen.Type);
         }

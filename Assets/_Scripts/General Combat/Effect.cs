@@ -79,6 +79,7 @@ public class SpawnProjectile : Effect
     [SerializeField] Projectile projectile;
     [SerializeField] float speed;
     [SerializeField] float delay;
+    [SerializeField] float spreadAngle;
 
     public override void Apply(EffectContext context)
     {
@@ -89,11 +90,14 @@ public class SpawnProjectile : Effect
 
     IEnumerator Spawn(EffectContext context)
     {
-        Quaternion spawnRot = Quaternion.FromToRotation(projectile.transform.right, context.EffectDir);
+        float angle = UnityEngine.Random.Range(-spreadAngle, spreadAngle);
+
+        Vector2 dir = Quaternion.Euler(0, 0, angle) * context.EffectDir.normalized;
+        Quaternion spawnRot = Quaternion.FromToRotation(projectile.transform.right, dir);
         yield return new WaitForSeconds(delay);
         Projectile proj = MonoBehaviour.Instantiate(projectile, context.EffectPoint, spawnRot);
         proj.Sender = context.Source.transform;
-        proj.Launch(context.EffectDir * speed);
+        proj.Launch(dir * speed);
 
     }
 }

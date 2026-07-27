@@ -392,6 +392,8 @@ MonoBehaviour:
   onHitEffects:
   - rid: 5677584718897873156
   - rid: 5677584734300930176
+  - rid: 5677585075760267369
+  onLaunchEffects: []
   pierceCount: 3
   projHit: 0
   hitbox: {fileID: 6843572708813636323}
@@ -413,6 +415,11 @@ MonoBehaviour:
       type: {class: KnockBackEffect, ns: , asm: Assembly-CSharp}
       data:
         knockback: 3
+    - rid: 5677585075760267369
+      type: {class: SpawnParticlesEffect, ns: , asm: Assembly-CSharp}
+      data:
+        particlesPreab: {fileID: 3818576318826847216, guid: 4dda9285244a70a48a542091283c5f63, type: 3}
+        useAttackDir: 1
 --- !u!1 &8332839029815223023
 GameObject:
   m_ObjectHideFlags: 0

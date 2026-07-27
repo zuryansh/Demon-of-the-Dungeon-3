@@ -10986,6 +10986,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3834756947165640165, guid: fea061eab8b1fde4d8474cc8de73a24a, type: 3}
+      propertyPath: startAlpha
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4698240675744380090, guid: fea061eab8b1fde4d8474cc8de73a24a, type: 3}
       propertyPath: m_Name
       value: ---MANAGERS---
@@ -11624,6 +11628,7 @@ MonoBehaviour:
   menuParent: {fileID: 1347943805}
   fadeDuration: 0.2
   fadeGroup: {fileID: 0}
+  startAlpha: 0
   menuType: 0
 --- !u!1 &2037529221
 GameObject:

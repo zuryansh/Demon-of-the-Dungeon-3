@@ -23,7 +23,8 @@ MonoBehaviour:
   - rid: 6524999602524913806
   - rid: 6524999602524913809
   - rid: 5677584699095777364
-  onAttackStartEffects: []
+  onAttackStartEffects:
+  - rid: 5677585102876180622
   onAttackEndEffects: []
   references:
     version: 2
@@ -32,6 +33,17 @@ MonoBehaviour:
       type: {class: StunEffect, ns: , asm: Assembly-CSharp}
       data:
         duration: 0.3
+    - rid: 5677585102876180622
+      type: {class: PlaySoundEffect, ns: , asm: Assembly-CSharp}
+      data:
+        clips:
+        - {fileID: 8300000, guid: ceb95b271e3c9264bb9b801127e54f1a, type: 3}
+        - {fileID: 8300000, guid: 207b807084afa424e88057475cf84363, type: 3}
+        - {fileID: 8300000, guid: ce685099a80503c489e7796882b09392, type: 3}
+        - {fileID: 8300000, guid: 501226e28ff251344a9bcf0722a21985, type: 3}
+        volumme: 0.2
+        type: 1
+        duration: 0
     - rid: 6524999602524913806
       type: {class: DamageEffect, ns: , asm: Assembly-CSharp}
       data:

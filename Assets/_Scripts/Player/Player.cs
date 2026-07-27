@@ -38,7 +38,9 @@ public class Player : Singleton<Player>
     void Start()
     {
         canMove = false;
-        RoomAssembler.EOnAssemblyFinished += UnlockMovement;
+        if (FindFirstObjectByType<RoomAssembler>() != null) RoomAssembler.EOnAssemblyFinished += UnlockMovement;
+        else UnlockMovement(null);
+
         UIManager.Instance.OnGamePauseToggle += HandlePause;
         cam = Camera.main;
 

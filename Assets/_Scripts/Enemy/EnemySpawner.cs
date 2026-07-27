@@ -145,6 +145,7 @@ public class EnemySpawner : MonoBehaviour , ISpawner
             wavesDefeated++;
             if(wavesDefeated>= noOfWaves)
             {
+                Debug.Log("ALL ENEMY WAVES DEFEATED!!!!!!!!");
                 OnAllWavesDefeated?.Invoke();
             }
         }

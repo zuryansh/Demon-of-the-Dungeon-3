@@ -110,7 +110,6 @@ public class EnemyAttackModule : MonoBehaviour
 
     void ResetStun()
     {
-        Debug.Log("REset");    
         isStunned= false;
     }
 
