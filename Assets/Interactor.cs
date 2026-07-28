@@ -25,7 +25,7 @@ public class Interactor : MonoBehaviour
     {
         if (selectedInteractor != null)
         {
-            if ((selectedInteractor.transform.position - transform.position).sqrMagnitude > radius * radius)
+            if ((selectedInteractor.transform.position - transform.position).sqrMagnitude > radius * radius )
             {
                 OnInteractableFar();
             }

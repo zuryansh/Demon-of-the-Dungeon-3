@@ -25,11 +25,13 @@ public class Teleporter : Interactable
 
     public void SetTeleportTo(Vector2 pos) { teleportTo = pos; }
 
-    public override void Interact(GameObject interactor)
+    public override bool Interact(GameObject interactor)
     {
-        base.Interact(interactor);
-        //Teleport(interactor);
+        if (!base.Interact(interactor)) return false;
+
         StartCoroutine(StartTeleport(interactor));
+
+        return true;
     }
 
     protected IEnumerator StartTeleport(GameObject interactor)

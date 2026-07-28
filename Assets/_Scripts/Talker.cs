@@ -40,12 +40,31 @@ public class Talker : Interactable
     }
 
     [Button("Interact")]
-    public override void Interact(GameObject interactor)
+    public override bool Interact(GameObject interactor)
     {
-        if(interactor != null)base.Interact(interactor);
+        if (interactor != null) 
+        {
+            if(! base.Interact(interactor)) return false;
+        }
 
         if(!isAnimating) StartCoroutine(Talk(segmentedParas));
         else skipToEnd = true;
+
+        return true;
+    }
+
+    public void CutsceneTalk(GameObject interactor)
+    {
+        if (interactor != null)
+        {
+            if (base.Interact(interactor))
+            {
+
+
+                if (!isAnimating) StartCoroutine(Talk(segmentedParas));
+                else skipToEnd = true;
+            }
+        }
     }
 
     public void StartConversation()

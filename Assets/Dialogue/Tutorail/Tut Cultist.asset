@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e800685119c870943a9317396b511e08, type: 3}
-  m_Name: Cultist 2
+  m_Name: Tut Cultist
   m_EditorClassIdentifier: 
   paras:
   - 'You can move using [WASD]'
-  - 'Attack with left mouse and change weapon with [1,2,3] number keys
+  - 'Attack with left mouse and change weapon with [1,2,3,4] number keys
 
-    Try Hitting
-    that dummy over there!'
+    Try
+    Hitting that dummy over there!'
   - 'you can pause the game with [esc] and bring up the minimap with [M]
 
     Try

@@ -3,14 +3,14 @@ using UnityEngine;
 public class TreasureRoom : Room
 {
     [SerializeField] Interactable treasurePrefab;
-
+    
 
     Interactable treasure;
 
     public override void ActivateRoom()
     {
         base.ActivateRoom();
-        SpawnTreasure();
+        if(!RoomClear) SpawnTreasure();
     }
 
     void SpawnTreasure()
