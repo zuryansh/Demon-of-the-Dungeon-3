@@ -5,11 +5,11 @@ using UnityEngine;
 [System.Serializable]
 public class EffectContext
 {
-    GameObject source;
-    GameObject target;
-    Vector3 effectPoint;
-    Vector3 effectDir;
-    Vector3 targetPos;
+    protected GameObject source;
+    protected GameObject target;
+    protected Vector3 effectPoint;
+    protected Vector3 effectDir;
+    protected Vector3 targetPos;
 
 
     public EffectContext(GameObject source,GameObject target, Vector3 effectPoint, Vector3 effectDir)
@@ -34,21 +34,16 @@ public class EffectContext
             if (Target == null) return targetPos;
             else return Target.transform.position;
         } }
-    public GameObject Source { get => source; }
-    public GameObject Target { get => target; }
-    public Vector3 EffectPoint { get => effectPoint; }
-    public Vector3 EffectDir { get => effectDir; }
+    public  virtual GameObject Source { get => source; }
+    public  virtual GameObject Target { get => target; }
+    public  virtual Vector3 EffectPoint { get => effectPoint; }
+    public virtual  Vector3 EffectDir { get => effectDir; }
 }
 
-//public class SpawnEffectContext : EffectContext
+//public class BuffDebuffContext : EffectContext
 //{
-//    public ISpawner Spawner => spawner;
-
-//    ISpawner spawner;
-
-//    public SpawnEffectContext(GameObject source,ISpawner parentSpawner, GameObject target, Vector3 effectPoint, Vector3 effectDir) : base(source, target, effectPoint, effectDir)
+//    public BuffDebuffContext(GameObject source, GameObject target, Vector3 effectPoint, Vector3 effectDir) : base(source, target, effectPoint, effectDir)
 //    {
-//        spawner = parentSpawner;
 
 //    }
 //}

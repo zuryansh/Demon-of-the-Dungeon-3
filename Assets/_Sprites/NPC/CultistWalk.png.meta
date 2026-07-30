@@ -160,7 +160,7 @@ TextureImporter:
       name: CultistWalk_1
       rect:
         serializedVersion: 2
-        x: 32
+        x: 16
         y: 0
         width: 16
         height: 16
@@ -182,7 +182,7 @@ TextureImporter:
       name: CultistWalk_2
       rect:
         serializedVersion: 2
-        x: 64
+        x: 32
         y: 0
         width: 16
         height: 16
@@ -204,7 +204,7 @@ TextureImporter:
       name: CultistWalk_3
       rect:
         serializedVersion: 2
-        x: 96
+        x: 48
         y: 0
         width: 16
         height: 16

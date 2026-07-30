@@ -26,7 +26,7 @@ public class CutsceneManager : MonoBehaviour
 
     public void HandleSkipInput()
     {
-        if (!showing && !cutsceneOnGoing )
+        if (!showing && cutsceneOnGoing )
         {
             print("skip");
 
@@ -47,5 +47,9 @@ public class CutsceneManager : MonoBehaviour
         _ = skipButton.Hide();
     }
 
+    private void OnDestroy()
+    {
+        director.stopped -= OnCutsceneFinish;
+    }
 
 }

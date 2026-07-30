@@ -103,7 +103,6 @@ public class EnemyBrain : MonoBehaviour,IStunnable
         {
             effect.Apply(context);
         }
-        Debug.Log("ENEMY DIED!!!!!!!!");
         if(parentSpawner != null) parentSpawner.OnSpawnRemoved(gameObject);
         Destroy(gameObject,0.05f);
     }

@@ -181,17 +181,7 @@ public class PlaySoundEffect : Effect
 
 }
 
-[Serializable]
-public class SpawnEnemyEffect : Effect
-{
-    [SerializeField] EnemyBrain[] enemies;
-    public override void Apply(EffectContext context)
-    {
-       EnemyBrain enemy=  MonoBehaviour.Instantiate(enemies.Choice(), context.EffectPoint, Quaternion.identity);
-       
 
-    }
-}
 
 [Serializable]
 public class UnityEventEffect : Effect
@@ -202,3 +192,4 @@ public class UnityEventEffect : Effect
         onApply?.Invoke(context);
     }
 }
+
