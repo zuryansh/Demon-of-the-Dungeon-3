@@ -18,13 +18,14 @@ public class Room : MonoBehaviour
     public List<Door> Doors => doors;
     public int ID => id;
     public bool HasPlayer;
-
+    public Color MapSpriteTint => mapSpriteTint;
 
     [SerializeField] protected RoomDataDebugger debugger;
     [SerializeField] protected List<Room> connectedRooms= new List<Room>();
     [SerializeField] protected Bounds globalBounds;
     [SerializeField] protected Door doorPrefab;
     [SerializeField] protected List<Door> doors;
+    [SerializeField] Color mapSpriteTint;
     //[SerializeField] protected EnemySpawner enemySpawner;
 
     int id=0;

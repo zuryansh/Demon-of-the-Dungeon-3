@@ -1,15 +1,16 @@
 using EditorAttributes;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : Singleton<Player> 
 {
-    public Health PlayerHealth => healthScript;
-    public event Action<float> EOnPointsChanged;
+    public Health HealthScript => healthScript;
+    public PlayerCombat CombatScript=> combatScript;
+    public UnityEvent<float> EOnPointsChanged;
     public Vector2 MouseAndJoystickDir => mouseDir;
 
     PlayerInput inputManager;
@@ -19,10 +20,12 @@ public class Player : Singleton<Player>
     [SerializeField] SpriteRenderer visuals;
     [SerializeField] float moveSpeed;
     [SerializeField] Vector2 movementVector;
-    [SerializeField] Health healthScript;
     [SerializeField] AnimationClip runAnim;
     [SerializeField] AnimationClip idleAnim;
     [SerializeField] int souls;
+
+    PlayerCombat combatScript;
+    Health healthScript;
     Vector3 towardsMouse;
     AnimationHelper animHelper;
     Vector2 mouseDir;
@@ -33,7 +36,9 @@ public class Player : Singleton<Player>
         inputManager = GetComponent<PlayerInput>();
         rb = GetComponent<Rigidbody2D>();
         animHelper = GetComponent<AnimationHelper>();
-    }
+        if (healthScript == null) healthScript = GetComponent<Health>();
+        if(combatScript == null) combatScript = GetComponent<PlayerCombat>();
+     }
 
     void Start()
     {

@@ -5171,7 +5171,6 @@ MonoBehaviour:
   onHitEffects:
   - rid: 6524999643305869415
   - rid: 5677585102876180627
-  - rid: 5677585170963628288
   onLaunchEffects:
   - rid: 5677585102876180619
   pierceCount: 0
@@ -5196,15 +5195,6 @@ MonoBehaviour:
       type: {class: StunEffect, ns: , asm: Assembly-CSharp}
       data:
         duration: 0.1
-    - rid: 5677585170963628288
-      type: {class: TickDamage, ns: , asm: Assembly-CSharp}
-      data:
-        timeBetweenTicks: 0.5
-        duration: 2
-        particlesPrefab: {fileID: 3952218624285773797, guid: e5ff6f8273ee4d649b5efd303981f89d, type: 3}
-        effectSprite: {fileID: 0}
-        canStack: 1
-        dmg: 2
     - rid: 6524999643305869415
       type: {class: DamageEffect, ns: , asm: Assembly-CSharp}
       data:

@@ -22,3 +22,4 @@ MonoBehaviour:
     m_Bits: 64
   hasComboEndCooldown: 0
   comboEndCooldown: 0
+  displayImage: {fileID: -7856493677412862020, guid: fd8d86788cb1ba94d8cd8d8df8f52380, type: 3}

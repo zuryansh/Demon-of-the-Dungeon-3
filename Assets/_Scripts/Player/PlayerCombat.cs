@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
+using UnityEngine.Events;
+using EditorAttributes;
 
 //handles which weapon is being used and input handling
 public class PlayerCombat : MonoBehaviour, ICombatant
@@ -8,9 +10,11 @@ public class PlayerCombat : MonoBehaviour, ICombatant
     public ICombatHandler CombatHandler => currentWeapon;
     
 
+    [HideProperty] public UnityEvent<WeaponData> EOnWeaponChanged;
     [SerializeField] List<Weapon> weapons;
     [SerializeField] Weapon currentWeapon;
     [SerializeReference, SubclassSelector] List<Effect> onHitEffects;
+
     AnimationHelper Animhelper;
 
 
@@ -26,10 +30,18 @@ public class PlayerCombat : MonoBehaviour, ICombatant
         //{
         //    currentWeapon.TryAttack();
         //}
-        if (Input.GetKeyDown(KeyCode.Alpha1)) currentWeapon = weapons[0];
-        else if(Input.GetKeyDown(KeyCode.Alpha2)) currentWeapon = weapons[1];
-        else if(Input.GetKeyDown(KeyCode.Alpha3)) currentWeapon = weapons[2];
-        else if(Input.GetKeyDown(KeyCode.Alpha4)) currentWeapon = weapons[3];
+        if (Input.GetKeyDown(KeyCode.Alpha1)) ChangeWeapon(0);
+        else if (Input.GetKeyDown(KeyCode.Alpha2)) ChangeWeapon(1);
+        else if (Input.GetKeyDown(KeyCode.Alpha3)) ChangeWeapon(2);
+        else if (Input.GetKeyDown(KeyCode.Alpha4)) ChangeWeapon(3);
+
+    }
+    
+    
+    void ChangeWeapon(int i)
+    {
+        currentWeapon = weapons[i];
+        EOnWeaponChanged?.Invoke(currentWeapon.Data);
     }
 
     public void HandleAttackInput(InputAction.CallbackContext c)

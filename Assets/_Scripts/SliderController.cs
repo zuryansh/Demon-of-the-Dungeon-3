@@ -1,5 +1,6 @@
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class SliderController : MonoBehaviour
@@ -7,7 +8,8 @@ public class SliderController : MonoBehaviour
     [SerializeField] float displayTime;
     [SerializeField] CanvasGroup fader;
     [SerializeField] float fadeDuration;
-    [SerializeField] bool isPlayerHealthBar;
+    //[SerializeField] bool isPlayerHealthBar;
+    [SerializeField] Health attatchedHealth;
     Slider slider;
 
 
@@ -37,31 +39,22 @@ public class SliderController : MonoBehaviour
 
     private void OnEnable()
     {
-        if (isPlayerHealthBar)
-        {
-            if (Player.Instance.PlayerHealth == null)
-            {
-                Debug.LogError("Player Health Bar Exists without Player");
-
-            }
-            else Player.Instance.PlayerHealth.EOnHealthChange.AddListener(UpdateSliderVal);
-        }
+        if (attatchedHealth != null) attatchedHealth.EOnHealthChange.RemoveListener(UpdateSliderVal);
     }
+
+    public void RegisterHealthBarUser(Health health)
+    {
+        if (health == null) return;
+        health.EOnHealthChange.AddListener(UpdateSliderVal);
+        attatchedHealth = health;
+    }
+
 
     private void OnDestroy()
     {
-        if (isPlayerHealthBar)
-        {
-            if (Player.Instance != null)
-            {
-                if (Player.Instance.PlayerHealth == null)
-                {
-                    Debug.LogError("Player Health Bar Exists without Player");
-
-                }
-                else Player.Instance.PlayerHealth.EOnHealthChange.RemoveListener(UpdateSliderVal);
-            }
-        }
+        if (attatchedHealth != null) attatchedHealth.EOnHealthChange.RemoveListener(UpdateSliderVal);
+            
+        
         if (fader != null) DOTween.Kill(fader);
     }
 

@@ -7,6 +7,7 @@ public class Weapon: MonoBehaviour, ICombatHandler
 {
     //public Vector2 MouseDir => (inputCam.ScreenToWorldPoint(Input.mousePosition) - visuals.position).normalized;
     public Vector2 MouseDir => Player.Instance.MouseAndJoystickDir;
+    public WeaponData Data => weaponData;
 
     [SerializeField] Collider2D user;
     [SerializeField] Transform visuals;

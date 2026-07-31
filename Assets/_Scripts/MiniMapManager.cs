@@ -58,6 +58,7 @@ public class MiniMapManager : MonoBehaviour
             MapSprite mapSprite = Instantiate(roomMapSpritePrefab, room.GlobalPosition, Quaternion.identity);
             mapSprite.transform.SetParent(room.transform);
             mapSprite.ResizeToBounds(room.GlobalBounds);
+            mapSprite.ChangeTint(room.MapSpriteTint);
             spriteLookup.Add(room,mapSprite);
         }
     }

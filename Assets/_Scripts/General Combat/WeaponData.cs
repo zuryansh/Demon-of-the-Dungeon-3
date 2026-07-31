@@ -14,9 +14,11 @@ public class WeaponData : ScriptableObject
     [SerializeField] LayerMask enemyLayer;
     [SerializeField] bool hasComboEndCooldown;
     [SerializeField, ShowField(nameof(hasComboEndCooldown))] float comboEndCooldown;
+    [SerializeField] Sprite displayImage;
 
     public List<AttackData> Combo => attackCombo;
     public int IdleAnim => Animator.StringToHash(idleClip.name);
     public float ComboEndCooldown => comboEndCooldown;
     public bool HasComboEndCooldown => hasComboEndCooldown;
+    public Sprite Icon => displayImage;
 }

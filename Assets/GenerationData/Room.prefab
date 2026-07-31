@@ -65,6 +65,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d9e769c66ba06945aa84bc3b126ae63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HasPlayer: 0
   debugger: {fileID: 744110699096498839}
   connectedRooms: []
   globalBounds:
@@ -72,5 +73,4 @@ MonoBehaviour:
     m_Extent: {x: 0, y: 0, z: 0}
   doorPrefab: {fileID: 6183569211736042676, guid: f024aa78363ea4748b8120a164064c04, type: 3}
   doors: []
-  enemySpawner: {fileID: 0}
-  hasPlayer: 0
+  mapSpriteTint: {r: 1, g: 1, b: 1, a: 1}

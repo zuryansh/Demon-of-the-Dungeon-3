@@ -157,9 +157,8 @@ MonoBehaviour:
     m_Extent: {x: 0, y: 0, z: 0}
   doorPrefab: {fileID: 6183569211736042676, guid: f024aa78363ea4748b8120a164064c04, type: 3}
   doors: []
+  mapSpriteTint: {r: 0.99371064, g: 0.39060944, b: 0.39060944, a: 1}
   enemySpawner: {fileID: 4652512335201678954}
-  enemies:
-  - {fileID: 0}
 --- !u!114 &5488631886884909697 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 744110699096498839, guid: 5dd24b17158be1b4b8dcea1a3e036398, type: 3}

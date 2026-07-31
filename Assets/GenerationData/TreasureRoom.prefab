@@ -97,4 +97,5 @@ MonoBehaviour:
     m_Extent: {x: 0, y: 0, z: 0}
   doorPrefab: {fileID: 6183569211736042676, guid: f024aa78363ea4748b8120a164064c04, type: 3}
   doors: []
+  mapSpriteTint: {r: 0.9685534, g: 0.7623805, b: 0.3137137, a: 1}
   treasurePrefab: {fileID: 6096345620123537705, guid: 5e06fb9747c29574ea47ed55d4c93155, type: 3}
