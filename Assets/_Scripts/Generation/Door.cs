@@ -13,7 +13,8 @@ public class Door : Teleporter
     {
         this.attatchedRoom = attachedRoom;
         this.teleportToRoom = teleportToRoom;
-        teleportTo = teleportToRoom.transform.position;
+        if(teleportToRoom != null) teleportTo = teleportToRoom.transform.position;
+        else teleportTo = teleportToTeleporter.transform.position;
     }
 
     protected override void Teleport(GameObject obj, string tag = "Player")

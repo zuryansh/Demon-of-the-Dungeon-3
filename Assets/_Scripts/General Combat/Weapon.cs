@@ -15,7 +15,7 @@ public class Weapon: MonoBehaviour, ICombatHandler
     [SerializeField] Hitbox weaponHitbox;
     [SerializeField] MouseLook mouseLook;
     [SerializeField] float comboCyoteTime=1f;
-    [SerializeField] AttackRuntime currentAttack;
+    [SerializeField] AnimationAttackRuntime currentAttack;
     [SerializeField] LayerMask hitLayers;
     [SerializeField] int comboIndex = 0;
     [SerializeField] bool hasBufferedAttack;
@@ -163,9 +163,9 @@ public class Weapon: MonoBehaviour, ICombatHandler
         return (comboIndex + 1) % weaponData.Combo.Count;
     }
 
-    AttackRuntime CreateRuntimeAttack(AttackData data)
+    AnimationAttackRuntime CreateRuntimeAttack(AttackData data)
     {
-        return new AttackRuntime(data,Time.time, animHelper.Anim);
+        return new AnimationAttackRuntime(data,Time.time, animHelper.Anim);
     }
 
     void OnToggleMouseLook(bool val)=> mouseLook.Locked = val;

@@ -131,7 +131,7 @@ public class RoomGenerator : MonoBehaviour
 
             for (int i = 0; i < genSettings.WalkerCount; i++)
             {
-                //if (useRandomSeed) seed = Random.Range(0, 10000);
+                if (genSettings.UseRandomSeed) seed = Random.Range(0, 10000);
                 int walkerStartX = prng.Next(5, (int)(map.GetLength(0) / 1.15f));
                 int walkerStartY = prng.Next(5, (int)(map.GetLength(1) / 1.15f));
 

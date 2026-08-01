@@ -12,7 +12,7 @@ public class EnemyAttackModule : MonoBehaviour
     protected virtual Vector2 DirToPlayer => (Brain.LastPlayerPos - transform.position.ToV2()).normalized;
 
     [SerializeField] protected AttackData attackData;
-    [SerializeField] protected AttackRuntime currentAttack;
+    [SerializeField] protected AnimationAttackRuntime currentAttack;
     [SerializeField] protected bool isAttacking;
     [SerializeField] protected Hitbox attackHitbox;
     
@@ -43,7 +43,7 @@ public class EnemyAttackModule : MonoBehaviour
     public virtual void StartAttack()
     {
         isAttacking = true;
-        currentAttack = new AttackRuntime(attackData, Time.time, AnimHelper.Anim);
+        currentAttack = new AnimationAttackRuntime(attackData, Time.time, AnimHelper.Anim);
         timeSinceLastAttack = 0f;
 
         Vector2 effectPos = (Brain.EffectPoint != null)? Brain.EffectPoint.position : transform.position;

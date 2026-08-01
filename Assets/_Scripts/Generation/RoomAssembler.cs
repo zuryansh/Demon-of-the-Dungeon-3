@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using UnityEngine.Rendering;
+using UnityEditor.Tilemaps;
 
 //THINGS TO ADD
 // scoring function to score possible positions
@@ -43,9 +44,14 @@ public class RoomAssembler : MonoBehaviour
         generator = FindFirstObjectByType<RoomGenerator>();
         if (data.UseRandomSeed) seed = UnityEngine.Random.Range(0, 10000);
         prng = new System.Random(seed);
+
+
+
+    }
+
+    private void Start()
+    {
         GameSceneManager.Instance.OnAllDependencyFinished += StartAssembly;
-
-
     }
 
     private void OnDisable()
@@ -63,8 +69,9 @@ public class RoomAssembler : MonoBehaviour
         {
             //RoomGenerationData roomGenSettings = data.RoomTypesAndCounts.Choice().GeneratorData;
             RoomGenerationData roomGenSettings;
-            if (placementType == RoomPlacementTypes.InMainGen)  roomGenSettings = InMainGenRoomSettings.Choice().GeneratorData;
-            else roomGenSettings = OutMainGenRoomsSettings.Choice().GeneratorData;
+            if (placementType == RoomPlacementTypes.InMainGen) roomGenSettings = InMainGenRoomSettings.Choice().GeneratorData;
+            else { roomGenSettings = OutMainGenRoomsSettings.Choice().GeneratorData; }
+
 
             result.Add(generator.GetNewRoom(roomGenSettings));
         }
@@ -87,7 +94,7 @@ public class RoomAssembler : MonoBehaviour
 
 
         PlaceInMainGenRooms();
-        PlaceOutMainGenRooms();
+        if(OutMainGenRoomsSettings.Count >0)PlaceOutMainGenRooms();
 
         if (ValidateDungeon())
         {
@@ -229,7 +236,9 @@ public class RoomAssembler : MonoBehaviour
     [Button("Place Linear Room")]
     void PlaceLinearRoom()
     {
-        if (placedRooms.Count > (data.NoOfInMainGenRooms + data.NoOfOutMainGenRooms)) return;  
+        print( $"{placedRooms.Count} at time {Time.time}");
+
+        if (placedRooms.Count >= (data.NoOfInMainGenRooms + data.NoOfOutMainGenRooms)) return;  
         Vector2Int spawnPos;
         RoomData roomData = GetRandomRoomData();
         if (placedRooms.Count == 0)

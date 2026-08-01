@@ -1,8 +1,9 @@
 using System;
+using UnityEditor;
 using UnityEngine;
 
 [System.Serializable]
-public class AttackRuntime
+public class AnimationAttackRuntime
 {
 
     public AttackData Data => data;
@@ -18,7 +19,7 @@ public class AttackRuntime
 
     bool hasTicked = false;
 
-    public AttackRuntime(AttackData data, float startTime, Animator animator)
+    public AnimationAttackRuntime(AttackData data, float startTime, Animator animator)
     {
         this.data = data;
         this.startTime = startTime;
@@ -32,23 +33,12 @@ public class AttackRuntime
     public void Tick()
     {
         var stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-
-        // Don't trust progress unless we're actually in the attack's own
-        // state. We deliberately don't check IsInTransition here: when
-        // Play() restarts a state that's already current (duplicate clips
-        // back-to-back in a combo), the transition flag can flicker for a
-        // tick or two even though nothing meaningful is blending, which
-        // would freeze progress at a stale value and never reset it.
         if (stateInfo.shortNameHash != data.AttackAnimation)
             return;
 
         if (!hasTicked)
         {
-            // First real sample of this attack instance. Force a clean
-            // baseline instead of trusting whatever normalizedTime happens
-            // to read right now, so a fresh AttackRuntime can never inherit
-            // a frozen >=1 value left over from a previous instance on the
-            // same clip.
+
             hasTicked = true;
             prevProgress = 0f;
             progress = stateInfo.normalizedTime;
@@ -87,10 +77,48 @@ public class AttackRuntime
         return progress >= data.NextAttackInputStartTime;
     }
 
-    //bool InWindow(float val, float start, float end) => (val >= start && val <= end);
 
     bool Crossed(float prev, float next, float threshold)
     {
         return (prev < threshold && next >= threshold);
+    }
+}
+
+[System.Serializable]
+public class ConditionAttackRuntime
+{
+    public AttackData Data => data;
+    public event Action EAttackFinish;
+    [SerializeField] bool completionEventTriggerd = false;
+    [SerializeField] AttackData data;
+    [SerializeField] readonly Func<bool> endCondition;
+
+
+    public ConditionAttackRuntime(AttackData data,Func<bool> endCondition)
+    {
+        this.data = data;
+        this.endCondition = endCondition;
+    }
+
+    public void Tick()
+    {
+
+        if ( completionEventTriggerd || (endCondition != null && endCondition()))
+        {
+            EAttackFinish?.Invoke();
+            Dispose();
+        }
+    }
+
+    public void SignalCompletion()
+    {
+        completionEventTriggerd = true;
+    }
+
+
+    void Dispose()
+    {
+        EAttackFinish = null;
+
     }
 }

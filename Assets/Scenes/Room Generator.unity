@@ -367,30 +367,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b323feef52646344ab2ac1944ddf8ab0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iterations: 19
-  walklength: 30
-  mapWidth: 50
-  mapHeight: 50
-  smoothing: 1
-  smoothingIterations: 1
-  walkerCount: 1
-  minRoomSize: 0
-  seed: 6237
-  algoUsed: 0
-  useRandomSeed: 1
-  smoothingCutoff: 3
-  tilePallete: {fileID: 11400000, guid: 2c0865efc45eb984697497fa934beed8, type: 2}
-  debugTileLayer: 0
-  ShowDebug: 0
-  fillPercent: 0
-  cutoff: 0
+  data: {fileID: 11400000, guid: e594754348efc1b4dbd0675bec1476ab, type: 2}
+  debugTileLayer: 1
+  ShowDebug: 1
   roomData:
-    id: 1104072233
+    id: 1089584676
     boundingBox:
-      m_Center: {x: 4.5, y: -6.5, z: 0}
-      m_Extent: {x: 13, y: 10, z: 0}
+      m_Center: {x: -10, y: -5, z: 0}
+      m_Extent: {x: 15.5, y: 13.5, z: 0}
     tilepallete: {fileID: 11400000, guid: 2c0865efc45eb984697497fa934beed8, type: 2}
+    functionType: 0
   roomDebugger: {fileID: 694369563}
+  seed: 8875
 --- !u!4 &1926177069
 Transform:
   m_ObjectHideFlags: 0

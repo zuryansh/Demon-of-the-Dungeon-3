@@ -32,6 +32,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Tutorial.unity
     guid: 72f028d9f37724e47a7b75c5d143b724
+  - enabled: 1
+    path: Assets/Scenes/SlimeBoss.unity
+    guid: 6b24ec505cdcc6c4380952b09667c30a
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

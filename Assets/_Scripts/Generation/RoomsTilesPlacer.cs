@@ -7,6 +7,12 @@ public class RoomsTilesPlacer : MonoBehaviour
     [SerializeField] Tilemap tilemap;
     [SerializeField] Tilemap colliderTilemap;
     [SerializeField] Tilemap decorationTilemap;
+
+    void PlaceTilesForGen(RoomGenerator generator)
+    {
+
+    }
+
     private void OnEnable()
     {
         RoomAssembler.EOnAssemblyFinished += VisualiseRooms;
