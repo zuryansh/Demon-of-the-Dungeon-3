@@ -12,9 +12,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afe94b400f5f23b48a12f145c070c15e, type: 3}
   m_Name: Slime Boss
   m_EditorClassIdentifier: 
-  health: 200
+  enemyName: Slime Boss
+  idleAnim: {fileID: 7400000, guid: 64c89e17a34d3d8488c21e585e33d82f, type: 2}
+  movementAnim: {fileID: 7400000, guid: 64c89e17a34d3d8488c21e585e33d82f, type: 2}
+  onHitEffects:
+  - rid: 3978503691842617549
+  - rid: 3978503691842617550
+  - rid: 3978503691842617551
+  onDeathEffects: []
+  pointCost: 1
   phases:
   - attacks:
-    - {fileID: 11400000, guid: 6b866b4d4e1c9154db9f56e531072908, type: 2}
-  idleAnimation: {fileID: 7400000, guid: 64c89e17a34d3d8488c21e585e33d82f, type: 2}
-  timeBetweenAttacks: 1
+    - {fileID: 11400000, guid: 2cc37da8941db17498c9aa8ef3ebcd2e, type: 2}
+    - {fileID: 11400000, guid: a28bcbf87e790d44593e3894431f417b, type: 2}
+    - {fileID: 11400000, guid: 31ff4c22bd7bbd54fbf12659f3a43e5b, type: 2}
+    - {fileID: 11400000, guid: 59b66da5264829f45bceeb62159e80f8, type: 2}
+    phaseStartPoint: 0
+    timeBetweenAttacks: 1
+    maxNoOfAttacks: 6
+    minNoOfAttacks: 3
+    timeBetweenRotations: 5
+  references:
+    version: 2
+    RefIds:
+    - rid: 3978503691842617549
+      type: {class: SpawnParticlesEffect, ns: , asm: Assembly-CSharp}
+      data:
+        particlesPreab: {fileID: 5313175317198594345, guid: 0cdbe0e4b8390c04f8f4c9ae53bc63eb, type: 3}
+        useAttackDir: 1
+    - rid: 3978503691842617550
+      type: {class: ScreenShakeEffect, ns: , asm: Assembly-CSharp}
+      data:
+        force: 0.3
+    - rid: 3978503691842617551
+      type: {class: PlaySoundEffect, ns: , asm: Assembly-CSharp}
+      data:
+        clips:
+        - {fileID: 8300000, guid: 24aea3a639588da4e997b4237e788ca7, type: 3}
+        - {fileID: 8300000, guid: ae8e98d33ce1ee34ab5778ec5a043047, type: 3}
+        - {fileID: 8300000, guid: 753f14174908844409097ac0065cbd26, type: 3}
+        volumme: 0.8
+        type: 1
+        duration: 0

@@ -5171,6 +5171,7 @@ MonoBehaviour:
   onHitEffects:
   - rid: 6524999643305869415
   - rid: 5677585102876180627
+  - rid: 3978503790609825867
   onLaunchEffects:
   - rid: 5677585102876180619
   pierceCount: 0
@@ -5182,6 +5183,15 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: 3978503790609825867
+      type: {class: TickDamage, ns: , asm: Assembly-CSharp}
+      data:
+        timeBetweenTicks: 1
+        duration: 10
+        particlesPrefab: {fileID: 3952218624285773797, guid: e5ff6f8273ee4d649b5efd303981f89d, type: 3}
+        effectSprite: {fileID: 0}
+        canStack: 0
+        dmg: 3
     - rid: 5677585102876180619
       type: {class: PlaySoundEffect, ns: , asm: Assembly-CSharp}
       data:

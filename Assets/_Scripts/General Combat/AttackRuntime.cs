@@ -89,13 +89,15 @@ public class ConditionAttackRuntime
 {
     public AttackData Data => data;
     public event Action EAttackFinish;
+    
     [SerializeField] bool completionEventTriggerd = false;
     [SerializeField] AttackData data;
-    [SerializeField] readonly Func<bool> endCondition;
+    Func<bool> endCondition;
 
 
     public ConditionAttackRuntime(AttackData data,Func<bool> endCondition)
     {
+        Debug.Log("NEW RUNTIME CREATED");
         this.data = data;
         this.endCondition = endCondition;
     }

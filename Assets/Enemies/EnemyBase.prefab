@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 9162493328528385227}
   - component: {fileID: 7339058114127483965}
   - component: {fileID: 3373508549274494159}
+  - component: {fileID: 271903329242463162}
   m_Layer: 6
   m_Name: EnemyBase
   m_TagString: Untagged
@@ -241,6 +242,19 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+--- !u!114 &271903329242463162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2230395923528354873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f85611f352ff3c43ae6d4acccc7bb32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resistance: 0
 --- !u!1 &4750981326506217873
 GameObject:
   m_ObjectHideFlags: 0

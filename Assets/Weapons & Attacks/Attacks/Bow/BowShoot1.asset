@@ -32,3 +32,4 @@ MonoBehaviour:
         projectile: {fileID: 6738067564620746127, guid: f2a5fbba37793674db06b68113f9a73b, type: 3}
         speed: 17
         delay: 0
+        spreadAngle: 0

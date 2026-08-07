@@ -1,29 +1,31 @@
 using EditorAttributes;
 using System.Collections.Generic;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public enum AttackDataType { Player, Enemy }
 
 
 // holds stuff like list of attacks and normalised time windows as well as the animation for the attack
-[CreateAssetMenu(menuName ="attack")]
+[CreateAssetMenu(menuName ="Attack/BaseAttack")]
 public class AttackData : ScriptableObject
 {
 
-    [SerializeField] AttackDataType attackType;
+    [SerializeField] protected AttackDataType attackType;
 
-    [SerializeField] string attackName;
-    [SerializeField] AnimationClip attackAnimation;
-    [SerializeField] int animationPriority =0;
+    [SerializeField] protected string attackName;
+    [SerializeField] protected AnimationClip attackAnimation;
+    [SerializeField] protected int animationPriority =0;
 
-    [SerializeField, ShowField(nameof(attackType), AttackDataType.Player)] float mouseLockTime;
-    [SerializeField, ShowField(nameof(attackType), AttackDataType.Player)]float nextAttackInputStartTime; //for next combo 
-    [SerializeField, ShowField(nameof(attackType), AttackDataType.Player)] float cancelAttackBeforeTime; // can cancel attack before this
+    [SerializeField, ShowField(nameof(attackType), AttackDataType.Player)] protected float mouseLockTime;
+    [SerializeField, ShowField(nameof(attackType), AttackDataType.Player)]protected float nextAttackInputStartTime; //for next combo 
+    [SerializeField, ShowField(nameof(attackType), AttackDataType.Player)] protected float cancelAttackBeforeTime; // can cancel attack before this
 
 
-    [SerializeReference, SubclassSelector] List<Effect> onTargetHitEffects;
-    [SerializeReference, SubclassSelector] List<Effect> onAttackStartEffects;
-    [SerializeReference, SubclassSelector] List<Effect> onAttackEndEffects;
+    [SerializeReference, SubclassSelector] protected List<Effect> onTargetHitEffects;
+    [SerializeReference, SubclassSelector] protected List<Effect> onAttackStartEffects;
+    [SerializeReference, SubclassSelector] protected List<Effect> onAttackEndEffects;
 
 
 
@@ -40,6 +42,5 @@ public class AttackData : ScriptableObject
     public float NextAttackInputStartTime { get => nextAttackInputStartTime;  }
     public float CancelAttackBeforeTime { get => cancelAttackBeforeTime;  }
 
-
-
 }
+

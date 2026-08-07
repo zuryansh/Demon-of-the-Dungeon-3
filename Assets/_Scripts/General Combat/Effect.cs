@@ -46,10 +46,9 @@ public class KnockBackEffect: Effect
 
     public override void Apply(EffectContext context)
     {
-        Rigidbody2D rb;
-        if(context.Target.TryGetComponent<Rigidbody2D>(out rb))
+        if(context.Target.TryGetComponent<KnockbackReceiver>(out KnockbackReceiver kb))
         {
-            rb.AddForce(context.EffectDir * knockback* 100);
+            kb.Apply(context.EffectDir * knockback* 100);
         }
     }
 

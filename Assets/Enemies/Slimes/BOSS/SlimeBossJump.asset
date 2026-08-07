@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: SlimeBossJump
+  m_EditorClassIdentifier: Assembly-CSharp::JumpAttackData
+  attackType: 1
+  attackName: Slime Boss Jump
+  attackAnimation: {fileID: 7400000, guid: c6aa9d914a7aad743a3841f0180b3644, type: 2}
+  animationPriority: 0
+  mouseLockTime: 0
+  nextAttackInputStartTime: 0
+  cancelAttackBeforeTime: 0
+  onTargetHitEffects:
+  - rid: 3978503724153438208
+  onAttackStartEffects: []
+  onAttackEndEffects: []
+  jumpPower: 15
+  jumpTime: 1.5
+  landAnimation: {fileID: 7400000, guid: c6aa9d914a7aad743a3841f0180b3644, type: 2}
+  startLeapAfter: 0
+  maxJumpDist: 7
+  references:
+    version: 2
+    RefIds:
+    - rid: 3978503724153438208
+      type: {class: DamageEffect, ns: , asm: Assembly-CSharp}
+      data:
+        damage: 10
+        spawnDmgNo: 0

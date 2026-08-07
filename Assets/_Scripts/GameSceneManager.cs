@@ -8,7 +8,6 @@ public class GameSceneManager : PersistentSingletion<GameSceneManager>
     public Dictionary<string, SceneData> SceneLookup = new();
     public event Action OnAllDependencyFinished;
     public event Action<SceneData> ENewSceneLoaded;
-    public event Action<SceneData> EMainSceneSwitched;
 
     [SerializeField] private List<SceneData> allSceneDatas;
      HashSet<string> requested = new();

@@ -7,7 +7,7 @@ public class DebuffField : MonoBehaviour
     [SerializeReference, SubclassSelector] List<BuffDebuffEffect> DebuffEffects;
     [SerializeField] LayerMask layer;
     Collider2D col;
-    [SerializeField] float timeBetweenChecks=0.1f;
+    //[SerializeField] float timeBetweenChecks=0.1f;
 
     List<DebuffManager> effectedObjects;
 
