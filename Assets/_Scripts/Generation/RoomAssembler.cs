@@ -4,8 +4,6 @@ using EditorAttributes;
 using System;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using UnityEngine.Rendering;
-using UnityEditor.Tilemaps;
 
 //THINGS TO ADD
 // scoring function to score possible positions

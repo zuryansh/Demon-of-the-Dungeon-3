@@ -952,7 +952,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 179.4
+  m_fontSize: 245.44
   m_fontSizeBase: 109.02
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -16448,10 +16448,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -16856,10 +16856,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 2712, y: 1220}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -16970,6 +16970,7 @@ MonoBehaviour:
   skipButton: {fileID: 633369991}
   lingerTime: 2
   director: {fileID: 1909838529}
+  skipAction: {fileID: -944628639613478452, guid: d39b403b3c7aea04aa0924240bd06b6e, type: 3}
 --- !u!1001 &2099961723
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16978,6 +16979,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2615457525778383826, guid: 9ea64f9ddac572940afcb668b93f3510, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7287259163836918980, guid: 9ea64f9ddac572940afcb668b93f3510, type: 3}
       propertyPath: m_LocalPosition.x
       value: -46.57
@@ -17025,6 +17030,10 @@ PrefabInstance:
     - target: {fileID: 7421941241253774048, guid: 9ea64f9ddac572940afcb668b93f3510, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8602525028604153178, guid: 9ea64f9ddac572940afcb668b93f3510, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

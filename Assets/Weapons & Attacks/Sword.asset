@@ -23,3 +23,4 @@ MonoBehaviour:
   hasComboEndCooldown: 0
   comboEndCooldown: 0.2
   displayImage: {fileID: 2734422588928355149, guid: 51606fb55efb91c4980940c71abef6cd, type: 3}
+  timeBetweenAutoAttack: 0.3

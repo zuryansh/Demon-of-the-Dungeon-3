@@ -7,6 +7,7 @@ public class CutsceneManager : MonoBehaviour
     [SerializeField] UIScreen skipButton;
     [SerializeField] float lingerTime;
     [SerializeField] PlayableDirector director;
+    [SerializeField] private InputActionAsset skipAction;
     bool showing = false;
     bool cutsceneOnGoing = true;
 
@@ -17,7 +18,7 @@ public class CutsceneManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.anyKeyDown)
+        if (skipAction.FindAction("AnyButtonPressed").WasPressedThisFrame())
         {
             HandleSkipInput();
         }

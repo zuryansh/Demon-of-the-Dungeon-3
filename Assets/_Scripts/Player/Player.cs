@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.OnScreen;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : Singleton<Player> 
@@ -12,7 +13,9 @@ public class Player : Singleton<Player>
     public PlayerCombat CombatScript=> combatScript;
     public UnityEvent<float> EOnPointsChanged;
     public Vector2 MouseAndJoystickDir => mouseDir;
+    public bool IsUsingJoystick => isUsingJoystick;
 
+    bool isUsingJoystick;
     PlayerInput inputManager;
     Rigidbody2D rb;
     Camera cam;
@@ -23,6 +26,7 @@ public class Player : Singleton<Player>
     [SerializeField] AnimationClip runAnim;
     [SerializeField] AnimationClip idleAnim;
     [SerializeField] int souls;
+    [SerializeField] JoystickTouchTracker onScreenStick;
 
     PlayerCombat combatScript;
     Health healthScript;
@@ -32,6 +36,7 @@ public class Player : Singleton<Player>
 
     protected override void Awake()
     {
+        
         base.Awake();
         inputManager = GetComponent<PlayerInput>();
         rb = GetComponent<Rigidbody2D>();
@@ -103,6 +108,8 @@ public class Player : Singleton<Player>
         FlipSprite();
         mouseDir = GetDirToMouseOrJoystick();
         if (mouseDir.sqrMagnitude < 0.001f) mouseDir = Vector2.right;
+        if (onScreenStick != null && !onScreenStick.IsPressed) isUsingJoystick = false;
+            
         //movementVector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
         //if(Input.GetKeyDown(KeyCode.Escape))
@@ -181,13 +188,14 @@ public class Player : Singleton<Player>
     {
         if (inputManager.currentControlScheme == "Keyboard")
         {
+            isUsingJoystick = false;
             Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
             mouseWorld.z = transform.position.z;
 
             return (mouseWorld - transform.position).normalized;
         }
-
-        // Gamepad
+        isUsingJoystick = true;
+        // Gamepad / mouse
         InputAction aimAction = inputManager.actions["Aim"];
         return aimAction.ReadValue<Vector2>().normalized;
 

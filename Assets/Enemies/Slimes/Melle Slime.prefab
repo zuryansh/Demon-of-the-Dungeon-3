@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 271903329242463162, guid: 34696f206e18a8c499a0098f3c26fef2, type: 3}
+      propertyPath: resistance
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 305467625534704045, guid: 34696f206e18a8c499a0098f3c26fef2, type: 3}
       propertyPath: enemyData
       value: 
@@ -140,9 +144,9 @@ MonoBehaviour:
     progress: 0
   isAttacking: 0
   attackHitbox: {fileID: 2404252238210201601}
+  isStunned: 0
   maxAttackRange: 2
   timeBetweenAttacks: 1
-  canAttack: 1
   HitboxLookScript: {fileID: 6748509040379596786}
   jumpTowardsTarget: 1
 --- !u!212 &5593052055642133241 stripped

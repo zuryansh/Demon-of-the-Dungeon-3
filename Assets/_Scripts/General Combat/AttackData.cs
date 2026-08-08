@@ -1,8 +1,6 @@
 using EditorAttributes;
 using System.Collections.Generic;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public enum AttackDataType { Player, Enemy }
 

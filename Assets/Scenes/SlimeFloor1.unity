@@ -10021,6 +10021,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1583545144418087983, guid: 2a342198aeb3d5543a9844c2f20cc5de, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 187.08997
+      objectReference: {fileID: 0}
     - target: {fileID: 5129607265202311873, guid: 2a342198aeb3d5543a9844c2f20cc5de, type: 3}
       propertyPath: m_Name
       value: SCENE TITLE

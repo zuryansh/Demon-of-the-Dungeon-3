@@ -68,6 +68,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "CycleWeapon",
+                    "type": "Button",
+                    "id": "8816a437-e020-4fee-89c8-7f0b51fa968b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -294,7 +303,7 @@
                 {
                     "name": "2D Vector",
                     "id": "a71b807e-d12b-47c1-b989-69638704caab",
-                    "path": "2DVector",
+                    "path": "2DVector(mode=2)",
                     "interactions": "",
                     "processors": "StickDeadzone,NormalizeVector2",
                     "groups": "",
@@ -345,6 +354,17 @@
                     "action": "Aim",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "e3a2a058-7f45-4a32-8128-01660218a9cf",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CycleWeapon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },

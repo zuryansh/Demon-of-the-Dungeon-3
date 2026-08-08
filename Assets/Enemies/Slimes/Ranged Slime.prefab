@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 271903329242463162, guid: 34696f206e18a8c499a0098f3c26fef2, type: 3}
+      propertyPath: resistance
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 305467625534704045, guid: 34696f206e18a8c499a0098f3c26fef2, type: 3}
       propertyPath: enemyData
       value: 
@@ -60,6 +64,14 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 68f518675f9ef9e44a8911fa5252d9d9, type: 2}
+    - target: {fileID: 7074814886791431618, guid: 34696f206e18a8c499a0098f3c26fef2, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7074814886791431618, guid: 34696f206e18a8c499a0098f3c26fef2, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7940303333693853427, guid: 34696f206e18a8c499a0098f3c26fef2, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -127,8 +139,8 @@ MonoBehaviour:
     progress: 0
   isAttacking: 0
   attackHitbox: {fileID: 0}
+  isStunned: 0
   maxAttackRange: 7
   timeBetweenAttacks: 1
-  canAttack: 1
   HitboxLookScript: {fileID: 0}
   jumpTowardsTarget: 0
