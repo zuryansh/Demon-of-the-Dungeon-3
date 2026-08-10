@@ -9,26 +9,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: d00797bfebe8af84aa2a161c59237f4b, type: 3}
   m_Name: SlimeBossCharge
-  m_EditorClassIdentifier: Assembly-CSharp::ChargeAttackData
+  m_EditorClassIdentifier: 
   attackType: 1
-  attackName: Slime Boss Charge
+  attackName: 
   attackAnimation: {fileID: 7400000, guid: c6aa9d914a7aad743a3841f0180b3644, type: 2}
   animationPriority: 0
   mouseLockTime: 0
   nextAttackInputStartTime: 0
   cancelAttackBeforeTime: 0
   onTargetHitEffects:
-  - rid: 3978503724153438286
+  - rid: 3978503895845699697
   onAttackStartEffects: []
   onAttackEndEffects: []
-  chargeSpeed: 1
+  chargeSpeed: 3
   maxChargeTime: 1
   references:
     version: 2
     RefIds:
-    - rid: 3978503724153438286
+    - rid: 3978503895845699697
       type: {class: DamageEffect, ns: , asm: Assembly-CSharp}
       data:
         damage: 10

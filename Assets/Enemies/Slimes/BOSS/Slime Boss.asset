@@ -23,15 +23,15 @@ MonoBehaviour:
   pointCost: 1
   phases:
   - attacks:
+    - {fileID: 11400000, guid: 59b66da5264829f45bceeb62159e80f8, type: 2}
     - {fileID: 11400000, guid: 2cc37da8941db17498c9aa8ef3ebcd2e, type: 2}
     - {fileID: 11400000, guid: a28bcbf87e790d44593e3894431f417b, type: 2}
     - {fileID: 11400000, guid: 31ff4c22bd7bbd54fbf12659f3a43e5b, type: 2}
-    - {fileID: 11400000, guid: 59b66da5264829f45bceeb62159e80f8, type: 2}
     phaseStartPoint: 0
-    timeBetweenAttacks: 1
+    timeBetweenAttacks: 1.5
     maxNoOfAttacks: 6
     minNoOfAttacks: 3
-    timeBetweenRotations: 5
+    timeBetweenRotations: 1
   references:
     version: 2
     RefIds:

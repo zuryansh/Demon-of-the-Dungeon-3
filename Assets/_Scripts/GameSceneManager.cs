@@ -69,7 +69,6 @@ public class GameSceneManager : PersistentSingletion<GameSceneManager>
         // do whatever needs to happen here
        await UIManager.Instance.SceneTranitionEnd();
         OnAllDependencyFinished?.Invoke();
-        print("ALL DEPENDENCIES LOADED");
     }
 
     public void LoadDependencies(SceneData sceneData)

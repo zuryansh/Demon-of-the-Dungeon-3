@@ -105,6 +105,7 @@ public class EnemyAttackModule : MonoBehaviour
     public virtual void Stun(float duration)
     {
         isStunned = true;
+        CancelInvoke(nameof(ResetStun));
         Invoke(nameof(ResetStun), duration);
     }
 

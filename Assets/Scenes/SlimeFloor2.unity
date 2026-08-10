@@ -7839,6 +7839,7 @@ MonoBehaviour:
         - {fileID: 8300000, guid: 7bec093add186a240946cdf8d26e29a8, type: 3}
         volumme: 0.5
         type: 1
+        duration: 0
 --- !u!4 &978190584
 Transform:
   m_ObjectHideFlags: 0
@@ -8221,6 +8222,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3695901545004667057, guid: 9ea64f9ddac572940afcb668b93f3510, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 2142159416}
     - target: {fileID: 7287259163836918980, guid: 9ea64f9ddac572940afcb668b93f3510, type: 3}
       propertyPath: m_LocalPosition.x
       value: -300

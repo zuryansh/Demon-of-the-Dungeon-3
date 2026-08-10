@@ -240,7 +240,7 @@
                     "path": "<Gamepad>/start",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Gamepad",
                     "action": "TogglePause",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -273,7 +273,7 @@
                     "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Keyboard",
                     "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -281,10 +281,10 @@
                 {
                     "name": "",
                     "id": "b8d41268-b928-4ea8-8fc0-48628ffc3936",
-                    "path": "",
+                    "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Gamepad",
                     "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -296,6 +296,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard",
+                    "action": "AnyButtonPressed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c61c179d-5bf9-4108-906c-e5087782ce5e",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard;Gamepad",
                     "action": "AnyButtonPressed",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -361,7 +372,18 @@
                     "path": "<Keyboard>/rightArrow",
                     "interactions": "Press",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Keyboard",
+                    "action": "CycleWeapon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b4be8eea-0685-4172-ac7c-848067e50e8b",
+                    "path": "<Gamepad>/dpad/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
                     "action": "CycleWeapon",
                     "isComposite": false,
                     "isPartOfComposite": false

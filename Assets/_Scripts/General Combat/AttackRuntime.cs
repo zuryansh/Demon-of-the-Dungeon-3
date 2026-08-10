@@ -97,7 +97,6 @@ public class ConditionAttackRuntime
 
     public ConditionAttackRuntime(AttackData data,Func<bool> endCondition)
     {
-        Debug.Log("NEW RUNTIME CREATED");
         this.data = data;
         this.endCondition = endCondition;
     }

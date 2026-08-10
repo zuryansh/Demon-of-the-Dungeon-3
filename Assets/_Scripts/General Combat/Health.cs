@@ -13,6 +13,7 @@ public class Health : MonoBehaviour
     [SerializeField] float maxHealth;
     [SerializeField] float curHealth;
     [SerializeField] float invincibilityTime;
+    [SerializeField] bool dead;
 
 
     
@@ -40,9 +41,10 @@ public class Health : MonoBehaviour
         EOnHealthChange.Invoke(curHealth, maxHealth);
 
 
-        if(curHealth <= 0 )
+        if(curHealth <= 0 && !dead)
         {
             OnDeath.Invoke(cntxt);
+            dead = true;
         }
     }
 

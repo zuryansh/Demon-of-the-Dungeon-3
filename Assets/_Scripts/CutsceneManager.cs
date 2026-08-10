@@ -10,16 +10,21 @@ public class CutsceneManager : MonoBehaviour
     [SerializeField] private InputActionAsset skipAction;
     bool showing = false;
     bool cutsceneOnGoing = true;
+    InputAction inputAction;
 
     private void Start()
     {
         director.stopped += OnCutsceneFinish;
+        inputAction = skipAction.FindAction("AnyButtonPressed");
+        inputAction.Enable();
     }
 
     private void Update()
     {
-        if (skipAction.FindAction("AnyButtonPressed").WasPressedThisFrame())
+
+        if ( inputAction.WasPressedThisFrame())
         {
+            print("here");
             HandleSkipInput();
         }
 

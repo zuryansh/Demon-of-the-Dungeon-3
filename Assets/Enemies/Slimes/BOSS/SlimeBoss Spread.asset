@@ -27,7 +27,7 @@ MonoBehaviour:
   coverAngle: 45
   projSpeed: 10
   timeBetweenProj: 0
-  randomAngleOffset: 0
+  randomAngleOffset: 30
   references:
     version: 2
     RefIds: []

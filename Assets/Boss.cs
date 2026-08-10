@@ -121,7 +121,7 @@ public class Boss : MonoBehaviour
     public virtual ConditionAttackRuntime StartAttack(AttackData attackData, Func<bool> endFunc)
     {
         attackStartTime = Time.time;
-        foreach (Hitbox hitbox in hitBoxes) hitbox.ResetHitbox();
+        //foreach (Hitbox hitbox in hitBoxes) hitbox.ResetHitbox();
         currentAttack = new ConditionAttackRuntime(attackData, endFunc);
 
         Vector2 effectPos = transform.position;
@@ -137,7 +137,6 @@ public class Boss : MonoBehaviour
 
     public virtual void OnAttackFinish()
     {
-        print("Attack Finished");
         currentAttack.EAttackFinish -= OnAttackFinish;
 
         Vector2 effectPos = transform.position;
@@ -156,6 +155,7 @@ public class Boss : MonoBehaviour
 
     public void NotifyHit(Collider2D collider, Vector3 dir)
     {
+        print("hit detected");
         if (currentAttack == null) return;
         Vector3 p = collider.ClosestPoint(transform.position);
 
@@ -211,14 +211,14 @@ public class Boss : MonoBehaviour
     protected virtual IEnumerator Jump(JumpAttackData jumpAttackData)
     {
 
-        ConditionAttackRuntime atk = StartAttack(jumpAttackData, () => Time.time - attackStartTime >= jumpAttackData.JumpTime);
+        ConditionAttackRuntime atk = StartAttack(jumpAttackData, () => Time.time - attackStartTime >= jumpAttackData.JumpTime+jumpAttackData.StartLeapAfter+0.1f);
         atk.EAttackFinish += Cleanup;
 
         yield return new WaitForSeconds(jumpAttackData.StartLeapAfter); //wait for animation to get to the jump point 
 
         Vector2 endPos = player.transform.position - transform.position;
         endPos = Vector2.ClampMagnitude(endPos, jumpAttackData.MaxJumpDist) +transform.position.ToV2();
-        rb.DOJump(endPos, jumpAttackData.JumpPower, 1, jumpAttackData.JumpTime).SetEase(Ease.InBack)
+        rb.DOJump(endPos, jumpAttackData.JumpPower, 1, jumpAttackData.JumpTime).SetEase(jumpAttackData.EaseType)
             .OnComplete(()=> AnimHelper.ChangeAnimation(jumpAttackData.LandAnim));
 
 
@@ -226,7 +226,6 @@ public class Boss : MonoBehaviour
         void Cleanup()
         {
             print("attack cleanup");
-            atk.EAttackFinish -= Cleanup;
         }
 
         yield break;

@@ -35,7 +35,7 @@ public class Hitbox : MonoBehaviour
 
         Vector2 currentPosition = transform.position;
         Vector2 delta = currentPosition - prevPos;
-
+        //for casting the collider to prev and current pos
         if (delta.sqrMagnitude > Mathf.Epsilon)
         {
             col.Cast(delta.normalized, contactFilter, temp1, delta.magnitude + 0.01f);
@@ -52,7 +52,7 @@ public class Hitbox : MonoBehaviour
                 }
             }
         }
-
+        //for overlapting on current pos
         if (Physics2D.OverlapCollider(col, contactFilter, temp2) > 0)
         {
 
@@ -61,6 +61,8 @@ public class Hitbox : MonoBehaviour
             {
                 if (detectedColliders.Add(collider))
                 {
+                    print("collider detected");
+
                     Vector3 dir = (collider.transform.position - col.transform.position).normalized;
                     EOnHitDetect?.Invoke(collider, dir);
                 }
@@ -70,10 +72,6 @@ public class Hitbox : MonoBehaviour
         prevPos = currentPosition;
     }
 
-    Vector3 GetHitDirection()
-    {
-        throw new NotImplementedException();
-    }
 
     private void OnEnable()
     {
@@ -88,6 +86,8 @@ public class Hitbox : MonoBehaviour
     public void ResetHitbox()
     {
         detectedColliders.Clear();
+        temp1.Clear();
+        temp2.Clear();
     }
 
 }
