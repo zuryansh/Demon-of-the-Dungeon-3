@@ -40,10 +40,32 @@ public class EffectContext
     public virtual  Vector3 EffectDir { get => effectDir; }
 }
 
-//public class BuffDebuffContext : EffectContext
+//[System.Serializable]
+//public class TelegraphContext : EffectContext
 //{
-//    public BuffDebuffContext(GameObject source, GameObject target, Vector3 effectPoint, Vector3 effectDir) : base(source, target, effectPoint, effectDir)
-//    {
+//    private Vector2 indicatorSize;
 
+//    public TelegraphContext(
+//        GameObject source,
+//        GameObject target,
+//        Vector3 effectPoint,
+//        Vector3 effectDir,
+//        Vector2 indicatorSize
+//    ) : base(source, target, effectPoint, effectDir)
+//    {
+//        this.indicatorSize = indicatorSize;
 //    }
+
+//    public TelegraphContext(
+//        GameObject source,
+//        Vector3 targetPos,
+//        Vector3 effectPoint,
+//        Vector3 effectDir,
+//        Vector2 indicatorSize
+//    ) : base(source, targetPos, effectPoint, effectDir)
+//    {
+//        this.indicatorSize = indicatorSize;
+//    }
+
+//    public Vector2 IndicatorSize=> indicatorSize;
 //}

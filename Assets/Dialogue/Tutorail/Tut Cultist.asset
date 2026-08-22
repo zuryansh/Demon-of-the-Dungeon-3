@@ -14,10 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   paras:
   - 'You can move using [WASD]'
-  - 'Attack with left mouse and change weapon with [1,2,3,4] number keys
-
-    Try
-    Hitting that dummy over there!'
+  - "Attack with left mouse and change weapon with [Right Arrow, Q] \nTry Hitting
+    that dummy over there!"
   - 'you can pause the game with [esc] and bring up the minimap with [M]
 
     Try

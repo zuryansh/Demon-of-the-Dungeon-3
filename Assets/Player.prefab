@@ -75,8 +75,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1115722007
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 2734422588928355149, guid: 51606fb55efb91c4980940c71abef6cd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -361,8 +361,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1115722007
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: -7856493677412862020, guid: fd8d86788cb1ba94d8cd8d8df8f52380, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -550,8 +550,8 @@ TrailRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1115722007
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Time: 0.1
   m_PreviewTimeScale: 1
@@ -968,7 +968,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8974534972323011828
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1550,8 +1550,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1115722007
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: -5639234810971933889, guid: a446a82427f40dc46a4a3b7b27b00ad3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2405,6 +2405,7 @@ MonoBehaviour:
   maxHealth: 150
   curHealth: 100
   invincibilityTime: 0.3
+  dead: 0
 --- !u!95 &7168305273185293877
 Animator:
   serializedVersion: 7
@@ -2737,8 +2738,8 @@ TrailRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1115722007
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Time: 0.1
   m_PreviewTimeScale: 1

@@ -2,6 +2,7 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 
@@ -19,6 +20,10 @@ public class Boss : MonoBehaviour
     [SerializeField] protected Hitbox[] hitBoxes;
     [SerializeField] protected LayerMask WallLayer;
     [SerializeField] List<AttackData> attacksForThisRotation = new List<AttackData>();
+    [SerializeField] GameObject jumpIndicator;
+    [SerializeField] GameObject ChargeIndicator;
+    
+
 
     protected event Action EWallHit;
     protected Rigidbody2D rb;
@@ -118,21 +123,28 @@ public class Boss : MonoBehaviour
 
 
 
-    public virtual ConditionAttackRuntime StartAttack(AttackData attackData, Func<bool> endFunc)
+    public virtual ConditionAttackRuntime PrepareAttack(AttackData attackData, Func<bool> endFunc)
     {
         attackStartTime = Time.time;
         //foreach (Hitbox hitbox in hitBoxes) hitbox.ResetHitbox();
         currentAttack = new ConditionAttackRuntime(attackData, endFunc);
+
+       
+
+        currentAttack.EAttackFinish += OnAttackFinish;
+        return currentAttack;
+    }
+
+    public void ExecuteAttackStart(AttackData attackData)
+    {
+        AnimHelper.ChangeAnimation(attackData.AttackAnimation, priority: attackData.AnimationPriority, forceReplay: true);
 
         Vector2 effectPos = transform.position;
         EffectContext context = new EffectContext(gameObject, player.gameObject, effectPos, (Vector3)DirToPlayer);
         foreach (var effect in attackData.OnAttackStartEffects) effect.Apply(context);
 
 
-        currentAttack.EAttackFinish += OnAttackFinish;
-        AnimHelper.ChangeAnimation(attackData.AttackAnimation, priority: attackData.AnimationPriority, forceReplay: true);
 
-        return currentAttack;
     }
 
     public virtual void OnAttackFinish()
@@ -183,18 +195,34 @@ public class Boss : MonoBehaviour
             foreach (Hitbox hitbox in hitBoxes) hitbox.EOnHitDetect -= NotifyHit;
     }
 
-
+    protected void Telegraph(AttackData attackData, Vector2 spawnPos, Vector2 direction)
+    {
+        Vector2 effectPos = spawnPos;
+        EffectContext context = new EffectContext(gameObject, player.gameObject, effectPos, (Vector3)direction);
+        foreach (TelegraphEffect effect in attackData.TelegraphEffects)
+        {
+            effect.Apply(context);
+        }
+    } 
 
     protected virtual IEnumerator Charge(ChargeAttackData chargeAttackData)
-    {        
-        ConditionAttackRuntime atk= StartAttack(chargeAttackData, () => Time.time - attackStartTime >= chargeAttackData.MaxChargeTime);
+    {
+        Vector2 chargeDir = DirToPlayer;
+
+
+        float timeToWait = chargeAttackData.MaxChargeTime + chargeAttackData.TelegraphTime;
+        ConditionAttackRuntime atk= PrepareAttack(chargeAttackData, () => Time.time - attackStartTime >= timeToWait);
         EWallHit += atk.SignalCompletion; //attack will complete when it hits a wall
-
-
         atk.EAttackFinish += Cleanup;
 
+        //telegraph
+        Telegraph(chargeAttackData, transform.position,DirToPlayer);
+        yield return new WaitForSeconds(chargeAttackData.TelegraphTime);
+
+        ExecuteAttackStart(chargeAttackData);
+
         //charge
-        rb.linearVelocity=  10 * chargeAttackData.ChargeSpeed * DirToPlayer;
+        rb.linearVelocity=  10 * chargeAttackData.ChargeSpeed * chargeDir;
 
 
 
@@ -210,14 +238,21 @@ public class Boss : MonoBehaviour
 
     protected virtual IEnumerator Jump(JumpAttackData jumpAttackData)
     {
-
-        ConditionAttackRuntime atk = StartAttack(jumpAttackData, () => Time.time - attackStartTime >= jumpAttackData.JumpTime+jumpAttackData.StartLeapAfter+0.1f);
+        float timeToWait = jumpAttackData.JumpTime + jumpAttackData.StartLeapAfter + 0.1f + jumpAttackData.TelegraphTime;
+        ConditionAttackRuntime atk = PrepareAttack(jumpAttackData, () => Time.time - attackStartTime >= timeToWait);
         atk.EAttackFinish += Cleanup;
+
+        Vector2 endPos = player.transform.position - transform.position;
+        endPos = Vector2.ClampMagnitude(endPos, jumpAttackData.MaxJumpDist) + transform.position.ToV2();
+
+        //telegraph
+        Telegraph(jumpAttackData, endPos,DirToPlayer);
+        yield return new WaitForSeconds(jumpAttackData.TelegraphTime);
+
+        ExecuteAttackStart(jumpAttackData);
 
         yield return new WaitForSeconds(jumpAttackData.StartLeapAfter); //wait for animation to get to the jump point 
 
-        Vector2 endPos = player.transform.position - transform.position;
-        endPos = Vector2.ClampMagnitude(endPos, jumpAttackData.MaxJumpDist) +transform.position.ToV2();
         rb.DOJump(endPos, jumpAttackData.JumpPower, 1, jumpAttackData.JumpTime).SetEase(jumpAttackData.EaseType)
             .OnComplete(()=> AnimHelper.ChangeAnimation(jumpAttackData.LandAnim));
 
@@ -233,15 +268,24 @@ public class Boss : MonoBehaviour
 
     protected virtual IEnumerator BurstProjectile(ProjectileAttackData burstAttackData)
     {
+
+
         int spawnedProjectiles = 0;
-        ConditionAttackRuntime atk = StartAttack(burstAttackData, ()=> spawnedProjectiles>= burstAttackData.NoOfProj);
+        ConditionAttackRuntime atk = PrepareAttack(burstAttackData, ()=> spawnedProjectiles>= burstAttackData.NoOfProj);
         atk.EAttackFinish += Cleanup;
         float randomOffset = UnityEngine.Random.Range(-burstAttackData.RandomAngleOffset, burstAttackData.RandomAngleOffset);
+        Vector2 dirToFire = Quaternion.Euler(0, 0, randomOffset) * DirToPlayer;
+
+        //telegraph
+        Telegraph(burstAttackData, transform.position, dirToFire);
+        yield return new WaitForSeconds(burstAttackData.TelegraphTime);
+
+        ExecuteAttackStart(burstAttackData);
 
         for (int i = 0; i < burstAttackData.NoOfProj; i++)
         {
-            
-            Vector2 dir = GetSpreadDir(DirToPlayer, i, burstAttackData.CoverAngle, burstAttackData.NoOfProj, randomOffset);
+
+            Vector2 dir = GetSpreadDir(dirToFire, i, burstAttackData.CoverAngle, burstAttackData.NoOfProj, 0);// random offset is applied to dir to fire;
             Vector2 spawnPos = transform.position;
 
             Quaternion spawnRot = Quaternion.FromToRotation(burstAttackData.ProjectilePrefab.transform.right, dir);

@@ -19,18 +19,20 @@ public class AttackData : ScriptableObject
     [SerializeField, ShowField(nameof(attackType), AttackDataType.Player)] protected float mouseLockTime;
     [SerializeField, ShowField(nameof(attackType), AttackDataType.Player)]protected float nextAttackInputStartTime; //for next combo 
     [SerializeField, ShowField(nameof(attackType), AttackDataType.Player)] protected float cancelAttackBeforeTime; // can cancel attack before this
+    [SerializeField, ShowField(nameof(attackType), AttackDataType.Enemy)] protected float indicatorTime; // can cancel attack before this
 
 
+    [SerializeReference, SubclassSelector] private List<TelegraphEffect> telegraphEffects;
     [SerializeReference, SubclassSelector] protected List<Effect> onTargetHitEffects;
     [SerializeReference, SubclassSelector] protected List<Effect> onAttackStartEffects;
     [SerializeReference, SubclassSelector] protected List<Effect> onAttackEndEffects;
 
 
 
-
     public string AttackName { get => attackName;  }
     public int AttackAnimation { get => Animator.StringToHash(attackAnimation.name);  }
-    public int AnimationPriority { get => animationPriority; }  
+    public int AnimationPriority { get => animationPriority; }
+    public float TelegraphTime => indicatorTime;
     public List<Effect> OnTargetHitEffects { get => onTargetHitEffects; }
     public List<Effect> OnAttackStartEffects { get => onAttackStartEffects; }
     public List<Effect> OnAttackEndEffects { get => onAttackEndEffects; }
@@ -39,6 +41,6 @@ public class AttackData : ScriptableObject
     public float MouseLockTime { get => mouseLockTime;  }
     public float NextAttackInputStartTime { get => nextAttackInputStartTime;  }
     public float CancelAttackBeforeTime { get => cancelAttackBeforeTime;  }
-
+    public List<TelegraphEffect> TelegraphEffects { get => telegraphEffects; }
 }
 

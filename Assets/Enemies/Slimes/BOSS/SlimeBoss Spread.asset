@@ -19,6 +19,9 @@ MonoBehaviour:
   mouseLockTime: 0
   nextAttackInputStartTime: 0
   cancelAttackBeforeTime: 0
+  indicatorTime: 1
+  telegraphEffects:
+  - rid: 3978503960587665498
   onTargetHitEffects: []
   onAttackStartEffects: []
   onAttackEndEffects: []
@@ -27,7 +30,14 @@ MonoBehaviour:
   coverAngle: 45
   projSpeed: 10
   timeBetweenProj: 0
-  randomAngleOffset: 30
+  randomAngleOffset: 0
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 3978503960587665498
+      type: {class: TelegraphEffect, ns: , asm: Assembly-CSharp}
+      data:
+        indicatorType: 0
+        indicator: {fileID: 5074096409531948321, guid: a3a609eeff93f5247946a20bddbe58b4, type: 3}
+        activeTime: 1
+        indicatorSize: {x: 7, y: 6}

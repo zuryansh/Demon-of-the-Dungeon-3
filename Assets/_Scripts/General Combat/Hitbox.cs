@@ -7,6 +7,7 @@ public class Hitbox : MonoBehaviour
 
     public event Action<Collider2D,Vector3> EOnHitDetect;
     public event Action OnHitboxDisable;
+    public Collider2D Collider => col;
 
     [SerializeField]Collider2D col;
     [SerializeField] HashSet<Collider2D> detectedColliders = new HashSet<Collider2D>();

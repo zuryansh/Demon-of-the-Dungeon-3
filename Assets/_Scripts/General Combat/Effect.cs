@@ -192,3 +192,64 @@ public class UnityEventEffect : Effect
     }
 }
 
+[Serializable]
+public class TelegraphEffect : Effect
+{
+    enum IndicatorType
+    {
+        Line, Ellipse, Rectangle
+    }
+
+    [SerializeField] IndicatorType indicatorType;
+    [SerializeField] GameObject indicator;
+    [SerializeField] float activeTime=1f;
+    [SerializeField] Vector2 indicatorSize; //Line: (start, end) , Ellipse(xdia,ydia), rectangle(width, height)
+
+    public override void Apply(EffectContext context)
+    {
+       
+        GameObject obj = MonoBehaviour.Instantiate(indicator,context.EffectPoint, Quaternion.identity);
+        SetupIndicator(obj.transform, indicatorSize, indicatorType,context);
+        MonoBehaviour.Destroy(obj,activeTime);
+    }
+
+    
+
+
+        
+    void SetupIndicator(
+        Transform transform,
+        Vector2 indicatorSize,
+        IndicatorType shape,
+        EffectContext context)
+    {
+        if (shape == IndicatorType.Line)
+        {
+            Vector2 direction = context.EffectDir.normalized;
+
+            transform.position =
+                context.EffectPoint +
+                (Vector3)(direction * (indicatorSize.x * 0.5f));
+
+            transform.right = direction;
+
+            transform.localScale = new Vector3(
+                indicatorSize.x,
+                indicatorSize.y,
+                transform.localScale.z
+            );
+        }
+        else if (shape == IndicatorType.Ellipse || shape == IndicatorType.Rectangle)
+        {
+            transform.position = context.EffectPoint;
+
+            transform.localScale = new Vector3(
+                indicatorSize.x,
+                indicatorSize.y,
+                transform.localScale.z
+            );
+        }
+    }
+
+}
+

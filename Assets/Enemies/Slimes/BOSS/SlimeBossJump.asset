@@ -19,6 +19,9 @@ MonoBehaviour:
   mouseLockTime: 0
   nextAttackInputStartTime: 0
   cancelAttackBeforeTime: 0
+  indicatorTime: 1
+  telegraphEffects:
+  - rid: 3978503960587665501
   onTargetHitEffects:
   - rid: 3978503882670866534
   - rid: 3978503895845699662
@@ -42,3 +45,10 @@ MonoBehaviour:
       type: {class: DebugEffect, ns: , asm: Assembly-CSharp}
       data:
         message: JUMP HIT
+    - rid: 3978503960587665501
+      type: {class: TelegraphEffect, ns: , asm: Assembly-CSharp}
+      data:
+        indicatorShape: 1
+        indicator: {fileID: 5074096409531948321, guid: a3a609eeff93f5247946a20bddbe58b4, type: 3}
+        activeTime: 2
+        indicatorSize: {x: 8, y: 8}
