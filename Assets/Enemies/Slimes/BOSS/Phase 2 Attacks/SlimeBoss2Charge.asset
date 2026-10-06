@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d00797bfebe8af84aa2a161c59237f4b, type: 3}
-  m_Name: SlimeBossCharge
+  m_Name: SlimeBoss2Charge
   m_EditorClassIdentifier: 
   attackType: 1
   attackName: 
@@ -26,8 +26,8 @@ MonoBehaviour:
   - rid: 3978503895845699697
   onAttackStartEffects: []
   onAttackEndEffects: []
-  chargeSpeed: 3
-  maxChargeTime: 1
+  chargeSpeed: 5
+  maxChargeTime: 0.7
   references:
     version: 2
     RefIds:
@@ -39,7 +39,7 @@ MonoBehaviour:
     - rid: 3978503960587665500
       type: {class: TelegraphEffect, ns: , asm: Assembly-CSharp}
       data:
-        indicatorShape: 0
+        indicatorType: 0
         indicator: {fileID: 8046360393279281300, guid: d3ce2710cee9c4e40a37f35ac487dd5b, type: 3}
-        activeTime: 2
+        activeTime: 1
         indicatorSize: {x: 30, y: 8}

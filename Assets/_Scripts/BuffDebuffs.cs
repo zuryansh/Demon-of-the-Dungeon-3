@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+[System.Serializable]
 public class DebuffContext: EffectContext
 {
     public override Vector3 EffectPoint => Target.transform.position;
@@ -75,7 +76,10 @@ public class TickDamage : BuffDebuffEffect
         Health health = debuff.Context.Get<Health>();
         if (health != null)
         {
+
+
             health.TakeDamage(debuff.Context, dmg);
+
             if (particlesPrefab != null)
             {
                 debuff.Particles = MonoBehaviour.Instantiate(particlesPrefab, debuff.Context.EffectPoint, Quaternion.identity);

@@ -23,15 +23,28 @@ MonoBehaviour:
   pointCost: 1
   phases:
   - attacks:
-    - {fileID: 11400000, guid: a28bcbf87e790d44593e3894431f417b, type: 2}
     - {fileID: 11400000, guid: 2cc37da8941db17498c9aa8ef3ebcd2e, type: 2}
+    - {fileID: 11400000, guid: a28bcbf87e790d44593e3894431f417b, type: 2}
     - {fileID: 11400000, guid: 31ff4c22bd7bbd54fbf12659f3a43e5b, type: 2}
     - {fileID: 11400000, guid: 59b66da5264829f45bceeb62159e80f8, type: 2}
-    phaseStartPoint: 0
-    timeBetweenAttacks: 1.5
-    maxNoOfAttacks: 6
+    phaseEndPoint: 0.5
+    timeBetweenAttacks: 2
+    maxNoOfAttacks: 5
     minNoOfAttacks: 3
-    timeBetweenRotations: 1
+    timeBetweenRotations: 5
+    phaseChangeAnim: {fileID: 7400000, guid: 0f818057312315e429b7d874894844a5, type: 2}
+  - attacks:
+    - {fileID: 11400000, guid: 2687a270b3a2fed43ad172fe9e92772b, type: 2}
+    - {fileID: 11400000, guid: e820a02506b1ea647a4ad1f8facaa1d1, type: 2}
+    - {fileID: 11400000, guid: e554bde3ef929a941bf60164d4937e56, type: 2}
+    - {fileID: 11400000, guid: 19ef0829552233d4db08ca3d2b3f809a, type: 2}
+    phaseEndPoint: 0
+    timeBetweenAttacks: 1
+    maxNoOfAttacks: 7
+    minNoOfAttacks: 5
+    timeBetweenRotations: 2
+    phaseChangeAnim: {fileID: 0}
+  weakenedAnimation: {fileID: 7400000, guid: 0b6373c8c4d8d1e4d8ce43e77a94ed47, type: 2}
   references:
     version: 2
     RefIds:
@@ -40,6 +53,8 @@ MonoBehaviour:
       data:
         particlesPreab: {fileID: 5313175317198594345, guid: 0cdbe0e4b8390c04f8f4c9ae53bc63eb, type: 3}
         useAttackDir: 1
+        scale: {x: 2, y: 2}
+        setTargetAsParent: 0
     - rid: 3978503691842617550
       type: {class: ScreenShakeEffect, ns: , asm: Assembly-CSharp}
       data:

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7e6a503118d415d4ea7ad128bdff1b96, type: 3}
-  m_Name: SlimeBossJump
+  m_Name: Slime2BossJump
   m_EditorClassIdentifier: 
   attackType: 1
   attackName: 
@@ -19,7 +19,7 @@ MonoBehaviour:
   mouseLockTime: 0
   nextAttackInputStartTime: 0
   cancelAttackBeforeTime: 0
-  indicatorTime: 1
+  indicatorTime: 0.5
   telegraphEffects:
   - rid: 3978503960587665501
   onTargetHitEffects:
@@ -31,7 +31,7 @@ MonoBehaviour:
   jumpTime: 1
   landAnimation: {fileID: 7400000, guid: 0f818057312315e429b7d874894844a5, type: 2}
   startLeapAfter: 0.4
-  maxJumpDist: 15
+  maxJumpDist: 25
   easeType: 1
   references:
     version: 2
@@ -48,7 +48,7 @@ MonoBehaviour:
     - rid: 3978503960587665501
       type: {class: TelegraphEffect, ns: , asm: Assembly-CSharp}
       data:
-        indicatorShape: 1
+        indicatorType: 0
         indicator: {fileID: 5074096409531948321, guid: a3a609eeff93f5247946a20bddbe58b4, type: 3}
-        activeTime: 2
+        activeTime: 1
         indicatorSize: {x: 8, y: 8}

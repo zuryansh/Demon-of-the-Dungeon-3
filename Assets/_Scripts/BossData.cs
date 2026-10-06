@@ -8,19 +8,22 @@ using UnityEngine;
 public class BossPhase
 {
     [SerializeField] List<AttackData> attacks;
-    [SerializeField, Range(0, 1)] float phaseStartPoint; 
+    [SerializeField, Range(0, 1)] float phaseEndPoint; 
     [SerializeField] float timeBetweenAttacks;
     [SerializeField] int maxNoOfAttacks;
     [SerializeField] int minNoOfAttacks;
     [SerializeField] float timeBetweenRotations;
+    [SerializeField] AnimationClip phaseChangeAnim;
+    
 
 
     public List<AttackData> Attacks { get => attacks; }
-    public float PhaseStartPoint { get => phaseStartPoint; }
+    public float PhaseEndPoint { get => phaseEndPoint; }
     public float TimeBetweenAttacks { get => timeBetweenAttacks; }
     public int MaxNoOfAttacks { get => maxNoOfAttacks; }
     public int MinNoOfAttacks { get => minNoOfAttacks; }
     public float TimeBetweenRotations { get => timeBetweenRotations; }
+    public int PhaseChangeAnim => Animator.StringToHash(phaseChangeAnim.name);
 
     public List<AttackData> GetRandomAttacks()
     {
@@ -38,7 +41,8 @@ public class BossPhase
 public class BossData : EnemySO
 {
     [SerializeField] List<BossPhase> phases;
-    
+    [SerializeField] AnimationClip weakenedAnimation;
 
+    public int WeakenedAnimation => Animator.StringToHash(weakenedAnimation.name);
     public List<BossPhase> Phases { get => phases; }
 }

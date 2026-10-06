@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d00797bfebe8af84aa2a161c59237f4b, type: 3}
+  m_Name: SlimeBossCharge
+  m_EditorClassIdentifier: 
+  attackType: 1
+  attackName: 
+  attackAnimation: {fileID: 7400000, guid: c6aa9d914a7aad743a3841f0180b3644, type: 2}
+  animationPriority: 0
+  mouseLockTime: 0
+  nextAttackInputStartTime: 0
+  cancelAttackBeforeTime: 0
+  indicatorTime: 1
+  telegraphEffects:
+  - rid: 3978503960587665500
+  onTargetHitEffects:
+  - rid: 3978503895845699697
+  onAttackStartEffects: []
+  onAttackEndEffects: []
+  chargeSpeed: 3
+  maxChargeTime: 1
+  references:
+    version: 2
+    RefIds:
+    - rid: 3978503895845699697
+      type: {class: DamageEffect, ns: , asm: Assembly-CSharp}
+      data:
+        damage: 10
+        randomDamage: {x: 8, y: 13}
+    - rid: 3978503960587665500
+      type: {class: TelegraphEffect, ns: , asm: Assembly-CSharp}
+      data:
+        indicatorType: 0
+        indicator: {fileID: 8046360393279281300, guid: d3ce2710cee9c4e40a37f35ac487dd5b, type: 3}
+        activeTime: 2
+        indicatorSize: {x: 30, y: 8}

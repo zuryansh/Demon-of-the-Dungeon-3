@@ -13,7 +13,7 @@ using System;
 public class ActiveDebuff
 {
     public BuffDebuffEffect Effect;
-    public DebuffContext Context;
+    [NonSerialized] public DebuffContext Context;
     public float EndTime;
     public float NextTickTime;
 

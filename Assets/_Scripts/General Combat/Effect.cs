@@ -26,14 +26,14 @@ public class DebugEffect: Effect
 public class DamageEffect: Effect
 {
     [SerializeField] float damage;
-    [SerializeField] bool spawnDmgNo;
+    [SerializeField] Vector2 randomDamage;
+
 
     public override void Apply(EffectContext context)
     {
-        Health dmgable;
-        if(context.Target.TryGetComponent<Health>(out dmgable))
+        if (context.Target.TryGetComponent<Health>(out Health dmgable))
         {
-            dmgable.TakeDamage(context,damage);
+            dmgable.TakeDamage(context, UnityEngine.Random.Range(randomDamage.x, randomDamage.y));
 
         }
     }
@@ -59,6 +59,8 @@ public class SpawnParticlesEffect : Effect
 {
     [SerializeField] ParticleSystem particlesPreab;
     [SerializeField] bool useAttackDir = true;
+    [SerializeField] Vector2 scale = Vector2.one;
+    [SerializeField] bool setTargetAsParent=false;  
 
     public override void Apply(EffectContext context)
     {
@@ -66,6 +68,8 @@ public class SpawnParticlesEffect : Effect
         if(useAttackDir) spawnRot = Quaternion.FromToRotation(particlesPreab.transform.right, context.EffectDir);
 
         ParticleSystem particles = MonoBehaviour.Instantiate(particlesPreab, context.EffectPoint,spawnRot);
+        particles.transform.localScale = scale;
+        if (setTargetAsParent) particles.transform.parent = context.Target.transform;
         particles.Play();
     }
 
@@ -213,10 +217,6 @@ public class TelegraphEffect : Effect
         MonoBehaviour.Destroy(obj,activeTime);
     }
 
-    
-
-
-        
     void SetupIndicator(
         Transform transform,
         Vector2 indicatorSize,

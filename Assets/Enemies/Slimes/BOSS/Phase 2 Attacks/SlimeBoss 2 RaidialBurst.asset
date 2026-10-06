@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7f4ab16f10c95a4ca09fead61e7c281, type: 3}
+  m_Name: SlimeBoss 2 RaidialBurst
+  m_EditorClassIdentifier: 
+  attackType: 1
+  attackName: Slime Boss Radial Burst
+  attackAnimation: {fileID: 7400000, guid: c6aa9d914a7aad743a3841f0180b3644, type: 2}
+  animationPriority: 0
+  mouseLockTime: 0
+  nextAttackInputStartTime: 0
+  cancelAttackBeforeTime: 0
+  indicatorTime: 0.5
+  telegraphEffects:
+  - rid: 3978503960587665499
+  onTargetHitEffects: []
+  onAttackStartEffects: []
+  onAttackEndEffects: []
+  projectilePrefab: {fileID: 2627930888888434042, guid: 67ad7e22309732147872ce641662f057, type: 3}
+  noOfProf: 25
+  coverAngle: 360
+  projSpeed: 12
+  timeBetweenProj: 0
+  randomAngleOffset: 30
+  references:
+    version: 2
+    RefIds:
+    - rid: 3978503960587665499
+      type: {class: TelegraphEffect, ns: , asm: Assembly-CSharp}
+      data:
+        indicatorType: 1
+        indicator: {fileID: 5074096409531948321, guid: a3a609eeff93f5247946a20bddbe58b4, type: 3}
+        activeTime: 1
+        indicatorSize: {x: 15, y: 15}

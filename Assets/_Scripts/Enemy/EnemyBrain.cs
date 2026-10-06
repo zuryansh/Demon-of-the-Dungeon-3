@@ -16,7 +16,7 @@ public class EnemyBrain : MonoBehaviour,IStunnable
 
     [SerializeField] EnemySO enemyData;
     [SerializeField] bool hasLOS;
-    [SerializeField] float timeBetweenTicks = 0.1f;
+    //[SerializeField] float timeBetweenTicks = 0.1f;
     [SerializeField] LayerMask obstacleLayer;
     [SerializeField] LayerMask playerLayer;
     [SerializeField] float startDelay;

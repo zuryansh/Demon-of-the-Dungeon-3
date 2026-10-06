@@ -56,6 +56,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BoxIndicator
       objectReference: {fileID: 0}
+    - target: {fileID: 5074096409531948321, guid: a3a609eeff93f5247946a20bddbe58b4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

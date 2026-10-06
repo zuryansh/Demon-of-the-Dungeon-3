@@ -10,7 +10,7 @@ public class Hitbox : MonoBehaviour
     public Collider2D Collider => col;
 
     [SerializeField]Collider2D col;
-    [SerializeField] HashSet<Collider2D> detectedColliders = new HashSet<Collider2D>();
+    HashSet<Collider2D> detectedColliders = new HashSet<Collider2D>();
     [SerializeField] LayerMask layerMask;
 
     ContactFilter2D contactFilter;
@@ -62,7 +62,6 @@ public class Hitbox : MonoBehaviour
             {
                 if (detectedColliders.Add(collider))
                 {
-                    print("collider detected");
 
                     Vector3 dir = (collider.transform.position - col.transform.position).normalized;
                     EOnHitDetect?.Invoke(collider, dir);

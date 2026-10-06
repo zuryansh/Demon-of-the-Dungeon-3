@@ -15,7 +15,6 @@ public class KnockbackReceiver : MonoBehaviour
 
     public void Apply(Vector2 force)
     {
-        print(force * (1f - resistance));
         rb.AddForce(force * (1f - resistance));
     }
 }

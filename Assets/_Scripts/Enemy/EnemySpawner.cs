@@ -62,9 +62,9 @@ public class EnemySpawner : MonoBehaviour , ISpawner
     IEnumerator Countdown()
     {
         isCounting = true;
-        Instantiate(counterText, transform.position, Quaternion.identity).Init("2",2f, 0.8f, true, 0.2f);
+        PopupTextManager.Instance.Show("2", transform.position, Color.white,2f, 0.2f, 0.8f);
         yield return new WaitForSeconds(1.2f);
-        Instantiate(counterText, transform.position, Quaternion.identity).Init("1",2f, 0.8f, true, 0.2f);
+        PopupTextManager.Instance.Show("1", transform.position, Color.white,2f, 0.2f, 0.8f);
         yield return new WaitForSeconds(1.2f);
         isCounting = false;
         Spawn();

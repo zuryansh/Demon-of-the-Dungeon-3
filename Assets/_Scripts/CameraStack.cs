@@ -32,7 +32,7 @@ public class CameraStack : MonoBehaviour
         {
             var mainBaseData = cam.GetUniversalAdditionalCameraData();
 
-            CameraStack[] stack = FindObjectsByType<CameraStack>(FindObjectsSortMode.None);
+            CameraStack[] stack = FindObjectsByType<CameraStack>();
             foreach (CameraStack cameraStack in stack)
             {
                 if (debug)

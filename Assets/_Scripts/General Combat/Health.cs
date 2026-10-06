@@ -1,6 +1,8 @@
+using EditorAttributes;
 using System;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.TextCore.Text;
 
 
 public class Health : MonoBehaviour
@@ -9,16 +11,19 @@ public class Health : MonoBehaviour
     public UnityEvent<EffectContext> OnHit;
     public UnityEvent<EffectContext> OnDeath;
     public UnityEvent<float, float> EOnHealthChange;
+    public float CurHealth => curHealth;
+    public float MaxHealth => maxHealth;
+    public bool Vulnerable => vulnerable && (timeSinceLastHit > invincibilityTime);
 
     [SerializeField] float maxHealth;
     [SerializeField] float curHealth;
     [SerializeField] float invincibilityTime;
     [SerializeField] bool dead;
-
-
-    
-
+    [SerializeField] bool spawnDamageText = true;
+    [SerializeField, EnableField(nameof(spawnDamageText))] float textScale = 1f;
+    [SerializeField, EnableField(nameof(spawnDamageText))] private Gradient damagePopupGradient;
     float timeSinceLastHit;
+    [SerializeField]bool vulnerable = true;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -33,10 +38,18 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(EffectContext cntxt,float dmg)
     {
-        if (timeSinceLastHit < invincibilityTime) return;
+        if (!vulnerable) return;
 
         timeSinceLastHit = 0;
         curHealth -= dmg;
+        if (spawnDamageText)
+        {
+            float damageRatio = Mathf.Clamp01(dmg / maxHealth);
+            Color popupColor = damagePopupGradient.Evaluate(damageRatio);
+            PopupTextManager.Instance.Show(((int)dmg).ToString(), cntxt.EffectPoint, popupColor,scale: textScale, fadeDuration: 0.2f);
+
+        }
+
         OnHit.Invoke(cntxt);
         EOnHealthChange.Invoke(curHealth, maxHealth);
 
@@ -48,6 +61,9 @@ public class Health : MonoBehaviour
         }
     }
 
-    
+    public void SetVulnerability(bool val)
+    {
+        vulnerable = val;
+    }
 
 }

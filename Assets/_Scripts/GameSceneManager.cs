@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameSceneManager : PersistentSingletion<GameSceneManager>
 {
-    public Dictionary<string, SceneData> SceneLookup = new();
+    [NonSerialized] public Dictionary<string, SceneData> SceneLookup = new();
     public event Action OnAllDependencyFinished;
     public event Action<SceneData> ENewSceneLoaded;
 

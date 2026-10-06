@@ -39,7 +39,7 @@ public class RoomAssembler : MonoBehaviour
 
     void Awake()
     {
-        generator = FindFirstObjectByType<RoomGenerator>();
+        generator = FindAnyObjectByType<RoomGenerator>();
         if (data.UseRandomSeed) seed = UnityEngine.Random.Range(0, 10000);
         prng = new System.Random(seed);
 

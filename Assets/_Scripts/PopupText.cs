@@ -8,35 +8,66 @@ public class PopupText : MonoBehaviour
     [SerializeField] CanvasGroup canvas;
     [SerializeField] TextMeshProUGUI text;
 
-    float scale=1f;
-    float fadeDuration=0f;
+    Sequence sequence;
+    PopupTextManager popupTextManager;
 
-
-    //REDO TO STATIC CLASS THAT SPAWNS POPUPS WITH PROPERTIES;
-
-    public void Init(string text,float scale, float activeDuration ,bool doFade, float fadeDuration,bool doAnimation = false)
+    public void Initialize(PopupTextManager manager)
     {
+        this.popupTextManager = manager;
+    }
+
+    public void Show(string text, Vector3 position, Color color,float scale=1, float fadeDuration= 0.5f,float activeDuration =1f)
+    {
+        transform.position = position;
         this.text.text = text;
-        this.scale = scale;
-        this.fadeDuration = fadeDuration;
+        this.text.color = color;
+        canvas.alpha = 1f;
         canvas.transform.localScale = Vector3.one * scale;
-
-        if (doFade)
-        {
-            Invoke(nameof(FadeOut), activeDuration);
-        }
+        Animate(scale,activeDuration, fadeDuration);
     }
 
-    void FadeOut()
+    private void Animate(
+    float scale,
+    float activeDuration,
+    float fadeDuration)
     {
-        canvas.DOFade(0f, fadeDuration);
-        Destroy(gameObject, fadeDuration);
-    }
+        Vector2 direction = Random.insideUnitCircle.normalized;
+        float distance = Random.Range(0.3f, 0.6f);
+        float moveDuration = Random.Range(0.15f, 0.25f);
 
-    private void OnDestroy()
+        Vector3 targetPosition =
+            transform.position + (Vector3)(direction * distance);
+
+        Vector3 targetScale = Vector3.one * scale;
+
+        canvas.transform.localScale = targetScale * 0.5f;
+
+        sequence = DOTween.Sequence()
+            .Append(
+                canvas.transform
+                    .DOScale(targetScale, moveDuration)
+                    .SetEase(Ease.OutElastic)
+            )
+            .Join(
+                transform.DOMove(targetPosition, moveDuration)
+                    .SetEase(Ease.OutQuad)
+            )
+            .AppendInterval(activeDuration)
+            .Append(
+                canvas.DOFade(0f, fadeDuration)
+            )
+            .OnComplete(() => popupTextManager.Release(this));
+    }
+    public void ResetState()
     {
-        DOTween.Kill(canvas);
+        sequence?.Kill();
+        sequence = null;
+        text.color = Color.white;
+        canvas.alpha = 1f;
+        canvas.transform.localScale = Vector3.one;
     }
 }
+
+
 
 

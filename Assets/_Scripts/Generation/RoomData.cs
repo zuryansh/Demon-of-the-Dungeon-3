@@ -16,7 +16,7 @@ public class RoomData
 
 
     [SerializeField] int id;
-    [SerializeField] List<RoomTile> tiles;
+    List<RoomTile> tiles;
     [SerializeField] Bounds boundingBox;
     [SerializeField] RoomPalleteSO tilepallete;
     [SerializeField] RoomFunctionTypes functionType;

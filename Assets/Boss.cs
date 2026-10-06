@@ -2,7 +2,6 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using UnityEngine;
 
 
@@ -12,7 +11,7 @@ public class Boss : MonoBehaviour
     public Vector2 DirToPlayer => (player.transform.position - transform.position).normalized;
     public bool CanStartNewAttack => 
         (Time.time - lastAttackEndTime > currentPhase.TimeBetweenAttacks) && 
-        (Time.time - attackRotationStartTime > currentPhase.TimeBetweenRotations);
+        (Time.time - attackRotationEndTime > currentPhase.TimeBetweenRotations);
 
     [SerializeField] protected BossData bossData;
     [SerializeField] protected AnimationHelper AnimHelper;
@@ -20,10 +19,6 @@ public class Boss : MonoBehaviour
     [SerializeField] protected Hitbox[] hitBoxes;
     [SerializeField] protected LayerMask WallLayer;
     [SerializeField] List<AttackData> attacksForThisRotation = new List<AttackData>();
-    [SerializeField] GameObject jumpIndicator;
-    [SerializeField] GameObject ChargeIndicator;
-    
-
 
     protected event Action EWallHit;
     protected Rigidbody2D rb;
@@ -31,8 +26,10 @@ public class Boss : MonoBehaviour
     protected Dictionary<Type, Func<AttackData, IEnumerator>> attackMap = new();
     protected float lastAttackEndTime = 0f;
     protected float attackStartTime=0f;
-    protected float attackRotationStartTime = 0f;
+    protected float attackRotationEndTime = 0f;
     protected ConditionAttackRuntime currentAttack;  //Serialising this breaks it for some reason 
+    protected bool isVulnerable=false;
+    protected Health health;
 
     protected Player player;
 
@@ -42,6 +39,7 @@ public class Boss : MonoBehaviour
         RegisterBossAttacks();
         if(AnimHelper == null) AnimHelper = GetComponent<AnimationHelper>();
         rb = GetComponent<Rigidbody2D>();
+        health = GetComponent<Health>();
         currentPhase = bossData.Phases[0];
     }
 
@@ -67,12 +65,28 @@ public class Boss : MonoBehaviour
         }
         else
         {
+            CheckPhaseChange(health.CurHealth, health.MaxHealth);
 
-            if (CanStartNewAttack)
+            if (CanStartNewAttack) //will be set false by phase change because it starts its own attack
             {
                 //begin next attack
                 BeginNextAttack();
             }
+        }
+    }
+
+    public void CheckPhaseChange(float currentHealth, float maxHealth)
+    {
+        float ratio = currentHealth / maxHealth;
+
+        if(ratio<= currentPhase.PhaseEndPoint)
+        {
+            //Phase Change
+            AnimHelper.ChangeAnimation(currentPhase.PhaseChangeAnim,priority:2);
+            currentPhase = bossData.Phases[ bossData.Phases.IndexOf(currentPhase)+1];
+            attacksForThisRotation.Clear();
+            if (CanStartNewAttack) BeginNextAttack();
+            
         }
     }
 
@@ -100,14 +114,17 @@ public class Boss : MonoBehaviour
                                                                // eqv to Wrapper(AttackData data) { return attackFunc((T)data)} where T is the                                 generic type given 
     }
 
-
     public void BeginNextAttack()
     {
         if (attacksForThisRotation.Count == 0)
         {
-            attackRotationStartTime = Time.time;
             attacksForThisRotation = currentPhase.GetRandomAttacks();
-            return;
+            if (health.Vulnerable)
+            {
+                AnimHelper.ChangeAnimation(bossData.IdleAnim); //Change to restore animatiom
+                health.SetVulnerability(false);
+            }
+            //return;
         }
 
 
@@ -121,17 +138,16 @@ public class Boss : MonoBehaviour
         StartCoroutine( attackFunc(attackData));
     }
 
-
-
     public virtual ConditionAttackRuntime PrepareAttack(AttackData attackData, Func<bool> endFunc)
     {
         attackStartTime = Time.time;
         //foreach (Hitbox hitbox in hitBoxes) hitbox.ResetHitbox();
         currentAttack = new ConditionAttackRuntime(attackData, endFunc);
 
-       
-
         currentAttack.EAttackFinish += OnAttackFinish;
+
+
+
         return currentAttack;
     }
 
@@ -160,14 +176,19 @@ public class Boss : MonoBehaviour
 
 
         AnimHelper.ChangeAnimation(bossData.IdleAnim);
-
+        if (attacksForThisRotation.Count == 0) Rest();
 
     }
 
+    public void Rest()
+    {
+        AnimHelper.ChangeAnimation(bossData.WeakenedAnimation, priority: 1);
+        attackRotationEndTime = Time.time;
+        health.SetVulnerability(true);
+    }
 
     public void NotifyHit(Collider2D collider, Vector3 dir)
     {
-        print("hit detected");
         if (currentAttack == null) return;
         Vector3 p = collider.ClosestPoint(transform.position);
 
@@ -181,7 +202,6 @@ public class Boss : MonoBehaviour
             EWallHit?.Invoke();
         }
     }
-
 
     private void OnEnable()
     {
@@ -317,5 +337,8 @@ public class Boss : MonoBehaviour
 
     }
 
-
+    protected void Die()
+    {
+        Destroy(gameObject);
+    }
 }
