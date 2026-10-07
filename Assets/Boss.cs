@@ -50,7 +50,7 @@ public class Boss : MonoBehaviour
     {
 
         player = Player.Instance;
-        BeginNextAttack();
+        //BeginNextAttack();
 
 
     }
@@ -59,20 +59,20 @@ public class Boss : MonoBehaviour
     private void Update()
     {
 
-        if (currentAttack!= null)
-        {
-            currentAttack.Tick();
-        }
-        else
-        {
-            CheckPhaseChange(health.CurHealth, health.MaxHealth);
+        //if (currentAttack!= null)
+        //{
+        //    currentAttack.Tick();
+        //}
+        //else
+        //{
+        //    CheckPhaseChange(health.CurHealth, health.MaxHealth);
 
-            if (CanStartNewAttack) //will be set false by phase change because it starts its own attack
-            {
-                //begin next attack
-                BeginNextAttack();
-            }
-        }
+        //    if (CanStartNewAttack) //will be set false by phase change because it starts its own attack
+        //    {
+        //        //begin next attack
+        //        BeginNextAttack();
+        //    }
+        //}
     }
 
     public void CheckPhaseChange(float currentHealth, float maxHealth)
@@ -340,5 +340,28 @@ public class Boss : MonoBehaviour
     protected void Die()
     {
         Destroy(gameObject);
+    }
+
+
+    Coroutine phaseRoutine;
+
+    void StartPhase(BossPhase phase)
+    {
+        if (phaseRoutine != null)
+        {
+            StopCoroutine(phaseRoutine);
+        }
+
+        currentPhase = phase;
+        phaseRoutine = StartCoroutine(RunPhase(phase));
+        
+    }
+
+    IEnumerator RunPhase(BossPhase phase)
+    {
+        foreach (var b in phase.EnterBehaviors)
+        {
+            yield return b.Execute(this);
+        }
     }
 }

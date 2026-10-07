@@ -14,6 +14,11 @@ public class BossPhase
     [SerializeField] int minNoOfAttacks;
     [SerializeField] float timeBetweenRotations;
     [SerializeField] AnimationClip phaseChangeAnim;
+
+    [Header("Behaviors")]
+    [SerializeReference, SubclassSelector] List<BossPhaseBehavior> enterBehaviors; 
+    [SerializeReference, SubclassSelector] List<BossPhaseBehavior> mainBehaviors; 
+    [SerializeReference, SubclassSelector] List<BossPhaseBehavior> exitBehaviors; 
     
 
 
@@ -24,6 +29,10 @@ public class BossPhase
     public int MinNoOfAttacks { get => minNoOfAttacks; }
     public float TimeBetweenRotations { get => timeBetweenRotations; }
     public int PhaseChangeAnim => Animator.StringToHash(phaseChangeAnim.name);
+
+    public List<BossPhaseBehavior> EnterBehaviors { get => enterBehaviors; }
+    public List<BossPhaseBehavior> MainBehaviors { get => mainBehaviors; }
+    public List<BossPhaseBehavior> ExitBehaviors { get => exitBehaviors; }
 
     public List<AttackData> GetRandomAttacks()
     {

@@ -12,10 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d54233e20e9bb04aac1e6fada42b0ba, type: 3}
   m_Name: TreasureROom
   m_EditorClassIdentifier: 
-  IDs: 0100000002000000
-  values:
-  - {fileID: 11400000, guid: 0f9686b24923ed64891293d880971589, type: 2}
-  - {fileID: 11400000, guid: ad9e0c64df2cc6446962bd3850c3ec0a, type: 2}
   floorDecoTiles:
   - {fileID: 0}
   floorDecoSpawnChances:
@@ -24,3 +20,8 @@ MonoBehaviour:
   - {fileID: 0}
   wallDecoSpawnChances:
   - 1
+  palette:
+  - key: 0
+    value: {fileID: 11400000, guid: 0f9686b24923ed64891293d880971589, type: 2}
+  - key: 2
+    value: {fileID: 11400000, guid: ad9e0c64df2cc6446962bd3850c3ec0a, type: 2}
