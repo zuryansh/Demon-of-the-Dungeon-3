@@ -88,8 +88,11 @@ public class AnimationAttackRuntime
 public class ConditionAttackRuntime
 {
     public AttackData Data => data;
-    public event Action EAttackFinish;
-    
+    public event Action EAttackRuntimeFinish;
+    public bool IsFinished => finished;
+
+
+    bool finished=false;
     [SerializeField] bool completionEventTriggerd = false;
     [SerializeField] AttackData data;
     Func<bool> endCondition;
@@ -106,7 +109,8 @@ public class ConditionAttackRuntime
 
         if ( completionEventTriggerd || (endCondition != null && endCondition()))
         {
-            EAttackFinish?.Invoke();
+            finished = true;
+            EAttackRuntimeFinish?.Invoke();
             Dispose();
         }
     }
@@ -119,7 +123,7 @@ public class ConditionAttackRuntime
 
     void Dispose()
     {
-        EAttackFinish = null;
+        EAttackRuntimeFinish = null;
 
     }
 }

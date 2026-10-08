@@ -1,18 +1,13 @@
 using EditorAttributes;
 using System;
 using System.Collections.Generic;
-using Unity.Cinemachine;
 using UnityEngine;
-
+using BossArchitecture;
 [Serializable]
 public class BossPhase
 {
-    [SerializeField] List<AttackData> attacks;
+    [SerializeField] int phaseID;
     [SerializeField, Range(0, 1)] float phaseEndPoint; 
-    [SerializeField] float timeBetweenAttacks;
-    [SerializeField] int maxNoOfAttacks;
-    [SerializeField] int minNoOfAttacks;
-    [SerializeField] float timeBetweenRotations;
     [SerializeField] AnimationClip phaseChangeAnim;
 
     [Header("Behaviors")]
@@ -22,28 +17,14 @@ public class BossPhase
     
 
 
-    public List<AttackData> Attacks { get => attacks; }
     public float PhaseEndPoint { get => phaseEndPoint; }
-    public float TimeBetweenAttacks { get => timeBetweenAttacks; }
-    public int MaxNoOfAttacks { get => maxNoOfAttacks; }
-    public int MinNoOfAttacks { get => minNoOfAttacks; }
-    public float TimeBetweenRotations { get => timeBetweenRotations; }
     public int PhaseChangeAnim => Animator.StringToHash(phaseChangeAnim.name);
 
     public List<BossPhaseBehavior> EnterBehaviors { get => enterBehaviors; }
     public List<BossPhaseBehavior> MainBehaviors { get => mainBehaviors; }
     public List<BossPhaseBehavior> ExitBehaviors { get => exitBehaviors; }
+    public int PhaseID => phaseID;
 
-    public List<AttackData> GetRandomAttacks()
-    {
-        int n = UnityEngine.Random.Range(minNoOfAttacks, maxNoOfAttacks+1);
-        List<AttackData> datas = new();
-        for (int i = 0; i < n; i++)
-        {
-            datas.Add(attacks.Choice());
-        }
-        return datas;
-    }
 }
 
 [CreateAssetMenu(menuName ="Enemy/ Boss")]

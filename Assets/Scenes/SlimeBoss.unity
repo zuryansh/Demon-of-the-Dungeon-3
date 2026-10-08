@@ -41220,7 +41220,7 @@ Transform:
   m_GameObject: {fileID: 541617999}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -145.75818, y: 27.18345, z: -26.759212}
+  m_LocalPosition: {x: -138.95818, y: 25.283451, z: -26.759212}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -45404,6 +45404,7 @@ GameObject:
   - component: {fileID: 1372034406}
   - component: {fileID: 1372034407}
   - component: {fileID: 1372034408}
+  - component: {fileID: 1372034409}
   m_Layer: 6
   m_Name: Slime Boss
   m_TagString: Untagged
@@ -45511,8 +45512,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1372034408}
-        m_TargetAssemblyTypeName: SlimeBoss, Assembly-CSharp
-        m_MethodName: OnHit
+        m_TargetAssemblyTypeName: Boss, Assembly-CSharp
+        m_MethodName: OnHitTaken
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -45645,26 +45646,43 @@ MonoBehaviour:
   m_GameObject: {fileID: 1372034398}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6777aedf0c70dd4a84eae0584006dfb, type: 3}
+  m_Script: {fileID: 11500000, guid: 8d4cda5f3189eb44d978d2357c5d10af, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Assembly-CSharp::Boss
   bossData: {fileID: 11400000, guid: 35158efa79cf65c41bc894db8e1fa8a5, type: 2}
-  AnimHelper: {fileID: 1372034401}
+  animHelper: {fileID: 1372034401}
   currentPhase:
-    attacks: []
     phaseEndPoint: 0
-    timeBetweenAttacks: 0
-    maxNoOfAttacks: 0
-    minNoOfAttacks: 0
-    timeBetweenRotations: 0
     phaseChangeAnim: {fileID: 0}
+    enterBehaviors: []
+    mainBehaviors: []
+    exitBehaviors: []
   hitBoxes:
   - {fileID: 176735960}
   - {fileID: 1810456930}
-  WallLayer:
+  wallLayer:
     serializedVersion: 2
     m_Bits: 1024
-  attacksForThisRotation: []
+  phaseChangeQueued: 0
+  references:
+    version: 2
+    RefIds: []
+--- !u!114 &1372034409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1372034398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12a5bf779b83f504fb4d05b386bee8f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DebuffManager
+  activeDebuffs: []
+  references:
+    version: 2
+    RefIds: []
 --- !u!1001 &1537802394
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -45675,11 +45693,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7287259163836918980, guid: 9ea64f9ddac572940afcb668b93f3510, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -144.7
+      value: -137.9
       objectReference: {fileID: 0}
     - target: {fileID: 7287259163836918980, guid: 9ea64f9ddac572940afcb668b93f3510, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 27.8
+      value: 25.9
       objectReference: {fileID: 0}
     - target: {fileID: 7287259163836918980, guid: 9ea64f9ddac572940afcb668b93f3510, type: 3}
       propertyPath: m_LocalPosition.z
@@ -50603,7 +50621,7 @@ Transform:
   m_GameObject: {fileID: 2142159408}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -145.75818, y: 27.18345, z: -26.759212}
+  m_LocalPosition: {x: -138.95818, y: 25.283451, z: -26.759212}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

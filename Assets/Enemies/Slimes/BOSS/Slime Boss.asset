@@ -22,32 +22,27 @@ MonoBehaviour:
   onDeathEffects: []
   pointCost: 1
   phases:
-  - attacks:
-    - {fileID: 11400000, guid: 2cc37da8941db17498c9aa8ef3ebcd2e, type: 2}
-    - {fileID: 11400000, guid: a28bcbf87e790d44593e3894431f417b, type: 2}
-    - {fileID: 11400000, guid: 31ff4c22bd7bbd54fbf12659f3a43e5b, type: 2}
-    - {fileID: 11400000, guid: 59b66da5264829f45bceeb62159e80f8, type: 2}
-    phaseEndPoint: 0.5
-    timeBetweenAttacks: 2
-    maxNoOfAttacks: 5
-    minNoOfAttacks: 3
-    timeBetweenRotations: 5
+  - phaseEndPoint: 0.754
     phaseChangeAnim: {fileID: 7400000, guid: 0f818057312315e429b7d874894844a5, type: 2}
-  - attacks:
-    - {fileID: 11400000, guid: 2687a270b3a2fed43ad172fe9e92772b, type: 2}
-    - {fileID: 11400000, guid: e820a02506b1ea647a4ad1f8facaa1d1, type: 2}
-    - {fileID: 11400000, guid: e554bde3ef929a941bf60164d4937e56, type: 2}
-    - {fileID: 11400000, guid: 19ef0829552233d4db08ca3d2b3f809a, type: 2}
-    phaseEndPoint: 0
-    timeBetweenAttacks: 1
-    maxNoOfAttacks: 7
-    minNoOfAttacks: 5
-    timeBetweenRotations: 2
-    phaseChangeAnim: {fileID: 0}
+    enterBehaviors: []
+    mainBehaviors:
+    - rid: 954037633037893791
+    - rid: 954037633037893792
+    exitBehaviors: []
   weakenedAnimation: {fileID: 7400000, guid: 0b6373c8c4d8d1e4d8ce43e77a94ed47, type: 2}
   references:
     version: 2
     RefIds:
+    - rid: 954037633037893791
+      type: {class: SummonMinionsBehavior, ns: BossArchitecture, asm: Assembly-CSharp}
+      data:
+        data: {fileID: 11400000, guid: f4669578e7ab5924e85adf3eaad87e1c, type: 2}
+        timeBetweenSummons: 0.1
+        waitUntilAllMinionsDead: 1
+    - rid: 954037633037893792
+      type: {class: JumpAttackBehavior, ns: BossArchitecture, asm: Assembly-CSharp}
+      data:
+        data: {fileID: 11400000, guid: 59b66da5264829f45bceeb62159e80f8, type: 2}
     - rid: 3978503691842617549
       type: {class: SpawnParticlesEffect, ns: , asm: Assembly-CSharp}
       data:
