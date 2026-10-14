@@ -32,7 +32,10 @@ public class BossData : EnemySO
 {
     [SerializeField] List<BossPhase> phases;
     [SerializeField] AnimationClip weakenedAnimation;
+    [SerializeField] AnimationClip deathAnim;
 
     public int WeakenedAnimation => Animator.StringToHash(weakenedAnimation.name);
     public List<BossPhase> Phases { get => phases; }
+    public int DeathAnim => Animator.StringToHash(deathAnim.name);
+
 }

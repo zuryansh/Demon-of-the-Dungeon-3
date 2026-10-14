@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using EditorAttributes;
 
 //public interface DebuffAcceptor
 //{
@@ -25,6 +26,7 @@ public class DebuffManager : MonoBehaviour
 {
     public List<ActiveDebuff> ActiveDebuffs => activeDebuffs;
 
+    
     [SerializeReference] List<ActiveDebuff> activeDebuffs;
 
     public void ApplyDebuff(BuffDebuffEffect effect, EffectContext context)

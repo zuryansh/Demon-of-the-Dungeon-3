@@ -19,7 +19,7 @@ MonoBehaviour:
   mouseLockTime: 0
   nextAttackInputStartTime: 0
   cancelAttackBeforeTime: 0
-  indicatorTime: 0.5
+  indicatorTime: 0.25
   telegraphEffects:
   - rid: 3978503960587665499
   onTargetHitEffects: []

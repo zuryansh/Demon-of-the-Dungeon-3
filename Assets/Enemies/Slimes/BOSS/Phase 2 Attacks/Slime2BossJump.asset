@@ -19,7 +19,7 @@ MonoBehaviour:
   mouseLockTime: 0
   nextAttackInputStartTime: 0
   cancelAttackBeforeTime: 0
-  indicatorTime: 0.5
+  indicatorTime: 0.25
   telegraphEffects:
   - rid: 3978503960587665501
   onTargetHitEffects:
@@ -40,7 +40,7 @@ MonoBehaviour:
       type: {class: DamageEffect, ns: , asm: Assembly-CSharp}
       data:
         damage: 10
-        spawnDmgNo: 0
+        randomDamage: {x: 0, y: 0}
     - rid: 3978503895845699662
       type: {class: DebugEffect, ns: , asm: Assembly-CSharp}
       data:

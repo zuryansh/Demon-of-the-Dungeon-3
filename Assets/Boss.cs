@@ -85,8 +85,26 @@ namespace BossArchitecture
             }
         }
 
+        public void Die(EffectContext context)
+        {
+            AnimHelper.ChangeAnimation(Data.DeathAnim, priority: 3);
+            StopAllCoroutines();
+            StartCoroutine(ApplyDeathEffects(context));
 
+            
 
+        }
+
+        IEnumerator ApplyDeathEffects(EffectContext context)
+        {
+            yield return new WaitForSeconds(2);
+            foreach (Effect effect in Data.OnDeathEffects)
+            {
+                effect.Apply(context);
+            }
+
+            Destroy(gameObject, 0.05f);
+        }
 
         void StartPhase(BossPhase phase)
         {
@@ -96,7 +114,7 @@ namespace BossArchitecture
             }
 
             currentPhase = phase;
-            phaseRoutine = StartCoroutine(RunPhase(phase));
+            phaseRoutine = StartCoroutine(RunPhase(phase));         
 
         }
 

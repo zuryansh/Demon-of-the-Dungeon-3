@@ -4,9 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using EditorAttributes;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
-//TODO: Make Melle Attack behavior, repeat untill behavior, make a parent WrapperBehavior for random and conditional behaviors, make generic event behavior;
+//TODO: Make Melle Attack behavior, repeat untill behavior, make a parent WrapperBehavior for random and conditional behaviors, make generic event behavior, hazard behavior    ;
 
 namespace BossArchitecture {
 
@@ -237,10 +236,11 @@ namespace BossArchitecture {
     }
 
     [Serializable]
-    public class SummonMinionsBehavior : BossAttackBehavior
+    public class SummonObjectsBehavior : BossAttackBehavior
     {
         [SerializeField] SummonAttackData data;
         [SerializeField] float timeBetweenSummons=0.1f;
+        //[Header("If using for Minions")]
         [SerializeField] bool waitUntilAllMinionsDead=false;
 
         protected override AttackData GetAttackData()
@@ -250,8 +250,8 @@ namespace BossArchitecture {
 
         public override IEnumerator Execute(Boss boss)
         {
-            int minionCount = data.GetRandomCount();
-            float timeToWait = minionCount * data.TelegraphTime + (minionCount - 1) * timeBetweenSummons;
+            int objectCount = data.GetRandomCount();
+            float timeToWait = objectCount * data.TelegraphTime + (objectCount - 1) * timeBetweenSummons;
 
 
             PrepareAttack(boss, data, () => Time.time - boss.AttackStartTime >= timeToWait);
@@ -259,19 +259,19 @@ namespace BossArchitecture {
             StartAnimAndEffects(boss, data);
 
             //summon
-            for (int i = 0; i < minionCount; i++)
+            for (int i = 0; i < objectCount; i++)
             {
                 Vector2 spawnPos = GetSpawnPos(boss);
                 //telegraph
                 Telegraph(boss, data, spawnPos, boss.DirToPlayer);
                 yield return new WaitForSeconds(data.TelegraphTime);
 
-                Spawn(boss, spawnPos, data.GetRandomMinion());
-                if (i < minionCount - 1)
+                Spawn(boss, spawnPos, data.GetRandomObj());
+                if (i < objectCount - 1)
                     yield return new WaitForSeconds(timeBetweenSummons);
             }
 
-            if (waitUntilAllMinionsDead)
+            if (data.SummonsMinions&& waitUntilAllMinionsDead)
             {
                 yield return new WaitUntil(() => (boss.AllMinionsDead())); //runtimr atk condition is not neeede since the attack will finish after summoning 
             }
@@ -288,17 +288,24 @@ namespace BossArchitecture {
                    (UnityEngine.Random.insideUnitCircle.normalized * (UnityEngine.Random.Range(data.SpawnBounds.x,data.SpawnBounds.y)));
         }
 
-        void Spawn(Boss boss, Vector2 spawnPoint, EnemyBrain minion)
+        void Spawn(Boss boss, Vector2 spawnPoint, GameObject minion)
         {
 
+            if (data.SummonsMinions)
+            {
+                GameObject obj =MonoBehaviour.Instantiate(minion, spawnPoint, Quaternion.identity);
+                if (obj.TryGetComponent(out EnemyBrain enemy))
+                {
 
-            EnemyBrain enemy = MonoBehaviour.Instantiate(minion, spawnPoint, Quaternion.identity);
-
-            //enemy.SetSpawner(Brain.ParentSpawner);// sets for the room
-
-            boss.RegisterMinion(enemy.gameObject);
-
-            enemy.EOnDeath += ( (EnemyBrain enemy)=> OnSpawnRemoved(boss,enemy)); //sets for itself
+                    boss.RegisterMinion(enemy.gameObject);
+                    enemy.EOnDeath += ((EnemyBrain enemy) => OnSpawnRemoved(boss, enemy)); //sets for itself
+                }
+                else Debug.LogError("Enemy Brain not found on minion prefab during boss spawning");
+            }
+            else
+            {
+                 MonoBehaviour.Instantiate(minion, spawnPoint, Quaternion.identity);
+            }
 
         }
 
@@ -308,6 +315,7 @@ namespace BossArchitecture {
         }
 
     }
+
     #endregion
 
 
@@ -411,12 +419,12 @@ namespace BossArchitecture {
     public class SetVulnerability : BossPhaseBehavior
     {
         [SerializeField] bool val;
-        [SerializeField, ShowField(nameof(val))] AnimationClip vulnerableAnim;
+        //[SerializeField, ShowField(nameof(val))] AnimationClip vulnerableAnim;
         public override IEnumerator Execute(Boss boss)
         {
             if (boss.TryGetComponent(out Health health))
             {
-                if (val) boss.AnimHelper.ChangeAnimation(Animator.StringToHash(vulnerableAnim.name), priority: 1);
+                if (val) boss.AnimHelper.ChangeAnimation(boss.Data.WeakenedAnimation, priority: 1);
                 else boss.AnimHelper.ChangeAnimation(boss.Data.IdleAnim);
                 health.SetVulnerability(val);
             }

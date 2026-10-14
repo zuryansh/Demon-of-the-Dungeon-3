@@ -60,16 +60,26 @@ public class SpawnParticlesEffect : Effect
     [SerializeField] ParticleSystem particlesPreab;
     [SerializeField] bool useAttackDir = true;
     [SerializeField] Vector2 scale = Vector2.one;
-    [SerializeField] bool setTargetAsParent=false;  
+    [SerializeField] bool setTargetAsParent=false;
+    [SerializeField] bool spawnAtEffectPoint=true;
+    [SerializeField] bool scaleWithSpriteSize;
 
     public override void Apply(EffectContext context)
     {
         Quaternion spawnRot=Quaternion.identity;
+        Vector2 spawnPos = (spawnAtEffectPoint) ? context.EffectPoint : context.Target.transform.position;
         if(useAttackDir) spawnRot = Quaternion.FromToRotation(particlesPreab.transform.right, context.EffectDir);
 
-        ParticleSystem particles = MonoBehaviour.Instantiate(particlesPreab, context.EffectPoint,spawnRot);
+        ParticleSystem particles = MonoBehaviour.Instantiate(particlesPreab, spawnPos,spawnRot);
         particles.transform.localScale = scale;
         if (setTargetAsParent) particles.transform.parent = context.Target.transform;
+        if (scaleWithSpriteSize)
+        {
+            if(context.Target.TryGetComponent(out SpriteRenderer ren))
+            {
+                particles.transform.localScale = ren.bounds.size/2;
+            }
+        }
         particles.Play();
     }
 
@@ -124,6 +134,8 @@ public class StunEffect : Effect
 public class ScreenShakeEffect : Effect
 {
     [SerializeField] float force;
+    [SerializeField] float time;
+
 
     public override void Apply(EffectContext context)
     {

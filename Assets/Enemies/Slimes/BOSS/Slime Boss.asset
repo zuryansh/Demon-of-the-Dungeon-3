@@ -19,30 +19,159 @@ MonoBehaviour:
   - rid: 3978503691842617549
   - rid: 3978503691842617550
   - rid: 3978503691842617551
-  onDeathEffects: []
+  onDeathEffects:
+  - rid: 954037655864869170
   pointCost: 1
   phases:
-  - phaseEndPoint: 0.754
+  - phaseID: 0
+    phaseEndPoint: 0.525
     phaseChangeAnim: {fileID: 7400000, guid: 0f818057312315e429b7d874894844a5, type: 2}
     enterBehaviors: []
     mainBehaviors:
-    - rid: 954037633037893791
-    - rid: 954037633037893792
-    exitBehaviors: []
+    - rid: 954037655864869112
+    exitBehaviors:
+    - rid: 954037655864869151
+  - phaseID: 1
+    phaseEndPoint: 0
+    phaseChangeAnim: {fileID: 7400000, guid: 0f818057312315e429b7d874894844a5, type: 2}
+    enterBehaviors:
+    - rid: 954037655864869118
+    - rid: 954037655864869121
+    - rid: 954037655864869131
+    - rid: 954037655864869124
+    mainBehaviors:
+    - rid: 954037655864869122
+    exitBehaviors:
+    - rid: 954037655864869152
   weakenedAnimation: {fileID: 7400000, guid: 0b6373c8c4d8d1e4d8ce43e77a94ed47, type: 2}
+  deathAnim: {fileID: 7400000, guid: 40723bd3241f38b4b8223d77bf06752b, type: 2}
   references:
     version: 2
     RefIds:
-    - rid: 954037633037893791
-      type: {class: SummonMinionsBehavior, ns: BossArchitecture, asm: Assembly-CSharp}
+    - rid: 954037655864869112
+      type: {class: RepeatBehavior, ns: BossArchitecture, asm: Assembly-CSharp}
+      data:
+        behaviors:
+        - rid: 954037655864869160
+        - rid: 954037655864869160
+        - rid: 954037655864869160
+        - rid: 954037655864869117
+    - rid: 954037655864869117
+      type: {class: WaitBehavior, ns: BossArchitecture, asm: Assembly-CSharp}
+      data:
+        waitTime: 3
+    - rid: 954037655864869118
+      type: {class: SetVulnerability, ns: BossArchitecture, asm: Assembly-CSharp}
+      data:
+        val: 0
+    - rid: 954037655864869121
+      type: {class: SummonObjectsBehavior, ns: BossArchitecture, asm: Assembly-CSharp}
+      data:
+        data: {fileID: 11400000, guid: 6b29214e8857d564590c457544f1d564, type: 2}
+        timeBetweenSummons: 0.1
+        waitUntilAllMinionsDead: 1
+    - rid: 954037655864869122
+      type: {class: RepeatBehavior, ns: BossArchitecture, asm: Assembly-CSharp}
+      data:
+        behaviors:
+        - rid: 954037655864869133
+        - rid: 954037655864869123
+        - rid: 954037655864869130
+    - rid: 954037655864869123
+      type: {class: RandomBehavior, ns: BossArchitecture, asm: Assembly-CSharp}
+      data:
+        behaviors:
+        - rid: 954037655864869125
+        - rid: 954037655864869126
+        - rid: 954037655864869127
+        - rid: 954037655864869128
+    - rid: 954037655864869124
+      type: {class: SummonObjectsBehavior, ns: BossArchitecture, asm: Assembly-CSharp}
+      data:
+        data: {fileID: 11400000, guid: d47b42dbb7a10e8428a84380f69adeb3, type: 2}
+        timeBetweenSummons: 0.1
+        waitUntilAllMinionsDead: 0
+    - rid: 954037655864869125
+      type: {class: ChargeAttackBehavior, ns: BossArchitecture, asm: Assembly-CSharp}
+      data:
+        data: {fileID: 11400000, guid: 19ef0829552233d4db08ca3d2b3f809a, type: 2}
+    - rid: 954037655864869126
+      type: {class: JumpAttackBehavior, ns: BossArchitecture, asm: Assembly-CSharp}
+      data:
+        data: {fileID: 11400000, guid: 2687a270b3a2fed43ad172fe9e92772b, type: 2}
+    - rid: 954037655864869127
+      type: {class: ShootAttackBehavior, ns: BossArchitecture, asm: Assembly-CSharp}
+      data:
+        data: {fileID: 11400000, guid: e554bde3ef929a941bf60164d4937e56, type: 2}
+    - rid: 954037655864869128
+      type: {class: ShootAttackBehavior, ns: BossArchitecture, asm: Assembly-CSharp}
+      data:
+        data: {fileID: 11400000, guid: e820a02506b1ea647a4ad1f8facaa1d1, type: 2}
+    - rid: 954037655864869130
+      type: {class: WaitBehavior, ns: BossArchitecture, asm: Assembly-CSharp}
+      data:
+        waitTime: 1
+    - rid: 954037655864869131
+      type: {class: SetVulnerability, ns: BossArchitecture, asm: Assembly-CSharp}
+      data:
+        val: 1
+    - rid: 954037655864869133
+      type: {class: ConditionalBehavior, ns: BossArchitecture, asm: Assembly-CSharp}
+      data:
+        behavior:
+          rid: 954037655864869134
+        condition:
+          rid: 954037655864869135
+    - rid: 954037655864869134
+      type: {class: SummonObjectsBehavior, ns: BossArchitecture, asm: Assembly-CSharp}
       data:
         data: {fileID: 11400000, guid: f4669578e7ab5924e85adf3eaad87e1c, type: 2}
         timeBetweenSummons: 0.1
-        waitUntilAllMinionsDead: 1
-    - rid: 954037633037893792
+        waitUntilAllMinionsDead: 0
+    - rid: 954037655864869135
+      type: {class: AllMinionsDeadCondition, ns: BossArchitecture, asm: Assembly-CSharp}
+      data: 
+    - rid: 954037655864869151
+      type: {class: DebugBehavior, ns: BossArchitecture, asm: Assembly-CSharp}
+      data:
+        message: Phaser 1FIN
+    - rid: 954037655864869152
+      type: {class: DebugBehavior, ns: BossArchitecture, asm: Assembly-CSharp}
+      data:
+        message: Phase 2 END
+    - rid: 954037655864869160
+      type: {class: RandomBehavior, ns: BossArchitecture, asm: Assembly-CSharp}
+      data:
+        behaviors:
+        - rid: 954037655864869161
+        - rid: 954037655864869162
+        - rid: 954037655864869163
+        - rid: 954037655864869164
+    - rid: 954037655864869161
+      type: {class: ChargeAttackBehavior, ns: BossArchitecture, asm: Assembly-CSharp}
+      data:
+        data: {fileID: 11400000, guid: 31ff4c22bd7bbd54fbf12659f3a43e5b, type: 2}
+    - rid: 954037655864869162
       type: {class: JumpAttackBehavior, ns: BossArchitecture, asm: Assembly-CSharp}
       data:
         data: {fileID: 11400000, guid: 59b66da5264829f45bceeb62159e80f8, type: 2}
+    - rid: 954037655864869163
+      type: {class: ShootAttackBehavior, ns: BossArchitecture, asm: Assembly-CSharp}
+      data:
+        data: {fileID: 11400000, guid: a28bcbf87e790d44593e3894431f417b, type: 2}
+    - rid: 954037655864869164
+      type: {class: ShootAttackBehavior, ns: BossArchitecture, asm: Assembly-CSharp}
+      data:
+        data: {fileID: 11400000, guid: 2cc37da8941db17498c9aa8ef3ebcd2e, type: 2}
+    - rid: 954037655864869170
+      type: {class: SpawnParticlesEffect, ns: , asm: Assembly-CSharp}
+      data:
+        particlesPreab: {fileID: 1408716358625599528, guid: e34e9c5e3f03c4240b39d6275ac3ea5e, type: 3}
+        useAttackDir: 1
+        scale: {x: 1, y: 1}
+        setTargetAsParent: 0
+        spawnAtEffectPoint: 0
+        scaleWithSpriteSize: 1
     - rid: 3978503691842617549
       type: {class: SpawnParticlesEffect, ns: , asm: Assembly-CSharp}
       data:
@@ -50,10 +179,13 @@ MonoBehaviour:
         useAttackDir: 1
         scale: {x: 2, y: 2}
         setTargetAsParent: 0
+        spawnAtEffectPoint: 1
+        scaleWithSpriteSize: 0
     - rid: 3978503691842617550
       type: {class: ScreenShakeEffect, ns: , asm: Assembly-CSharp}
       data:
         force: 0.3
+        time: 0
     - rid: 3978503691842617551
       type: {class: PlaySoundEffect, ns: , asm: Assembly-CSharp}
       data:

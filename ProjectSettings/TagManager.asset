@@ -41,6 +41,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Hazards
+    uniqueID: 3503873153
+    locked: 0
   - name: Emittera
     uniqueID: 2309794177
     locked: 0
@@ -49,3 +52,4 @@ TagManager:
     locked: 0
   m_RenderingLayers:
   - Default
+  m_MigratedRenderPipelines: []
