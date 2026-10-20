@@ -21,7 +21,7 @@ MonoBehaviour:
   wallDecoSpawnChances:
   - 1
   palette:
-  - key: 0
+  - key: 1
     value: {fileID: 11400000, guid: 0f9686b24923ed64891293d880971589, type: 2}
   - key: 2
     value: {fileID: 11400000, guid: ad9e0c64df2cc6446962bd3850c3ec0a, type: 2}

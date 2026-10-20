@@ -39,7 +39,7 @@ MonoBehaviour:
     - rid: 3978503882670866534
       type: {class: DamageEffect, ns: , asm: Assembly-CSharp}
       data:
-        damage: 10
+        damage: 25
         randomDamage: {x: 0, y: 0}
     - rid: 3978503895845699662
       type: {class: DebugEffect, ns: , asm: Assembly-CSharp}

@@ -34,7 +34,7 @@ MonoBehaviour:
     - rid: 3978503895845699697
       type: {class: DamageEffect, ns: , asm: Assembly-CSharp}
       data:
-        damage: 10
+        damage: 25
         randomDamage: {x: 0, y: 0}
     - rid: 3978503960587665500
       type: {class: TelegraphEffect, ns: , asm: Assembly-CSharp}

@@ -64,7 +64,7 @@ MonoBehaviour:
         particlesPrefab: {fileID: 2562251328078639717, guid: 3f3cbedfb936ec44c8caa4ca6d6702b8, type: 3}
         effectSprite: {fileID: 0}
         canStack: 0
-        dmg: 1
+        dmg: 5
 --- !u!58 &1280146800759682146
 CircleCollider2D:
   m_ObjectHideFlags: 0
